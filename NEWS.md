@@ -1,4 +1,27 @@
-GSODR (Release date: 2016-04-20)
+GSODR v0.1.3 (Release date: 2016-05-06)
+==============
+Changes
+  * Set NA to -9999.99
+  * Bug fix in MIN/MAX with flags. Some columns have differing widths, which caused a flag to be left attached to some values
+  * Correct URL in README.md for CRAN to point to CRAN not GitHub
+  
+GSODR v0.1.2 (Release date: 2016-05-05)
+==============
+  Changes:
+  * Bug fix in importing isd-history.csv file. Previous issues caused all lat/lon/elev values to be >0.
+  * Bug fix where WDSP was mistyped as WDPS causing the creation of a new column, rather than the conversion of the existing
+  * Bug fix if Agroclimatology selected. Previously this resulted in no records.
+  * Set the default encoding to UTF8.
+  * Bug fix for country selection. Some countries did not return proper ISO code.
+  * Use write.csv, not readr::write_csv due to issue converting double to string: https://github.com/hadley/readr/issues/387
+
+
+GSODR v0.1.1 (Release date: 2016-04-21)
+==============
+  Changes:
+  * Now available on CRAN
+  
+GSODR v0.1.1 (Release date: 2016-04-21)
 ==============
 
   Changes:
