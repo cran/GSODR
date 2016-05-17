@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
@@ -52,10 +52,10 @@ Imports: countrycode, curl, data.table, dplyr, lubridate, raster,
 RoxygenNote: 5.0.1
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2016-05-09 00:22:47 UTC; U8004755
+Packaged: 2016-05-16 23:02:59 UTC; asparks
 Author: Adam Sparks [aut, cre],
   Tomislav Hengl [ctb],
   Andy Nelson [ctb],
   Kay Sumfleth [ctb]
 Repository: CRAN
-Date/Publication: 2016-05-09 06:25:50
+Date/Publication: 2016-05-17 01:11:40
