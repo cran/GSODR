@@ -1,8 +1,8 @@
 Package: GSODR
 Type: Package
 Title: Download, Clean and Generate New Variables from GSOD Data
-Version: 0.1.7
-Date: 2016-05-26
+Version: 0.1.8
+Date: 2016-07-04
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "ctb",
@@ -29,7 +29,7 @@ Description: Download, clean, reformat and create new variables from the
     longitude of < - 180 or > 180. Output is returned as a comma-separated
     values (CSV) file written to disk in a location selected by the user, which
     summarises each year by station and includes new variables: actual vapor
-    pressure, saturation vapor pressure and relative humidity are calculated
+    pressure, saturation vapor pressure and relative humidity, calculated
     from the original GSOD data. The resulting files can be as large as 500mb
     depending on the user's stringency for missing data and geographic area of
     interest. Be sure to have sufficient RAM and disk space as well as a
@@ -42,20 +42,21 @@ Description: Download, clean, reformat and create new variables from the
     for use in a geographic information system (GIS). The function was largely
     based on T. Hengl's 'getGSOD.R' script, available from
     <http://spatial-analyst.net/book/system/files/getGSOD.R> with enhancements
-    to be more cross-platform, faster and more flexible. See the GSOD readme.txt
+    to be more cross-platform, faster and more flexible. For information on the
+    original data from NCDC, please see the GSOD readme.txt file available from,
     <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends: R (>= 3.0.0)
 License: GPL (>= 3)
 Imports: countrycode, curl, data.table, dplyr, lubridate, raster,
-        readr, sp, stats, stringr, utils
+        readr, settings, sp, stats, stringr, utils
 RoxygenNote: 5.0.1
 Encoding: UTF-8
 NeedsCompilation: no
 Repository: CRAN
 LazyData: TRUE
-Packaged: 2016-06-02 03:31:14 UTC; U8004755
+Packaged: 2016-07-04 05:04:15 UTC; U8004755
 Author: Adam Sparks [aut, cre],
   Tomislav Hengl [ctb],
   Andy Nelson [ctb],
   Kay Sumfleth [ctb]
-Date/Publication: 2016-06-02 05:50:23
+Date/Publication: 2016-07-04 09:12:52

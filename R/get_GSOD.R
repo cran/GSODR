@@ -1,15 +1,23 @@
-#' Download, Clean and Generate New Variables From GSOD Weather Data
+#' Download, Clean, Reformat and Generate New Variables From GSOD Weather Data
 #'
-#'This function automates downloading and cleaning data from the Global Surface
-#'Summary of the Day (GSOD) data provided by the US National Climatic Data
-#'Center (NCDC),
-#'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}.
-#'Stations are individually checked for number of missing days to assure data
-#'quality, stations with too many missing observations are omitted, stations
-#'with a latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
-#'All units are converted to International System of Units (SI), e.g. Fahrenheit
-#'to Celsius and inches to millimetres. For convenience elevation is
-#'converted from decimetres to metres.
+#'This function automates downloading, cleaning, reformatting of data from
+#'the Global Surface Summary of the Day (GSOD) data provided by the US National
+#'Climatic Data Center (NCDC),
+#'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
+#'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
+#'Vapor Pressure (EA) and relative humidity (RH). Stations are individually
+#'checked for number of missing days to assure data quality, stations with too
+#'many missing observations are omitted, stations with a latitude of < -90 or >
+#'90 or longitude of < -180 or > 180 are removed. All units are converted to
+#'International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
+#'millimetres. For convenience elevation is converted from decimetres to metres.
+#'Alternative elevation measurements are supplied for missing values or values
+#'found to be questionable based on the Consulatative Group for International
+#'Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
+#'Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
+#'based on NASA's original SRTM 90m data. Further information on these data and
+#'methods can be found on GSODR's GitHub repository here:
+#'\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Specify single station for which to retrieve, check and clean
@@ -22,7 +30,8 @@
 #' output file. Defaults to the current working directory.
 #' @param max_missing The maximum number of days allowed to be missing from a
 #' station's data before it is excluded from final file output. Defaults to five
-#' days.
+#' days. If a single station is specified, this option is ignored and any data
+#' available, even an empty file,from NCDC will be returned.
 #' @param agroclimatology Only clean data for stations between latitudes 60 and
 #' -60 for agroclimatology work, defaults to FALSE. Set to FALSE to override and
 #' include only stations within the confines of these latitudes.
@@ -40,7 +49,7 @@
 #'station, which includes vapour pressure and relative humidity variables
 #'calculated from existing data in GSOD.
 #'
-#'All missing values in resulting files are represented as -9999.99
+#'All missing values in resulting files are represented as -9999
 #'regardless of which field they occur in.
 #'
 #'Be sure to have disk space free and allocate the proper time for this to run.
@@ -61,56 +70,55 @@
 #' \item{CTRY}{Country}
 #' \item{LAT}{Latitude}
 #' \item{LON}{Longitude}
-#' \item{ELEV.M}{Elevation converted to metres}
+#' \item{ELEV.M}{Station reported elevation (metres to tenths)}
+#' \item{ELEV.M.SRTM.90m}{Corrected elevation data in whole metres for stations
+#' derived from Jarvis et al. (2008), extracted from DEM using reported LAT/LON
+#' values in metres}
 #' \item{YEARMODA}{Date in YYYY-MM-DD format}
 #' \item{YEAR}{The year}
 #' \item{MONTH}{The month}
 #' \item{DAY}{The day}
 #' \item{YDAY}{Sequential day of year (not in original GSOD)}
 #' \item{TEMP}{Mean daily temperature converted to degrees C to tenths.
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{TEMP.CNT}{Number of observations used in calculating mean daily
 #' temperature}
 #' \item{DEWP}{Mean daily dew point converted to degrees C to tenths. Missing =
-#' -9999.99}
+#' -9999}
 #' \item{DEWP.CNT}{Number of observations used in calculating mean daily
 #' dew point}
 #' \item{SLP}{Mean sea level pressure in millibars to tenths. Missing =
-#' -9999.99}
+#' -9999}
 #' \item{SLP.CNT}{Number of observations used in calculating mean sea level
 #' pressure}
 #' \item{STP}{Mean station pressure for the day in millibars to tenths
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{STP.CNT}{Number of observations used in calculating mean station
 #' pressure}
 #' \item{VISIB}{Mean visibility for the day converted to kilometers to tenths
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{VISIB.CNT}{Number of observations used in calculating mean daily
 #' visibility}
 #' \item{WDSP}{Mean daily wind speed value converted to metres/second to tenths
-#' Missing = -9999.99}
+#' Missing = -9999}
 #' \item{WDSP.CNT}{Number of observations used in calculating mean daily
 #' windspeed}
 #' \item{MXSPD}{Maximum sustained wind speed reported for the day converted to
-#' metres/second to tenths. Missing = -9999.99}
+#' metres/second to tenths. Missing = -9999}
 #' \item{GUST}{Maximum wind gust reported for the day converted to
-#' metres/second to tenths. Missing = -9999.99}
+#' metres/second to tenths. Missing = -9999}
 #' \item{MAX}{Maximum temperature reported during the day converted to Celsius
 #' to tenths--time of maximum temperature report varies by country and region,
-#' so this will sometimes not be the maximum for the calendar day. In instances
-#' where MAX < MIN, both MAX and MIN are set to missing. In instances where MIN
-#' is missing, MAX is correspondingly set to missing as well. Missing =
-#' -9999.99}
+#' so this will sometimes not be the maximum for the calendar day. Missing =
+#' -9999}
 #' \item{MAX.FLAG}{Blank indicates maximum temperature was taken from the
 #' explicit maximum temperature report and not from the 'hourly' data. " * "
 #' indicates maximum temperature was derived from the hourly data (i.e., highest
 #' hourly or synoptic-reported temperature)}
 #' \item{MIN}{Minimum temperature reported during the day converted to Celsius
 #' to tenths--time of minimum temperature report varies by country and region,
-#' so this will sometimes not be the minimum for the calendar day. In instances
-#' where MIN > MAX, both MAX and MIN are set to missing. In instances where MIN
-#' is missing, MAX is correspondingly set to missing as well. Missing =
-#' -9999.99}
+#' so this will sometimes not be the minimum for the calendar day. Missing =
+#' -9999}
 #' \item{MIN.FLAG}{Blank indicates minimum temperature was taken from the
 #' explicit minimum temperature report and not from the 'hourly' data. " * "
 #' indicates minimum temperature was derived from the hourly data (i.e., lowest
@@ -118,9 +126,9 @@
 #' \item{PRCP}{Total precipitation (rain and/or melted snow) reported during
 #' the day converted to millimetres to hundredths will usually not end with the
 #' midnight observation--i.e., may include latter part of previous day. ".00"
-#' indicates no measurable precipitation (includes a trace). Missing = -9999.99.
+#' indicates no measurable precipitation (includes a trace). Missing = -9999.
 #' \emph{Note}: Many stations do not report '0' on days with no precipitation--
-#' therefore, '-9999.99' will often appear on these days. For example, a
+#' therefore, '-9999' will often appear on these days. For example, a
 #' station may only report a 6-hour amount for the period during which rain
 #' fell. See PRCP.FLAG column for source of data}
 #' \item{PRCP.FLAG}{
@@ -142,7 +150,7 @@
 #'    reported}
 #'    }
 #'  }
-#' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999.99}
+#' \item{SNDP}{Snow depth in millimetres to tenths. Missing = -9999}
 #' \item{I.FOG}{Fog, (1 = yes, 0 = no/not reported) for the occurrence during
 #' the day}
 #' \item{I.RAIN_DZL}{Rain or drizzle, (1 = yes, 0 = no/not reported) for the
@@ -175,7 +183,7 @@
 #' @examples
 #' \dontrun{
 #' # Download weather station for Toowoomba, Queensland for 2010, save resulting
-#' # file in the user's Downloads directory.
+#' # file in the user's "Downloads" directory.
 #'
 #' get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
 #'
@@ -194,16 +202,22 @@
 #'
 #' get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
 #' }
+#'
+#' @references {Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
+#' SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
+#' \url{http://srtm.csi.cgiar.org}}
+#'
 #' @export
 get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                      max_missing = 5, agroclimatology = FALSE,
                      shapefile = FALSE, CSV = TRUE) {
 
   # Setting up options, creating objects, check variables entered by user-------
-  options(warn = 2)
+  opt <- settings::options_manager(warn = 2, timeout = 300)
 
   utils::data("stations", package = "GSODR", envir = environment())
   stations <- get("stations", envir = environment())
+  stations[, 12] <- as.character(stations[, 12])
 
   # Set up tempfile and directory for downloading data from server
   tf <- tempfile()
@@ -218,6 +232,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # Check years given by the user, are they valid?
   .validate_years(years)
 
+  # Check station given by user, is it valid?
+  .validate_station(station)
+
   # Check country given by user and format for use in function
   if (!is.null(country)) {
     country <- .get_country(country)
@@ -226,7 +243,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   # By default, if a single station is selected, then we will report even just
   # one day of data if that's all that is recorded
   if (!is.null(station)) {
-    max_missing <- 364
+    max_missing <- 366
   }
 
   ftp_site <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/"
@@ -272,7 +289,8 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 
     # If a single station is selected---------------------- --------------------
     if (!is.null(station)) {
-      tmp <- .read_gz(paste0(ftp_site, yr, "/", station, "-", yr, ".op.gz"))
+      tmp <- try(.read_gz(paste0(ftp_site, yr, "/", station, "-", yr,
+                                 ".op.gz")))
       GSOD_XY <- .reformat(tmp, stations)
     } else {
       # For a country, the entire set or agroclimatology -----------------------
@@ -306,7 +324,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
     #### csv file---------------------------------------------------------------
     if (CSV == TRUE) {
       utils::write.csv(GSOD_XY, file = paste0(path.expand(outfile), ".csv"),
-                       na = "-9999.99", row.names = FALSE,
+                       na = "-9999", row.names = FALSE,
                        fileEncoding = "UTF-8")
     }
 
@@ -320,6 +338,9 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       rm(GSOD_XY)
     }
   }
+  unlink(tf)
+  unlink(td)
+  settings::reset(opt)
 }
 
 # Functions used within this package -------------------------------------------
@@ -348,13 +369,6 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
                   "MXSPD", "GUST", "MAX", "MAX.FLAG", "MIN", "MIN.FLAG",
                   "PRCP", "PRCP.FLAG", "SNDP", "I.FOG", "I.RAIN_DZL",
                   "I.SNW_ICE", "I.HAIL", "I.THUNDER", "I.TDO_FNL")
-
-  # data quality assurance with MIN/MAX temperatures. In some cases MIN > MAX.
-  # Set these instances to NA, also set corresponding MIN/MAX NA values to NA in
-  # other column
-  tmp$MIN[which(tmp$MIN > tmp$MAX)] <- NA
-  tmp$MAX[is.na(tmp$MIN)] <- NA
-  tmp$MIN[is.na(tmp$MAX)] <- NA
 
   # Clean up and convert the station and weather data to metric
   tmp <- dplyr::mutate(tmp, STNID = paste(tmp$STN, tmp$WBAN, sep = "-"))
@@ -406,7 +420,7 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
   GSOD_df <- dplyr::inner_join(tmp, stations, by = "STNID")
 
   GSOD_df <- GSOD_df[c("USAF", "WBAN", "STNID", "STN.NAME", "CTRY",
-                       "LAT", "LON", "ELEV.M",
+                       "LAT", "LON", "ELEV.M", "ELEV.M.SRTM.90m",
                        "YEARMODA", "YEAR", "MONTH", "DAY", "YDAY",
                        "TEMP", "TEMP.CNT", "DEWP", "DEWP.CNT",
                        "SLP", "SLP.CNT", "STP", "STP.CNT",
@@ -471,7 +485,12 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
 .get_country <- function(country = "") {
   country <- toupper(raster::trim(country[1]))
   cs <- raster::ccodes()
-  cs <- toupper(cs)
+  # from Stack Overflow user juba, goo.gl/S31jyk
+  cs <- data.frame(lapply(cs, function(x) {
+    if (is.character(x)) return(toupper(x))
+    else return(x)
+  }))
+  # end juba
   nc <- nchar(country)
 
   if (nc == 3) {
@@ -525,5 +544,18 @@ get_GSOD <- function(years = NULL, station = NULL, country = NULL, path = "",
       }
       return(1)
     }
+  }
+}
+
+.validate_station <- function(station){
+  utils::data("stations", package = "GSODR", envir = environment())
+  stations <- get("stations", envir = environment())
+  stations[, 12] <- as.character(stations[, 12])
+
+  if (station %in% stations[, 12] == FALSE) {
+    stop("\nThis is not a valid station ID number, please check.\n
+         Station IDs are provided as a part of the GSODR package in the
+         'stations' data frame in the STNID column.")
+    return(0)
   }
 }
