@@ -1,9 +1,14 @@
+# GSODR v0.1.8.1
+
+## Bug fixes
+  * Fix bug where no station is specified, function fails to run  
+ 
 # GSODR v0.1.8
 
 ## Bug fixes
   * Fix bug with connection timing out for single station queries commit:  [a126641e00dc7acc21844ff0436e5702f8b6e04a](https://github.com/adamhsparks/GSODR/commit/a126641e00dc7acc21844ff0436e5702f8b6e04a)  
   * Somehow the previously working function that checked country names broke
-  with the toupper() function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
+  with the `toupper()` function. A new [function from juba](http://stackoverflow.com/questions/16516593/convert-from-lowercase-to-uppercase-all-values-in-all-character-variables-in-dat)
   fixes this issue and users can now select country again  
 
 ## Changes
