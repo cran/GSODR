@@ -6,7 +6,7 @@
 \usage{
 get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
   max_missing = 5, agroclimatology = FALSE, shapefile = FALSE,
-  CSV = TRUE)
+  CSV = TRUE, merge_station_years = FALSE)
 }
 \arguments{
 \item{years}{Year(s) of weather data to download.}
@@ -15,9 +15,10 @@ get_GSOD(years = NULL, station = NULL, country = NULL, path = "",
 weather data.}
 
 \item{country}{Specify a country of interest for which to retrieve weather
-data, full name or 3 letter ISO code work. Use
-\code{\link[raster]{getData}("ISO3")} to retrieve a list of possible three
-letter ISO country codes.}
+data; full name. For stations located in locales
+having an ISO code 2 or 3 letter ISO code can also be used if known. See
+\code{\link{country_list}} for a full list of country names and ISO codes
+available.}
 
 \item{path}{Path entered by user indicating where to store resulting
 output file. Defaults to the current working directory.}
@@ -37,6 +38,9 @@ created.}
 
 \item{CSV}{If set to TRUE, create a comma separated value (CSV) file of data,
 defaults to TRUE, a CSV file is created.}
+
+\item{merge_station_years}{If set to TRUE, merge output files into one output
+file for all years when selecting a single station, defaults to FALSE.}
 }
 \description{
 This function automates downloading, cleaning, reformatting of data from
@@ -49,21 +53,23 @@ checked for number of missing days to assure data quality, stations with too
 many missing observations are omitted, stations with a latitude of < -90 or >
 90 or longitude of < -180 or > 180 are removed. All units are converted to
 International System of Units (SI), e.g., Fahrenheit to Celsius and inches to
-millimetres. For convenience elevation is converted from decimetres to metres.
-Alternative elevation measurements are supplied for missing values or values
-found to be questionable based on the Consulatative Group for International
-Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
-Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
-based on NASA's original SRTM 90m data. Further information on these data and
-methods can be found on GSODR's GitHub repository here:
-\url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
+millimetres. Alternative elevation measurements are supplied for missing
+values or values found to be questionable based on the Consulatative Group
+for International Agricultural Research's Consortium for Spatial Information
+group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
+digital elevation data based on NASA's original SRTM 90m data. Further
+information on these data and methods can be found on GSODR's GitHub
+repository here: \url{https://github.com/adamhsparks/GSODR/blob/master/data-raw/fetch_isd-history.md}
 }
 \details{
 Due to the size of the resulting data, output is saved as a comma-separated,
 csv, file (default) or ESRI shapefile in a directory specified by the user or
 defaults to the current working directory. The files summarize each year by
 station, which includes vapour pressure and relative humidity variables
-calculated from existing data in GSOD.
+calculated from existing data in GSOD. Optionally, because the file sizes are
+much smaller, when selecting a single station, all years queried may be
+merged into one final ouptut file (CSV or shapefile) using the \code{
+merge_station_years} option.
 
 All missing values in resulting files are represented as -9999
 regardless of which field they occur in.
@@ -72,7 +78,7 @@ Be sure to have disk space free and allocate the proper time for this to run.
 This is a time, processor and disk input/output/space intensive process.
 This function was largely based on T. Hengl's "getGSOD.R" script, available
 from \url{http://spatial-analyst.net/book/system/files/getGSOD.R} with
-enhancements to be more cross-platform, faster and a bit more flexible.
+enhancements to be cross-platform, faster and more flexible.
 For more information see the description of the data provided by NCDC,
 \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 
@@ -190,34 +196,34 @@ the occurrence during the day}
 }
 \note{
 Users of these data should take into account the following (from the
-NCDC website): "The following data and products may have conditions placed on
-their international commercial use. They can be used within the U.S. or for
-non-commercial international activities without restriction. The non-U.S.
-data cannot be redistributed for commercial purposes. Re-distribution of
-these data by others must provide this same notification."
+NCDC website): \dQuote{The following data and products may have conditions
+placed on their international commercial use. They can be used within the
+U.S. or for non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes.
+Re-distribution of these data by others must provide this same
+notification.}
 }
 \examples{
 \dontrun{
 # Download weather station for Toowoomba, Queensland for 2010, save resulting
-# file in the user's "Downloads" directory.
+# file, GSOD-955510-99999-2010.csv, in the user's home directory.
 
-get_GSOD(years = 2010, station = "955510-99999", path = "~/Downloads")
+get_GSOD(years = 2010, station = "955510-99999", path = "~/")
 
+# Download data for Philippines for year 2010 and generate a yearly
+# summary file, GSOD-PHL-2010.csv, file in the user's home directory with a
+# maximum of five missing days per station allowed.
+
+get_GSOD(years = 2010, country = "Philippines", path = "~/")
 
 # Download global GSOD data for agroclimatology work for years 2009 and 2010
-# and generate yearly summary files, GSOD_2009_XY and GSOD_2010_XY in folders
-# named 2009 and 2010 in the user's Downloads directory with a maximum of
-# five missing days per weather station allowed.
+# and generate yearly summary files, GSOD-agroclimatology-2010.csv and
+# GSOD-agroclimatology-2011.csv in the user's home directory with a maximum
+# of five missing days per weather station allowed.
 
-get_GSOD(years = 2010:2011, path = "~/Downloads", agroclimatology = TRUE)
-
-
-# Download data for Australia for year 2010 and generate a yearly
-# summary file, GSOD_2010_XY files in the user's Downloads directory with a
-maximum of five missing days per station allowed.
-
-get_GSOD(years = 2010, country = "Australia", path = "~/Downloads")
+get_GSOD(years = 2010:2011, path = "~/", agroclimatology = TRUE)
 }
+
 
 }
 \references{
