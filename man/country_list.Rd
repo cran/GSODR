@@ -7,7 +7,7 @@
 \format{A data frame with 293 observations of 4 variables:
 \describe{
 \item{FIPS}{Federal Information Processing Standards (FIPS) code}
-\item{COUNTRY NAME}{English language name}
+\item{COUNTRY_NAME}{English language name}
 \item{iso2c}{ISO 3166-1 alpha-2 – two-letter country codes}
 \item{iso3c}{ISO 3166-1 alpha-3 – three-letter country codes}
 }}
@@ -21,16 +21,11 @@ country_list
 country_list
 }
 \note{
-Users of these data should take into account the following (from the
-NCDC website): \dQuote{The following data and products may have conditions
-placed on their international commercial use. They can be used within the
-U.S. or for non-commercial international activities without restriction. The
-non-U.S. data cannot be redistributed for commercial purposes.
-Re-distribution of these data by others must provide this same
-notification.}
+Users of these data should take into account the following (from the NCDC website): \dQuote{The following data and products may have conditions
+placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The
+non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification.}
 
-The \code{country_list} data are automatically loaded with the
-\code{GSODR} package.
+The \code{country_list} data are automatically loaded with the \code{GSODR} package.
 }
 \keyword{datasets}
 
