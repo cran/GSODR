@@ -1,19 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-GSODR: Global Surface Summary Daily Weather Data in R
-=====================================================
+GSODR: Global Summary Daily Weather Data in R
+=============================================
 
 [![Travis-CI Build
 Status](https://travis-ci.org/ropensci/GSODR.svg?branch=master)](https://travis-ci.org/ropensci/GSODR)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/master?svg=true)](https://ci.appveyor.com/project/ropensci/gsodr/branch/master)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/ropensci/GSODR/master.svg)](https://codecov.io/github/ropensci/GSODR?branch=master)
+[![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
 [![rstudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
+[![rstudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
+[![Research software
+impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
 
 Introduction to GSODR
 =====================
@@ -719,17 +722,13 @@ abide by its terms.
 References
 ==========
 
-Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled SRTM for
-the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-(<http://srtm.csi.cgiar.org>)
+Jarvis, A., Reuter, H. I., Nelson, A., Guevara, E. (2008) Hole-filled
+SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m
+Database (<http://srtm.csi.cgiar.org>)
 
 Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
-Soria-Auza, R. W., et al. (2016). Climatologies at high resolution for
-the Earth land surface areas. arXiv preprint arXiv:1607.00217.
+Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
+the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
 
-Wilson AM, Jetz W (2016). Remotely Sensed High-Resolution Global Cloud
-Dynamics for Predicting Ecosystem and Biodiversity Distributions. PLoS
-Biol 14(3): e1002415.
-
-[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)

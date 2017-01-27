@@ -12,13 +12,14 @@ get_GSOD(years = NULL, station = NULL, country = NULL, dsn = NULL,
 \item{years}{Year(s) of weather data to download.}
 
 \item{station}{Optional. Specify a station or multiple stations for which to
-retrieve, check and clean weather data. The NCDC reports years for which the
-data are available. This function checks against these years. However, not
-all cases are properly documented and in some cases files may not exist on
-the ftp server even though it is indicated that data was recorded for the
-station for a particular year. If a station is specified that does not have
-an existing file on the server, this function will silently fail and move on
-to existing files for download and cleaning from the FTP server.}
+retrieve, check and clean weather data using \code{STNID}. The NCDC reports
+years for which the data are available. This function checks against these
+years. However, not all cases are properly documented and in some cases files
+may not exist on the ftp server even though it is indicated that data was
+recorded for the station for a particular year. If a station is specified
+that does not have an existing file on the server, this function will
+silently fail and move on to existing files for download and cleaning from
+the FTP server.}
 
 \item{country}{Optional. Specify a country for which to retrieve weather
 data; full name or ISO codes can be used. See
@@ -61,19 +62,19 @@ the Global Surface Summary of the Day (GSOD) data provided by the US National
 Climatic Data Center (NCDC),
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-Vapor Pressure (EA) and relative humidity (RH). Stations reporting a latitude
-of < -90 or > 90 or longitude of < -180 or > 180 are removed. Stations may be
+Vapor Pressure (EA) and relative humidity (RH).  Stations reporting a latitude
+of < -90 or > 90 or longitude of < -180 or > 180 are removed.  Stations may be
 individually checked for number of missing days to assure data quality and
-omitting stations with too many missing observations. All units are converted
+omitting stations with too many missing observations.  All units are converted
 to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
-to millimetres. Alternative elevation measurements are supplied for missing
+to millimetres.  Alternative elevation measurements are supplied for missing
 values or values found to be questionable based on the Consultative Group for
 International Agricultural Research's Consortium for Spatial Information
 group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
-digital elevation data based on NASA's original SRTM 90m data. Further
+digital elevation data based on NASA's original SRTM 90m data.  Further
 information on these data and methods can be found on GSODR's GitHub
 repository here:
-\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}
+\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}.
 }
 \details{
 Data summarise each year by station, which include vapour pressure and
@@ -200,14 +201,14 @@ no/not reported) for the occurrence during the day}
 }
 }
 \note{
-Some of these data are redistributed with this R package. Originally
+Some of these data are redistributed with this R package.  Originally
 from these data come from the US NCDC which states that users of these data
 should take into account the following: \dQuote{The following data and
 products may have conditions placed on their international commercial use.
 They can be used within the U.S. or for non-commercial international
-activities without restriction. The non-U.S. data cannot be redistributed for
-commercial purposes. Re-distribution of these data by others must provide
-this same notification.}
+activities without restriction.  The non-U.S. data cannot be redistributed
+for commercial purposes.  Re-distribution of these data by others must
+provide this same notification.}
 }
 \examples{
 \dontrun{
@@ -230,14 +231,15 @@ filename = "GSOD_agroclimatology_2010-2011", agroclimatology = TRUE,
 CSV = TRUE)
 
 }
+
 }
 \author{
-Adam H Sparks \email{adamhsparks@gmail.com}
+Adam Sparks, \email{adamhsparks@gmail.com}
 }
 \references{
-{Jarvis, A, HI Reuter, A Nelson, E Guevara, 2008, Hole-filled
-SRTM for the globe Version 4, available from the CGIAR-CSI SRTM 90m Database
-\url{http://srtm.csi.cgiar.org}}
+{Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
+Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
+90m Database \url{http://srtm.csi.cgiar.org}}
 }
 \seealso{
 \code{\link{reformat_GSOD}}

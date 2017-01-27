@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
@@ -31,9 +31,8 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
-Imports: curl, data.table, dplyr, fields, magrittr, plyr, purrr (>=
-        0.2.0), R.utils, RCurl, readr, rgdal (>= 1.1-9), sp, stats,
-        utils
+Imports: curl, data.table, dplyr, fields, plyr, purrr (>= 0.2.0),
+        R.utils, readr, rgdal (>= 1.1-9), sp, stats, utils
 Suggests: ggalt, ggplot2, knitr, lubridate, plotKML, raster, reshape2,
         rgeos, rmarkdown, spacetime, testthat, tibble, tidyr, covr
 RoxygenNote: 5.0.1
@@ -43,9 +42,9 @@ Repository: CRAN
 LazyData: TRUE
 ByteCompile: TRUE
 VignetteBuilder: knitr
-Packaged: 2017-01-19 06:22:41 UTC; U8004755
+Packaged: 2017-01-27 00:13:51 UTC; asparks
 Author: Adam Sparks [aut, cre],
   Tomislav Hengl [aut],
   Andrew Nelson [aut]
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2017-01-19 11:17:37
+Date/Publication: 2017-01-27 10:39:49

@@ -1,7 +1,7 @@
 ---
 title: "Working with spatial and climate data from GSODR"
 author: "Tomislav Hengl and Adam H Sparks"
-date: "`r Sys.Date()`"
+date: "2017-01-27"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -21,7 +21,8 @@ This example will demonstrate how to download data for Philippines for year 2010
 
 Download data for Philippines for year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in the user's home directory.
 
-```{r example_1, eval=FALSE, message=FALSE, results='hide'}
+
+```r
 library(GSODR)
 get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
          filename = "PHL-2010", GPKG = TRUE, max_missing = 5)
@@ -31,7 +32,8 @@ get_GSOD(years = 2010, country = "Philippines", dsn = "~/",
 
 Using the GeoPackage that was just created, you can now create a KML file to open with Google Earth and visualise the data spatially and over time.
 
-```{r example_1.1, eval=FALSE, echo=TRUE}
+
+```r
 library(rgdal)
 library(spacetime)
 library(plotKML)
