@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 1.0.2
+Version: 1.0.2.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com"),
     person("Tomislav", "Hengl", role = "aut",
@@ -43,9 +43,9 @@ Repository: CRAN
 LazyData: TRUE
 ByteCompile: TRUE
 VignetteBuilder: knitr
-Packaged: 2017-04-03 05:20:28 UTC; U8004755
+Packaged: 2017-04-03 06:10:36 UTC; asparks
 Author: Adam Sparks [aut, cre],
   Tomislav Hengl [aut],
   Andrew Nelson [aut]
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2017-04-03 06:17:00 UTC
+Date/Publication: 2017-04-03 08:12:44 UTC
