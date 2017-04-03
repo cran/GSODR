@@ -1,11 +1,11 @@
-#' Download, Clean, Reformat and Generate New Variables From GSOD Weather Data
+#' Download, Clean, Reformat and Generate New Elements From GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National
-#'Climatic Data Center (NCDC),
+#'Centers for Environmental Information (NCEI),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
-#'and calculates three new variables; Saturation Vapor Pressure (ES) – Actual
-#'Vapor Pressure (EA) and relative humidity (RH).  Stations reporting a latitude
+#'and elements three new variables; saturation vapour pressure (es) – Actual
+#'vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
 #'of < -90 or > 90 or longitude of < -180 or > 180 are removed.  Stations may be
 #'individually checked for number of missing days to assure data quality and
 #'omitting stations with too many missing observations.  All units are converted
@@ -21,7 +21,7 @@
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to
-#' retrieve, check and clean weather data using \code{STNID}. The NCDC reports
+#' retrieve, check and clean weather data using \code{STNID}. The NCEI reports
 #' years for which the data are available. This function checks against these
 #' years. However, not all cases are properly documented and in some cases files
 #' may not exist on the ftp server even though it is indicated that data was
@@ -56,7 +56,7 @@
 #'
 #' @details
 #' Data summarise each year by station, which include vapour pressure and
-#' relative humidity variables calculated from existing data in GSOD.
+#' relative humidity elements calculated from existing data in GSOD.
 #'
 #' If the option to save locally is selected. Output may be saved as comma-
 #' separated, CSV, files or GeoPackage, GPKG, files in a directory specified by
@@ -68,7 +68,7 @@
 #' All missing values in resulting files are represented as NA regardless of
 #' which field they occur in.
 #'
-#'For more information see the description of the data provided by NCDC,
+#'For more information see the description of the data provided by NCEI,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
 #' The data returned either in a data.frame object and/or a file written to
@@ -180,7 +180,7 @@
 #'
 #'
 #' @note Some of these data are redistributed with this R package.  Originally
-#' from these data come from the US NCDC which states that users of these data
+#' from these data come from the US NCEI which states that users of these data
 #' should take into account the following: \dQuote{The following data and
 #' products may have conditions placed on their international commercial use.
 #' They can be used within the U.S. or for non-commercial international
@@ -210,14 +210,14 @@
 #'
 #' }
 #'
-#' @author Adam Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #'
 #' @references {Jarvis, A., Reuter, H. I, Nelson, A., Guevara, E. (2008)
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A \code{data.frame} object of weather data or a comma-separated value
-#' (CSV) or GeoPackage (GPKG) file saved to local disk.
+#' @return A \code{\link[base]{data.frame}} object of weather data or a
+#' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
 #'
 #' @seealso \code{\link{reformat_GSOD}}
 #'
@@ -233,8 +233,9 @@ get_GSOD <- function(years = NULL,
                      CSV = FALSE,
                      GPKG = FALSE) {
   # Create objects for use in retrieving files ---------------------------------
-  original_options <- options()
+  original_timeout <- options("timeout")[[1]]
   options(timeout = 300)
+  on.exit(options(timeout = original_timeout), add = TRUE)
   cache_dir <- tempdir()
   ftp_base <- "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/%s/"
   # Validate user inputs -------------------------------------------------------
@@ -249,11 +250,9 @@ get_GSOD <- function(years = NULL,
   if (!is.null(dsn)) {
     outfile <- .validate_fileout(CSV, dsn, filename, GPKG)
   }
-  # Fetch latest station metadata from NCDC server
-  if (!exists("stations")) {
-    stations <- get_station_list()
-  }
-  # Validate user entered stations for existence in stations list from NCDC
+  # Fetch latest station metadata from NCEI server
+  stations <- get_station_list()
+  # Validate user entered stations for existence in stations list from NCEI
   plyr::l_ply(
     .data = station,
     .fun = .validate_station,
@@ -262,10 +261,10 @@ get_GSOD <- function(years = NULL,
   )
   country <- .validate_country(country)
 
-    # Download files from server -----------------------------------------------
+  # Download files from server -----------------------------------------------
   GSOD_list <- .download_files(ftp_base, station, years, cache_dir)
 
-    # Subset GSOD_list for agroclimatology only stations -----------------------
+  # Subset GSOD_list for agroclimatology only stations -----------------------
   if (isTRUE(agroclimatology)) {
     GSOD_list <-
       .agroclimatology_list(GSOD_list, stations, cache_dir, years)
@@ -313,9 +312,8 @@ get_GSOD <- function(years = NULL,
   return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
   do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
-  unlink(cache_dir)
+  rm(cache_dir)
   gc()
-  options(original_options)
 }
 # Validation functions ---------------------------------------------------------
 #' @noRd
@@ -378,9 +376,8 @@ get_GSOD <- function(years = NULL,
     stop(
       "\n",
       paste0(station),
-      " is not a valid station ID number, please check
-      your entry. Station IDs are provided as a part of the GSODR package in the
-      'stations' data\nin the STNID column.\n"
+      " is not a valid station ID number, please check your entry. Station IDs
+      can be found in the 'stations' dataframe in the STNID column.\n"
     )
   }
   BEGIN <-

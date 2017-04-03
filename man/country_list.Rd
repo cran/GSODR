@@ -4,7 +4,7 @@
 \name{country_list}
 \alias{country_list}
 \title{country_list}
-\format{A data frame with 293 observations of 4 variables:
+\format{A data frame with 293 observations of 4 elements:
 \describe{
 \item{FIPS}{Federal Information Processing Standards (FIPS) code}
 \item{COUNTRY_NAME}{English language name}
@@ -22,7 +22,7 @@ country_list
 }
 \note{
 Users of these data should take into account the following
-(from the NCDC website): \dQuote{The following data and products may have
+(from the NCEI website): \dQuote{The following data and products may have
 conditions placed on their international commercial use. They can be used
 within the U.S. or for non-commercial international activities without
 restriction. The non-U.S. data cannot be redistributed for commercial
@@ -33,4 +33,3 @@ The \code{country_list} data are automatically loaded with the \code{GSODR}
 package.
 }
 \keyword{datasets}
-

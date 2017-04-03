@@ -15,19 +15,20 @@ downloads](http://cranlogs.r-pkg.org/badges/grand-total/GSODR?color=blue)](https
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
 [![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
+[![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![Research software
 impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
 
-Introduction to GSODR
-=====================
+Introduction to *GSODR*
+=======================
 
 The GSOD or [Global Surface Summary of the Day
 (GSOD)](https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod)
-data provided by the US National Climatic Data Center (NCDC) are a
-valuable source of weather data with global coverage. However, the data
-files are cumbersome and difficult to work with. The GSODR package aims
-to make it easy to find, transfer and format the data you need for use
-in analysis. The GSODR package provides four main functions for
+data provided by the US National Centers for Environmental Information
+(NCEI) are a valuable source of weather data with global coverage.
+However, the data files are cumbersome and difficult to work with.
+*GSODR* aims to make it easy to find, transfer and format the data you
+need for use in analysis and provides four main functions for
 facilitating this:
 
 -   `get_GSOD()` - queries and transfers files from the FTP server,
@@ -42,7 +43,7 @@ facilitating this:
     of stations and their metadata that fall within the given radius of
     a point specified by the user,  
 -   `get_station_list()` - downloads the latest station list from the
-    NCDC FTP server and returns a `data.table()` object in R session.
+    NCEI FTP server and returns a `data.table()` object in R session.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
@@ -50,7 +51,7 @@ inches to millimetres and Fahrenheit to Celsius. File output can be
 saved as a Comma Separated Value (CSV) file or in a spatial GeoPackage
 (GPKG) file, implemented by most major GIS software, summarising each
 year by station, which also includes vapour pressure and relative
-humidity variables calculated from existing data in GSOD.
+humidity elements calculated from existing data in GSOD.
 
 Additional data are calculated by this R package using the original data
 and included in the final data. These include vapour pressure (ea and
@@ -59,18 +60,8 @@ es) and relative humidity.
 It is recommended that you have a good Internet connection to download
 the data files as they can be quite large and slow to download.
 
-For more information see the description of the data provided by NCDC,
+For more information see the description of the data provided by NCEI,
 <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
-
-Other Sources of Weather Data
------------------------------
-
-There are several other sources of weather data and ways of retrieving
-them through R. In particular, the excellent
-[rnoaa](https://CRAN.R-project.org/package=rnoaa) package from
-[ROpenSci](https://ropensci.org) offers tools for interacting with and
-downloading weather data from the United States National Oceanic and
-Atmospheric Administration but lacks support GSOD data.
 
 Quick Start
 ===========
@@ -80,7 +71,7 @@ Install
 
 ### Stable version
 
-A stable version of GSODR is available from
+A stable version of *GSODR* is available from
 [CRAN](https://cran.r-project.org/package=GSODR).
 
 ``` r
@@ -96,9 +87,6 @@ package](https://CRAN.R-project.org/package=devtools), available from
 CRAN. We strive to keep the master branch on GitHub functional and
 working properly, although this may not always happen.
 
-If you find bugs, please file a [report as an
-issue](https://github.com/ropensci/GSODR/issues).
-
 ``` r
 #install.packages("devtools")
 devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
@@ -109,7 +97,7 @@ devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 Final data format and contents
 ------------------------------
 
-The `GSODR` package returns data with the following fields/units.
+*GSODR* formatted data include the following fields and units:
 
 -   **STNID** - Station number (WMO/DATSAV3 number) for the location;
 
@@ -267,13 +255,13 @@ The `GSODR` package returns data with the following fields/units.
 
 -   **RH** - Mean daily relative humidity.
 
-Using GSODR
------------
+Using *GSODR*
+-------------
 
-### Query the NCDC FTP server for GSOD data
+### Query the NCEI FTP server for GSOD data
 
-GSODR's main function, `get_GSOD()`, downloads and cleans GSOD data from
-the NCDC server. Following are a few examples of its capabilities.
+*GSODR's* main function, `get_GSOD()`, downloads and cleans GSOD data
+from the NCEI server. Following are a few examples of its capabilities.
 
 #### Example 1 - Download weather station data for Toowoomba, Queensland for 2010
 
@@ -402,29 +390,29 @@ kml(tmp_ST, dtime = 24 * 3600, colour = TEMP, shape = shape, labels = TEMP,
 system("zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml")
 ```
 
-#### Example 4 - Working with climate data from GSODRdata
+#### Example 4 - Working with climate data from *GSODRdata*
 
 This example will demonstrate how to download data for Philippines for
 year 2010 and generate a spatial, year summary file, PHL-2010.gpkg, in
 the user's home directory and link it with climate data from the
-`GSODRdata` package.
+*GSODRdata* package.
 
-##### Install `GSODRdata` package
+##### Install *GSODRdata* package
 
-This package is only available from GitHub; due to its large size (5.5Mb
-installed) it is not allowed on CRAN. It provides optional data for use
-with the `GSODR` package. See <https://github.com/adamhsparks/GSODRdata>
-for more.
+This package is only available from GitHub; due to its large size
+(&lt;9Mb installed) it is not allowed on CRAN. It provides optional data
+for use with the *GSODR* package. See
+<https://github.com/adamhsparks/GSODRdata> for more.
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("adamhsparks/GSODdata")
 ```
 
-##### Working with climate data from `GSODRdata`
+##### Working with climate data from *GSODRdata*
 
 Now that the extra data have been installed, take a look at the CHELSA
-data that are one of the data sets included in the `GSODRdata` package.
+data that are one of the data sets included in *GSODRdata*.
 
 CHELSA (Climatologies at high resolution for the earth’s land surface
 areas) are climate data at (30 arc sec) for the earth land surface
@@ -451,88 +439,63 @@ areas.
 See <http://chelsa-climate.org> for more information on these data.
 
 Compare the GSOD weather data from the Philippines with climatic data
-provided by the GSODR package in the `CHELSA` data set.
+provided by *GSODRdata* in the `CHELSA` data set.
 
 ``` r
 library(GSODRdata)
 
-head(CHELSA)
+str(CHELSA)
+
+#> 'data.frame':    23927 obs. of  46 variables:
+#>   $ STNID                      : chr  "008268-99999" "010014-99999" "010015-99999" "010882-99999" ...
+#> $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...
+#> $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...
+#> $ CHELSA_bio1_1979-2013_V1_1 : num  18.3 7.1 4.2 2.3 7 6.6 4.8 2.4 5 5.2 ...
+#> $ CHELSA_bio12_1979-2013_V1_1: num  214 1889 2209 563 1710 ...
+#> $ CHELSA_bio13_1979-2013_V1_1: num  54.6 223.7 254.7 73 200.6 ...
+#> $ CHELSA_bio14_1979-2013_V1_1: num  0.1 87.7 108.9 26.7 78.5 ...
+#> $ CHELSA_bio15_1979-2013_V1_1: num  104.9 30.3 30.1 30.7 32.1 ...
+#> $ CHELSA_bio16_1979-2013_V1_1: num  155 651 753 216 590 ...
+#> $ CHELSA_bio17_1979-2013_V1_1: num  0.6 273.5 332.6 85.5 244.7 ...
+#> $ CHELSA_bio18_1979-2013_V1_1: num  1.7 433.3 448.3 198.7 330.9 ...
+#> $ CHELSA_bio19_1979-2013_V1_1: num  96.9 490.4 621.1 122 494.4 ...
+#> $ CHELSA_bio2_1979-2013_V1_1 : num  23 12.5 16.7 20.1 15.6 17.1 16.4 18.6 14.8 13.3 ...
+#> $ CHELSA_bio3_1979-2013_V1_1 : num  48.3 44.8 45.3 45.5 45 44.3 43.8 44.6 43.8 43.8 ...
+#> $ CHELSA_bio4_1979-2013_V1_1 : num  884 486 592 734 573 ...
+#> $ CHELSA_bio5_1979-2013_V1_1 : num  40.5 21.5 22.2 23.6 23.9 25.4 23.1 23 21.8 20.4 ...
+#> $ CHELSA_bio6_1979-2013_V1_1 : num  -7.2 -6.5 -14.5 -20.7 -10.7 -13.3 -14.3 -18.7 -11.9 -9.9 ...
+#> $ CHELSA_bio7_1979-2013_V1_1 : num  47.7 28 36.8 44.3 34.7 38.7 37.4 41.7 33.8 30.3 ...
+#> $ CHELSA_bio8_1979-2013_V1_1 : num  10.5 5.7 -1.7 12.5 1.3 8.5 6.8 12.5 7 7.2 ...
+#> $ CHELSA_bio9_1979-2013_V1_1 : num  26.7 7.8 8.4 -0.1 12.2 3.8 9.6 0.1 9.8 9.3 ...
+#> $ CHELSA_prec_10_1979-2013   : num  3.6 230.6 237.5 48.9 192.8 ...
+#> $ CHELSA_prec_11_1979-2013   : num  10.5 219.9 237.8 41.3 189.6 ...
+#> $ CHELSA_prec_1_1979-2013    : num  35.8 198.4 227.7 40.3 189.5 ...
+#> $ CHELSA_prec_12_1979-2013   : num  25.4 215.5 248.3 40.5 201.5 ...
+#> $ CHELSA_prec_1979-2013_land : num  214 1912 2170 559 1720 ...
+#> $ CHELSA_prec_2_1979-2013    : num  46.5 153.3 188.4 32.5 153.7 ...
+#> $ CHELSA_prec_3_1979-2013    : num  54.8 151.9 176.4 31.8 145 ...
+#> $ CHELSA_prec_4_1979-2013    : num  28.3 101.1 114.4 26.6 91.6 ...
+#> $ CHELSA_prec_5_1979-2013    : num  7 90.6 107 38.9 79 72.1 75.6 46.7 91.3 85.1 ...
+#> $ CHELSA_prec_6_1979-2013    : num  1.2 100.5 110.1 58 84 ...
+#> $ CHELSA_prec_7_1979-2013    : num  1 116.7 119.2 69.7 90.1 ...
+#> $ CHELSA_prec_8_1979-2013    : num  0.3 165.6 159.6 72.7 121.6 ...
+#> $ CHELSA_prec_9_1979-2013    : num  0.1 204 229.6 57.9 181.4 ...
+#> $ CHELSA_temp_10_1979-2013   : num  19.2 8 4.3 2.3 7.2 6.7 5.7 2.4 5.6 5.9 ...
+#> $ CHELSA_temp_11_1979-2013   : num  13.2 4.5 0.2 -3 3 2.2 1.2 -2.7 1.6 2.2 ...
+#> $ CHELSA_temp_1_1979-2013    : num  4.9 1.2 -3.4 -7.2 -0.4 -2.4 -2.5 -7 -1.9 -1 ...
+#> $ CHELSA_temp_12_1979-2013   : num  7.7 2.1 -2.7 -6.5 0.3 -1.4 -1.3 -6.3 -0.7 -0.1 ...
+#> $ CHELSA_temp_1979-2013_land : num  18.3 7.1 4.1 2.3 6.9 6.5 5.1 2.5 5 5.2 ...
+#> $ CHELSA_temp_2_1979-2013    : num  7 0.8 -3.2 -6.6 -0.2 -2.2 -2.8 -6.4 -2.1 -1.2 ...
+#> $ CHELSA_temp_3_1979-2013    : num  12.2 2.3 -0.8 -3.3 2.2 0.8 -0.9 -2.7 -0.6 0.1 ...
+#> $ CHELSA_temp_4_1979-2013    : num  18.3 5.1 3 1.5 5.8 5.1 3 1.7 2.9 3.1 ...
+#> $ CHELSA_temp_5_1979-2013    : num  23.5 9 7.6 6.4 10.1 10.7 7.8 6.6 7.3 7.1 ...
+#> $ CHELSA_temp_6_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...
+#> $ CHELSA_temp_7_1979-2013    : num  28.2 12 10.9 10.9 13.2 14.7 11.9 11.3 11.1 10.5 ...
+#> $ CHELSA_temp_8_1979-2013    : num  29.7 14.2 12.2 12.1 14.9 15.8 14 12.2 13.3 12.8 ...
+#> $ CHELSA_temp_9_1979-2013    : num  25.1 11.5 8.6 7.7 11.5 11.6 10.2 7.6 9.9 9.8 ...
 ```
 
-``` r
-##          STNID    LON    LAT CHELSA_bio10_1979-2013_V1_1 CHELSA_bio11_1979-2013_V1_1 CHELSA_bio1_1979-2013_V1_1
-## 1 008268-99999 65.567 32.950                        30.0                         5.8                       18.3
-## 2 010014-99999  5.341 59.792                        14.3                         1.0                        7.1
-## 3 010015-99999  5.867 61.383                        12.5                        -3.2                        4.2
-## 4 010882-99999 11.342 62.578                        12.6                        -7.0                        2.3
-## 5 010883-99999  6.117 61.833                        15.2                        -0.2                        7.0
-## 6 010884-99999  9.567 59.185                        16.3                        -2.2                        6.6
-##   CHELSA_bio12_1979-2013_V1_1 CHELSA_bio13_1979-2013_V1_1 CHELSA_bio14_1979-2013_V1_1 CHELSA_bio15_1979-2013_V1_1
-## 1                       214.0                        54.6                         0.1                       104.9
-## 2                      1889.3                       223.7                        87.7                        30.3
-## 3                      2209.1                       254.7                       108.9                        30.1
-## 4                       563.0                        73.0                        26.7                        30.7
-## 5                      1710.3                       200.6                        78.5                        32.1
-## 6                       987.0                       120.9                        52.3                        24.4
-##   CHELSA_bio16_1979-2013_V1_1 CHELSA_bio17_1979-2013_V1_1 CHELSA_bio18_1979-2013_V1_1 CHELSA_bio19_1979-2013_V1_1
-## 1                       155.4                         0.6                         1.7                        96.9
-## 2                       650.7                       273.5                       433.3                       490.4
-## 3                       752.8                       332.6                       448.3                       621.1
-## 4                       216.2                        85.5                       198.7                       122.0
-## 5                       590.0                       244.7                       330.9                       494.4
-## 6                       338.0                       175.3                       242.3                       182.7
-##   CHELSA_bio2_1979-2013_V1_1 CHELSA_bio3_1979-2013_V1_1 CHELSA_bio4_1979-2013_V1_1 CHELSA_bio5_1979-2013_V1_1
-## 1                       23.0                       48.3                      884.1                       40.5
-## 2                       12.5                       44.8                      486.3                       21.5
-## 3                       16.7                       45.3                      591.5                       22.2
-## 4                       20.1                       45.5                      734.1                       23.6
-## 5                       15.6                       45.0                      573.4                       23.9
-## 6                       17.1                       44.3                      693.1                       25.4
-##   CHELSA_bio6_1979-2013_V1_1 CHELSA_bio7_1979-2013_V1_1 CHELSA_bio8_1979-2013_V1_1 CHELSA_bio9_1979-2013_V1_1 CHELSA_prec_10_1979-2013
-## 1                       -7.2                       47.7                       10.5                       26.7                      3.6
-## 2                       -6.5                       28.0                        5.7                        7.8                    230.6
-## 3                      -14.5                       36.8                       -1.7                        8.4                    237.5
-## 4                      -20.7                       44.3                       12.5                       -0.1                     48.9
-## 5                      -10.7                       34.7                        1.3                       12.2                    192.8
-## 6                      -13.3                       38.7                        8.5                        3.8                    122.1
-##   CHELSA_prec_11_1979-2013 CHELSA_prec_1_1979-2013 CHELSA_prec_12_1979-2013 CHELSA_prec_1979-2013_land CHELSA_prec_2_1979-2013
-## 1                     10.5                    35.8                     25.4                      214.5                    46.5
-## 2                    219.9                   198.4                    215.5                     1912.0                   153.3
-## 3                    237.8                   227.7                    248.3                     2170.2                   188.4
-## 4                     41.3                    40.3                     40.5                      559.3                    32.5
-## 5                    189.6                   189.5                    201.5                     1719.6                   153.7
-## 6                    106.2                    79.0                     82.4                      998.1                    53.0
-##  CHELSA_prec_3_1979-2013 CHELSA_prec_4_1979-2013 CHELSA_prec_5_1979-2013 CHELSA_prec_6_1979-2013 CHELSA_prec_7_1979-2013
-## 1                    54.8                    28.3                     7.0                     1.2                     1.0
-## 2                   151.9                   101.1                    90.6                   100.5                   116.7
-## 3                   176.4                   114.4                   107.0                   110.1                   119.2
-## 4                    31.8                    26.6                    38.9                    58.0                    69.7
-## 5                   145.0                    91.6                    79.0                    84.0                    90.1
-## 6                    63.7                    57.0                    72.1                    76.1                    84.3
-##   CHELSA_prec_8_1979-2013 CHELSA_prec_9_1979-2013 CHELSA_temp_10_1979-2013 CHELSA_temp_11_1979-2013 CHELSA_temp_1_1979-2013
-## 1                     0.3                     0.1                     19.2                     13.2                     4.9
-## 2                   165.6                   204.0                      8.0                      4.5                     1.2
-## 3                   159.6                   229.6                      4.3                      0.2                    -3.4
-## 4                    72.7                    57.9                      2.3                     -3.0                    -7.2
-## 5                   121.6                   181.4                      7.2                      3.0                    -0.4
-## 6                   105.0                    97.2                      6.7                      2.2                    -2.4
-##   CHELSA_temp_12_1979-2013 CHELSA_temp_1979-2013_land CHELSA_temp_2_1979-2013 CHELSA_temp_3_1979-2013 CHELSA_temp_4_1979-2013
-## 1                      7.7                       18.3                     7.0                    12.2                    18.3
-## 2                      2.1                        7.1                     0.8                     2.3                     5.1
-## 3                     -2.7                        4.1                    -3.2                    -0.8                     3.0
-## 4                     -6.5                        2.3                    -6.6                    -3.3                     1.5
-## 5                      0.3                        6.9                    -0.2                     2.2                     5.8
-## 6                     -1.4                        6.5                    -2.2                     0.8                     5.1
-##   CHELSA_temp_5_1979-2013 CHELSA_temp_6_1979-2013 CHELSA_temp_7_1979-2013 CHELSA_temp_8_1979-2013 ## CHELSA_temp_9_1979-2013
-## 1                    23.5                    28.2                    28.2                    29.7                    25.1
-## 2                     9.0                    12.0                    12.0                    14.2                    11.5
-## 3                     7.6                    10.9                    10.9                    12.2                     8.6
-## 4                     6.4                    10.9                    10.9                    12.1                     7.7
-## 5                    10.1                    13.2                    13.2                    14.9                    11.5
-## 6                    10.7                    14.7                    14.7                    15.8                    11.6
-```
-
-##### Using `dplyr` functions, join the CHELSA and GSODR data for plotting.
+##### Using *dplyr* functions, join the CHELSA and *GSODR* data for plotting.
 
 ``` r
 library(dplyr)
@@ -578,7 +541,7 @@ ggplot(df_melt, aes(x = DATE, y = value)) +
 ```
 
 ![Comparison of GSOD daily values and average monthly values with CHELSA
-climate monthly values](README-example_3.2-1.png)
+climate monthly values](man/figures/example_1.2-1.png)
 
 #### Example 5 - Finding stations within a given radius of a point
 
@@ -663,6 +626,28 @@ str(toowoomba)
 #> $ RH              : num  67.7 70 74.1 67.9 74.1 59.3 69.2 70.4 61.3 61.3 ...
 ```
 
+Other Sources of Weather Data in R
+----------------------------------
+
+There are several other sources of weather data and ways of retrieving
+them through R. In particular, the excellent
+[`rnoaa`](https://CRAN.R-project.org/package=rnoaa) package also from
+[rOpenSci](https://ropensci.org) offers tools for interacting with and
+downloading weather data from the United States National Oceanic and
+Atmospheric Administration but lacks support GSOD data.
+
+Other Sources for Fetching GSOD Weather Data
+--------------------------------------------
+
+The
+[*GSODTools*](https://github.com/environmentalinformatics-marburg/GSODTools)
+by [Florian Detsch](https://github.com/fdetsch) is an R package that
+offers similar functionality as *GSODR* but also has the ability to
+graph the data and working with data for time series analysis.
+
+The [*ULMO*](https://github.com/ulmo-dev/ulmo) library offers an
+interface to retrieve GSOD data using Python.
+
 Notes
 =====
 
@@ -676,14 +661,6 @@ quasi-mechanistical statistical downscaling of the ERA interim global
 circulation model (Karger et al. 2016). ESA's CCI-LC cloud probability
 monthly averages are based on the MODIS snow products (MOD10A2).
 <http://chelsa-climate.org/>
-
-#### EarthEnv MODIS cloud fraction
-
-<http://www.earthenv.org/cloud>
-
-#### ESA's CCI-LC cloud probability
-
-<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>
 
 #### Elevation Values
 
@@ -701,7 +678,7 @@ WMO Resolution 40. NOAA Policy
 ------------------------------
 
 *Users of these data should take into account the following (from the
-[NCDC
+[NCEI
 website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):*
 
 > "The following data and products may have conditions placed on their
@@ -712,12 +689,20 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 > notification." [WMO Resolution 40. NOAA
 > Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
-Code of Conduct
----------------
+Meta
+----
 
-Please note that this project is released with a [Contributor Code of
-Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+-   Please [report any issues or
+    bugs](https://github.com/ropensci/GSODR/issues).  
+-   License: MIT  
+-   To cite *GSODR*, please use:  
+    Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
+    Global Summary Daily Weather Data in R. *The Journal of Open Source
+    Software*, **2(10)**. DOI: 10.21105/joss.00177. URL:
+    <https://doi.org/10.21105%2Fjoss.00177>  
+-   Please note that this project is released with a [Contributor Code
+    of Conduct](CONDUCT.md). By participating in this project you agree
+    to abide by its terms.
 
 References
 ==========
