@@ -14,7 +14,7 @@ downloads](http://cranlogs.r-pkg.org/badges/GSODR?color=blue)](https://github.co
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/GSODR?color=blue)](https://github.com/metacran/cranlogs.app)
 [![cran
 version](http://www.r-pkg.org/badges/version/GSODR)](https://cran.r-project.org/package=GSODR)
-[![DOI](https://zenodo.org/badge/32764550.svg)](https://zenodo.org/badge/latestdoi/32764550)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.439850.svg)](https://doi.org/10.5281/zenodo.439850)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![Research software
 impact](http://depsy.org/api/package/cran/GSODR/badge.svg)](http://depsy.org/package/r/GSODR)
@@ -42,8 +42,9 @@ facilitating this:
 -   `nearest_stations()` - returns a `vector()` object containing a list
     of stations and their metadata that fall within the given radius of
     a point specified by the user,  
--   `get_station_list()` - downloads the latest station list from the
-    NCEI FTP server and returns a `data.table()` object in R session.
+-   `update_station_list()` - downloads the latest station list from the
+    NCEI FTP server updates the package's internal database of stations
+    and their metadata.
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), e.g.,
@@ -94,167 +95,6 @@ devtools::install_github("ropensci/GSODR", build_vignettes = TRUE)
 
 ------------------------------------------------------------------------
 
-Final data format and contents
-------------------------------
-
-*GSODR* formatted data include the following fields and units:
-
--   **STNID** - Station number (WMO/DATSAV3 number) for the location;
-
--   **WBAN** - number where applicable--this is the historical "Weather
-    Bureau Air Force Navy" number - with WBAN being the acronym;
-
--   **STN\_NAME** - Unique text identifier;
-
--   **CTRY** - Country in which the station is located;
-
--   **LAT** - Latitude. *Station dropped in cases where values are &lt;
-    -90 or &gt; 90 degrees or Lat = 0 and Lon = 0*;
-
--   **LON** - Longitude. *Station dropped in cases where values are &lt;
-    -180 or &gt; 180 degrees or Lat = 0 and Lon = 0*;
-
--   **ELEV\_M** - Elevation in metres;
-
--   **ELEV\_M\_SRTM\_90m** - Elevation in metres corrected for possible
-    errors, derived from the CGIAR-CSI SRTM 90m database (Jarvis et al.
-    2008);
-
--   **YEARMODA** - Date in YYYY-mm-dd format;
-
--   **YEAR** - The year (YYYY);
-
--   **MONTH** - The month (mm);
-
--   **DAY** - The day (dd);
-
--   **YDAY** - Sequential day of year (not in original GSOD);
-
--   **TEMP** - Mean daily temperature converted to degrees C to tenths.
-    Missing = NA;
-
--   **TEMP\_CNT** - Number of observations used in calculating mean
-    daily temperature;
-
--   **DEWP** - Mean daily dew point converted to degrees C to tenths.
-    Missing = NA;
-
--   **DEWP\_CNT** - Number of observations used in calculating mean
-    daily dew point;
-
--   **SLP** - Mean sea level pressure in millibars to tenths. Missing =
-    NA;
-
--   **SLP\_CNT** - Number of observations used in calculating mean sea
-    level pressure;
-
--   **STP** - Mean station pressure for the day in millibars to tenths.
-    Missing = NA;
-
--   **STP\_CNT** - Number of observations used in calculating mean
-    station pressure;
-
--   **VISIB** - Mean visibility for the day converted to kilometres to
-    tenths Missing = NA;
-
--   **VISIB\_CNT** - Number of observations used in calculating mean
-    daily visibility;
-
--   **WDSP** - Mean daily wind speed value converted to metres/second to
-    tenths Missing = NA;
-
--   **WDSP\_CNT** - Number of observations used in calculating mean
-    daily wind speed;
-
--   **MXSPD** - Maximum sustained wind speed reported for the day
-    converted to metres/second to tenths. Missing = NA;
-
--   **GUST** - Maximum wind gust reported for the day converted to
-    metres/second to tenths. Missing = NA;
-
--   **MAX** - Maximum temperature reported during the day converted to
-    Celsius to tenths--time of max temp report varies by country and
-    region, so this will sometimes not be the max for the calendar day.
-    Missing = NA;
-
--   **MAX\_FLAG** - Blank indicates max temp was taken from the explicit
-    max temp report and not from the 'hourly' data. An "\*" indicates
-    max temp was derived from the hourly data (i.e., highest hourly or
-    synoptic-reported temperature);
-
--   **MIN** - Minimum temperature reported during the day converted to
-    Celsius to tenths--time of min temp report varies by country and
-    region, so this will sometimes not be the max for the calendar day.
-    Missing = NA;
-
--   **MIN\_FLAG** - Blank indicates max temp was taken from the explicit
-    min temp report and not from the 'hourly' data. An "\*" indicates
-    min temp was derived from the hourly data (i.e., highest hourly or
-    synoptic-reported temperature);
-
--   **PRCP** - Total precipitation (rain and/or melted snow) reported
-    during the day converted to millimetres to hundredths; will usually
-    not end with the midnight observation, i.e., may include latter part
-    of previous day. A value of ".00" indicates no measurable
-    precipitation (includes a trace). Missing = NA; *Note: Many stations
-    do not report '0' on days with no precipitation-- therefore, 'NA'
-    will often appear on these days. For example, a station may only
-    report a 6-hour amount for the period during which rain fell.* See
-    FLAGS\_PRCP column for source of data;
-
--   **PRCP\_FLAG** -
-
-    -   A = 1 report of 6-hour precipitation amount;
-
-    -   B = Summation of 2 reports of 6-hour precipitation amount;
-
-    -   C = Summation of 3 reports of 6-hour precipitation amount;
-
-    -   D = Summation of 4 reports of 6-hour precipitation amount;
-
-    -   E = 1 report of 12-hour precipitation amount;
-
-    -   F = Summation of 2 reports of 12-hour precipitation amount;
-
-    -   G = 1 report of 24-hour precipitation amount;
-
-    -   H = Station reported '0' as the amount for the day (e.g., from
-        6-hour reports), but also reported at least one occurrence of
-        precipitation in hourly observations--this could indicate a
-        rrace occurred, but should be considered as incomplete data for
-        the day;
-
-    -   I = Station did not report any precipitation data for the day
-        and did not report any occurrences of precipitation in its
-        hourly observations--it's still possible that precipitation
-        occurred but was not reported;
-
--   **SNDP** - Snow depth in millimetres to tenths. Missing = NA;
-
--   **I\_FOG** - Indicator for fog, (1 = yes, 0 = no/not reported) for
-    the occurrence during the day;
-
--   **I\_RAIN\_DRIZZLE** - Indicator for rain or drizzle, (1 = yes, 0 =
-    no/not reported) for the occurrence during the day;
-
--   **I\_SNOW\_ICE** - Indicator for snow or ice pellets, (1 = yes, 0 =
-    no/not reported) for the occurrence during the day;
-
--   **I\_HAIL** - Indicator for hail, (1 = yes, 0 = no/not reported) for
-    the occurrence during the day;
-
--   **I\_THUNDER** - Indicator for thunder, (1 = yes, 0 = no/not
-    reported) for the occurrence during the day;
-
--   **I\_TORNADO\_FUNNEL** - Indicator for tornado or funnel cloud, (1 =
-    yes, 0 = no/not reported) for the occurrence during the day;
-
--   **ea** - Mean daily actual vapour pressure;
-
--   **es** - Mean daily saturation vapour pressure;
-
--   **RH** - Mean daily relative humidity.
-
 Using *GSODR*
 -------------
 
@@ -272,11 +112,6 @@ Tbar <- get_GSOD(years = 2010, station = "955510-99999")
 #> 
 #> Checking requested station file for availability on server.
 #> Starting data file processing
-#> 
-  |                                                                       
-  |                                                                 |   0%
-  |                                                                       
-  |=================================================================| 100%
 
 head(Tbar)
 #>    WBAN        STNID          STN_NAME CTRY STATE CALL    LAT     LON
@@ -671,7 +506,7 @@ where elevation was missing in the reported values as well. In case the
 station reported an elevation and the DEM does not, the station reported
 is taken. For stations beyond -60˚ and 60˚ latitude, the values are
 station reported values in every instance. See
-<https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md>
+<https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md>
 for more detail on the correction methods.
 
 WMO Resolution 40. NOAA Policy
@@ -686,20 +521,18 @@ website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabb
 > non-commercial international activities without restriction. The
 > non-U.S. data cannot be redistributed for commercial purposes.
 > Re-distribution of these data by others must provide this same
-> notification." [WMO Resolution 40. NOAA
-> Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+> notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
 
 Meta
 ----
 
--   Please [report any issues or
-    bugs](https://github.com/ropensci/GSODR/issues).  
+-   Please [report any issues or bugs](https://github.com/ropensci/GSODR/issues).  
+
 -   License: MIT  
--   To cite *GSODR*, please use:  
-    Adam H Sparks, Tomislav Hengl and Andrew Nelson (2017). GSODR:
-    Global Summary Daily Weather Data in R. *The Journal of Open Source
-    Software*, **2(10)**. DOI: 10.21105/joss.00177. URL:
-    <https://doi.org/10.21105%2Fjoss.00177>  
+
+- Get citation information for _getCRUCLdata_ in R typing
+  `citation(package = "GSODR")`
+
 -   Please note that this project is released with a [Contributor Code
     of Conduct](CONDUCT.md). By participating in this project you agree
     to abide by its terms.
@@ -715,5 +548,3 @@ Karger, D. N., Conrad, O., Bohner, J., Kawohl, T., Kreft, H.,
 Soria-Auza, R. W., *et al*. (2016) Climatologies at high resolution for
 the Earth land surface areas. *arXiv preprint* **arXiv:1607.00217**.
 (<http://chelsa-climate.org/>)
-
-[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
