@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = "http://orcid.org/0000-0002-0061-8359"),
@@ -47,9 +47,9 @@ LazyData: FALSE
 LazyLoad: FALSE
 ByteCompile: TRUE
 VignetteBuilder: knitr
-Packaged: 2017-06-13 06:36:35 UTC; U8004755
+Packaged: 2017-07-23 09:44:06 UTC; U8004755
 Author: Adam Sparks [aut, cre] (http://orcid.org/0000-0002-0061-8359),
   Tomislav Hengl [aut] (http://orcid.org/0000-0002-9921-5129),
   Andrew Nelson [aut] (http://orcid.org/0000-0002-7249-3778)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2017-06-13 07:06:58 UTC
+Date/Publication: 2017-07-23 16:28:00 UTC

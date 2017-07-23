@@ -50,8 +50,9 @@ Only station files in ".op.gz" file format are supported by this function. If
 you have downloaded the full annual "gsod_YYYY.tar" file you will need to
 extract the individual station files first to use this function.
 
-For a complete list of the fields and desciption of the contents and units,
-please refer to the \code{vignette("GSODR_output_fields", package = "GSODR")}.
+For a complete list of the fields and description of the contents and units,
+please refer to Appendix 1 in the GSODR vignette,
+\code{vignette("GSODR", package = "GSODR")}.
 }
 \note{
 Some of these data are redistributed with this R package. Originally
