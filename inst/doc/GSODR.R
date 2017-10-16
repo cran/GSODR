@@ -6,8 +6,9 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(dplyr)
-#  data(country_list)
-#  station_locations <- left_join(GSOD_stations, country_list,
+#  load(system.file("extdata", "country_list.rda", package = "GSODR"))
+#  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+#  station_locations <- left_join(isd_history, country_list,
 #                                 by = c("CTRY" = "FIPS"))
 #  
 #  # create data.frame for Australia only
@@ -53,15 +54,11 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 #  head(Tbar)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  tbar_stations <-
-#    nearest_stations(LAT = -27.5598,
-#    LON = 151.9507,
-#    distance = 50)
+#  tbar_stations <- nearest_stations(LAT = -27.5598,
+#                                    LON = 151.9507,
+#                                    distance = 50)
 #  
-#    tbar <- get_GSOD(
-#    years = 2010,
-#    station = tbar_stations
-#    )
+#    tbar <- get_GSOD(years = 2010, station = tbar_stations)
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  remove <- c("949999-00170", "949999-00183")
@@ -73,12 +70,13 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 #                   dsn = "~/")
 
 ## ---- eval=FALSE---------------------------------------------------------
+#  library(ggplot2)
 #  library(lubridate)
 #  library(tidyr)
 #  
 #  # Create a dataframe of just the date and temperature values that we want to
 #  # plot
-#  tbar_temps <- tbar[, c(13, 18, 32, 34)]
+#  tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
 #  
 #  # Gather the data from wide to long
 #  tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
@@ -102,10 +100,10 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 #  
 #  #> Finished downloading file.
 #  
-#  #> Parsing the indivdual station files now.
+#  #> Starting data file processing.
 #  
 #  
-#  #> Finished parsing files. Writing files to disk now.
+#  #> Writing GeoPackage file to disk.
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(rgdal)
@@ -121,7 +119,7 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 #  AUS_stations <- readOGR(dsn = path.expand("~/AUS.gpkg"), layer = "GSOD")
 #  #> OGR data source with driver: GPKG
 #  #> Source: "/Users/asparks/AUS-2015.gpkg", layer: "GSOD"
-#  #> with 165168 features
+#  #> with 186977 features
 #  #> It has 46 fields
 #  
 #  class(AUS_stations)
@@ -132,29 +130,23 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 ## ---- eval=FALSE---------------------------------------------------------
 #  AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS.gpkg")), "GSOD")
 #  class(AUS_sqlite)
-#  #> [1] "tbl_sqlite" "tbl_sql"    "tbl_lazy"   "tbl"
+#  #> [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"
 #  
 #  print(AUS_sqlite, n = 5)
-#  #> Source:   query [?? x 48]
-#  #> Database: sqlite 3.8.6 [/Users/asparks/AUS-2015.gpkg]
-#  #>
-#  #>     fid       geom   USAF  WBAN        STNID          STN_NAME  CTRY STATE
-#  #>   <int>     <list>  <chr> <chr>        <chr>             <chr> <chr> <chr>
-#  #> 1     1 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#  #> 2     2 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#  #> 3     3 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#  #> 4     4 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#  #> 5     5 <raw [29]> 941030 99999 941030-99999 BROWSE ISLAND AWS    AS -9999
-#  #> # ... with more rows, and 40 more variables: CALL <chr>, ELEV_M <dbl>,
-#  #> #   ELEV_M_SRTM_90m <dbl>, BEGIN <dbl>, END <dbl>, YEARMODA <chr>,
-#  #> #   YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>,
-#  #> #   TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>,
-#  #> #   STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
-#  #> #   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>,
-#  #> #   MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>, SNDP <dbl>,
-#  #> #   I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>,
-#  #> #   I_THUNDER <int>, I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
-#  
+#  #> Source:   table<GSOD> [?? x 48]
+#  #> Database: sqlite 3.19.3 [/Users/U8004755/AUS.gpkg]
+#  #>    fid         geom   USAF  WBAN        STNID  STN_NAME  CTRY STATE  CALL ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA
+#  #>  <int>       <blob>  <chr> <chr>        <chr>     <chr> <chr> <chr> <chr>  <dbl>           <dbl>    <dbl>    <dbl>    <chr>
+#  #> 1     1 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150101
+#  #> 2     2 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150102
+#  #> 3     3 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150103
+#  #> 4      4 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150104
+#  #> 5     5 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150105
+#  #> ... with more rows, and 34 more variables: YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>,
+#  #>   DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
+#  #>   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>,
+#  #>   SNDP <dbl>, I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>, I_TORNADO_FUNNEL <int>,
+#  #>   EA <dbl>, ES <dbl>, RH <dbl>
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
@@ -165,22 +157,45 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 #  x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  paste0(.libPaths(), "/GSODR/extdata")[1]
-
-## ---- eval=FALSE---------------------------------------------------------
 #  #install.packages("devtools")
 #  devtools::install_github("adamhsparks/GSODRdata")
 #  library("GSODRdata")
 
-## ---- eval = TRUE, message = FALSE, echo = FALSE, warning=FALSE----------
-library(ggplot2)
-library(GSODR)
+## ---- eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE------------
+if (requireNamespace("ggplot2", quietly = TRUE) &&
+    requireNamespace("ggthemes", quietly = TRUE) &&
+    requireNamespace("maps", quietly = TRUE) &&
+    requireNamespace("mapproj", quietly = TRUE) &&
+    requireNamespace("gridExtra", quietly = TRUE) &&
+    requireNamespace("grid", quietly = TRUE)) {
+  library(ggplot2)
+  library(mapproj)
+  library(ggthemes)
+  library(maps)
+  library(data.table)
+  library(grid)
+  library(gridExtra)
+  library(GSODR)
+  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  world_map <- map_data("world")
 
-load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  GSOD_stations <- ggplot(isd_history, aes(x = LON, y = LAT)) +
+    geom_polygon(data = world_map, aes(x = long, y = lat, group = group),
+                 color = grey(0.7),
+                 fill = NA) +
+    geom_point(color = "red",
+               size = 0.05) +
+    coord_map(xlim = c(-180, 180)) +
+    theme_map() +
+    labs(title = "GSOD Station Locations",
+         caption = "Data: US NCEI GSOD and CIA World DataBank II")
 
-ggplot(isd_history, aes(x = LON, y = LAT)) +
-  geom_point(alpha = 0.1) +
-  theme_bw() +
-  labs(title = "GSOD Station Locations",
-       caption = "Data: US NCEI isd_history.csv")
+  # Using the gridExtra and grid packages add a neatline to the map
+  grid.arrange(GSOD_stations, ncol = 1)
+  grid.rect(width = 0.98,
+            height = 0.98,
+            gp = grid::gpar(lwd = 0.25,
+                            col = "black",
+                            fill = NA))
+}
 

@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Summary Daily Weather Data in R
-Version: 1.0.6
+Version: 1.0.7
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = "http://orcid.org/0000-0002-0061-8359"),
@@ -36,9 +36,9 @@ Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
 Imports: curl, data.table, dplyr, fields, magrittr, purrr (>= 0.2.0),
         R.utils, readr, rgdal (>= 1.1-9), sp, stats, utils
-Suggests: ggplot2, knitr, lubridate, plotKML, raster, reshape2, rgeos,
-        rmarkdown, roxygen2 (>= 6.0.1), spacetime, testthat, tibble,
-        tidyr, covr
+Suggests: ggplot2, ggthemes, gridExtra, knitr, lubridate, mapproj,
+        maps, plotKML, raster, reshape2, rgeos, rmarkdown, roxygen2 (>=
+        6.0.1), spacetime, testthat, tibble, tidyr, covr
 RoxygenNote: 6.0.1
 Encoding: UTF-8
 NeedsCompilation: no
@@ -47,9 +47,9 @@ LazyData: FALSE
 LazyLoad: FALSE
 ByteCompile: TRUE
 VignetteBuilder: knitr
-Packaged: 2017-09-19 05:00:32 UTC; U8004755
+Packaged: 2017-10-16 06:30:34 UTC; U8004755
 Author: Adam Sparks [aut, cre] (http://orcid.org/0000-0002-0061-8359),
   Tomislav Hengl [aut] (http://orcid.org/0000-0002-9921-5129),
   Andrew Nelson [aut] (http://orcid.org/0000-0002-7249-3778)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2017-09-19 08:06:44 UTC
+Date/Publication: 2017-10-16 06:30:54 UTC

@@ -193,7 +193,7 @@ get_GSOD <- function(years = NULL,
       .validate_missing_days(max_missing, GSOD_list)
   }
   # Clean and reformat list of station files from local disk in tempdir --------
-  message("\nStarting data file processing.\n")
+
   GSOD_XY <- purrr::map(
     .x = GSOD_list,
     .f = .process_gz,
@@ -210,7 +210,7 @@ get_GSOD <- function(years = NULL,
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
-    message("\nWriting GeoPackage File to Disk.\n")
+    message("\nWriting GeoPackage file to disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     sp::coordinates(GSOD_XY) <- ~ LON + LAT
     sp::proj4string(GSOD_XY) <-
@@ -228,12 +228,21 @@ get_GSOD <- function(years = NULL,
       driver = "GPKG"
     )
   }
-  return(GSOD_XY)
   # Cleanup --------------------------------------------------------------------
-  do.call(file.remove, list(list.files(cache_dir, full.names = TRUE)))
+
+  files <-
+    list.files(
+      cache_dir,
+      ignore.case = TRUE,
+      include.dirs = TRUE,
+      full.names = TRUE,
+      recursive = TRUE,
+      pattern = ".gz$"
+    )
+  unlink(files, force = TRUE, recursive = TRUE)
   rm(cache_dir)
   gc()
-  message("\nFinished, your GSOD data is ready to go.")
+  return(GSOD_XY)
   }
 # Validation functions ---------------------------------------------------------
 #' @noRd
@@ -292,18 +301,21 @@ get_GSOD <- function(years = NULL,
 }
 #' @noRd
 .validate_station <- function(station, stations, years) {
-  if (!station %in% stations[[12]]) {
+  if (!station %in% stations[, "STNID"]) {
     stop(
       "\n",
       paste0(station),
-      " is not a valid station ID number, please check your entry. Station IDs
-      can be found in the 'stations' dataframe in the STNID column.\n"
+      " is not a valid station ID number, please check your entry.\n",
+      "Valid Station IDs can be found in the isd-history.txt file\n",
+      "available from the US NCEI FTP server by combining the USAF and WBAN\n",
+      "columns, e.g., '007005' '99999' is '007005-99999' from this file \n",
+      "<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
   BEGIN <-
-    as.numeric(substr(stations[stations[[12]] == station, ]$BEGIN, 1, 4))
+    as.numeric(substr(stations[stations[, "STNID"] == station, ]$BEGIN, 1, 4))
   END <-
-    as.numeric(substr(stations[stations[[12]] == station, ]$END, 1, 4))
+    as.numeric(substr(stations[stations[, "STNID"] == station, ]$END, 1, 4))
   if (min(years) < BEGIN | max(years) > END) {
     message("\nThis station, ",
             station,
