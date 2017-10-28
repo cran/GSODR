@@ -2,92 +2,66 @@
 required <- c("ggplot2", "tidyr", "lubridate")
 
 if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = TRUE)))))
-  knitr::opts_chunk$set(eval = FALSE)
 
-## ---- eval=FALSE---------------------------------------------------------
-#  library(dplyr)
-#  load(system.file("extdata", "country_list.rda", package = "GSODR"))
-#  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-#  station_locations <- left_join(isd_history, country_list,
-#                                 by = c("CTRY" = "FIPS"))
-#  
-#  # create data.frame for Australia only
-#  Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
-#  head(Oz)
-#  
-#  #>     USAF  WBAN                  STN_NAME CTRY STATE CALL     LAT     LON
-#  #> 1 695023 99999       HORN ISLAND   (HID)   AS  <NA> KQXC -10.583 142.300
-#  #> 2 749430 99999        AIDELAIDE RIVER SE   AS  <NA> <NA> -13.300 131.133
-#  #> 3 749432 99999 BATCHELOR FIELD AUSTRALIA   AS  <NA> <NA> -13.049 131.066
-#  #> 4 749438 99999      IRON RANGE AUSTRALIA   AS  <NA> <NA> -12.700 143.300
-#  #> 5 749439 99999  MAREEBA AS/HOEVETT FIELD   AS  <NA> <NA> -17.050 145.400
-#  #> 6 749440 99999                 REID EAST   AS  <NA> <NA> -19.767 146.850
-#  #>   ELEV_M    BEGIN      END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c
-#  #> 1     NA 19420804 20030816 695023-99999              24    AUSTRALIA    AU
-#  #> 2    131 19430228 19440821 749430-99999              96    AUSTRALIA    AU
-#  #> 3    107 19421231 19430610 749432-99999              83    AUSTRALIA    AU
-#  #> 4     18 19420917 19440930 749438-99999              63    AUSTRALIA    AU
-#  #> 5    443 19420630 19440630 749439-99999             449    AUSTRALIA    AU
-#  #> 6    122 19421012 19430405 749440-99999              75    AUSTRALIA    AU
-#  #>   iso3c
-#  #> 1   AUS
-#  #> 2   AUS
-#  #> 3   AUS
-#  #> 4   AUS
-#  #> 5   AUS
-#  #> 6   AUS
-#  
-#  filter(Oz, STN_NAME == "TOOWOOMBA")
-#  #>     USAF  WBAN  STN_NAME CTRY STATE CALL     LAT     LON ELEV_M    BEGIN
-#  #> 1 945510 99999 TOOWOOMBA   AS  <NA> <NA> -27.583 151.933    676 19561231
-#  #>        END        STNID ELEV_M_SRTM_90m COUNTRY_NAME iso2c iso3c
-#  #> 1 20120503 945510-99999             670    AUSTRALIA    AU   AUS
+  knitr::opts_chunk$set(eval = FALSE, collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
 
-## ---- eval=FALSE---------------------------------------------------------
-#  library(GSODR)
-#  Tbar <- get_GSOD(years = 2010, station = "955510-99999")
-#  
-#  #> Downloading the station file(s) now.
-#  
-#  #> Finished downloading file. Parsing the station file(s) now.
-#  
-#  head(Tbar)
+## ---- eval=TRUE----------------------------------------------------------
+library(GSODR)
+library(dplyr)
+load(system.file("extdata", "country_list.rda", package = "GSODR"))
+load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
-## ---- eval=FALSE---------------------------------------------------------
-#  tbar_stations <- nearest_stations(LAT = -27.5598,
-#                                    LON = 151.9507,
-#                                    distance = 50)
-#  
-#    tbar <- get_GSOD(years = 2010, station = tbar_stations)
+station_locations <- left_join(isd_history, country_list,
+                               by = c("CTRY" = "FIPS"))
 
-## ---- eval=FALSE---------------------------------------------------------
-#  remove <- c("949999-00170", "949999-00183")
-#  
-#  tbar_stations <- tbar_stations[!tbar_stations %in% remove]
-#  
-#  tbar <- get_GSOD(years = 2010,
-#                   station = tbar_stations,
-#                   dsn = "~/")
+# create data.frame for Australia only
+Oz <- filter(station_locations, COUNTRY_NAME == "AUSTRALIA")
 
-## ---- eval=FALSE---------------------------------------------------------
-#  library(ggplot2)
-#  library(lubridate)
-#  library(tidyr)
-#  
-#  # Create a dataframe of just the date and temperature values that we want to
-#  # plot
-#  tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
-#  
-#  # Gather the data from wide to long
-#  tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
-#  
-#  ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
-#                                colour = Measurement)) +
-#    geom_line() +
-#    scale_color_brewer(type = "qual", na.value = "black") +
-#    scale_y_continuous(name = "Temperature") +
-#    scale_x_date(name = "Date") +
-#    theme_bw()
+Oz
+
+Oz %>%
+  filter(grepl("TOOWOOMBA", STN_NAME))
+
+## ---- eval=TRUE----------------------------------------------------------
+tbar <- get_GSOD(years = 2010, station = "955510-99999")
+
+tbar
+
+## ---- eval=TRUE----------------------------------------------------------
+tbar_stations <- nearest_stations(LAT = -27.5598,
+                                  LON = 151.9507,
+                                  distance = 50)
+
+tbar <- get_GSOD(years = 2010, station = tbar_stations)
+
+## ---- eval=TRUE, message=FALSE-------------------------------------------
+remove <- c("949999-00170", "949999-00183")
+
+tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+
+tbar <- get_GSOD(years = 2010,
+                 station = tbar_stations,
+                 dsn = "~/")
+
+## ---- eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"-----
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+
+# Create a dataframe of just the date and temperature values that we want to
+# plot
+tbar_temps <- tbar[, c("YEARMODA", "TEMP", "MAX", "MIN")]
+
+# Gather the data from wide to long
+tbar_temps <- gather(tbar_temps, Measurement, gather_cols = TEMP:MIN)
+
+ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
+                              colour = Measurement)) +
+  geom_line() +
+  scale_color_brewer(type = "qual", na.value = "black") +
+  scale_y_continuous(name = "Temperature") +
+  scale_x_date(name = "Date") +
+  theme_bw()
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  get_GSOD(years = 2015, country = "Australia", dsn = "~/", filename = "AUS",
@@ -156,12 +130,19 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 ## ---- eval=FALSE---------------------------------------------------------
 #  x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
+## ---- eval=TRUE----------------------------------------------------------
+inventory <- get_inventory()
+
+inventory
+
+subset(inventory, STNID == "955510-99999")
+
 ## ---- eval=FALSE---------------------------------------------------------
 #  #install.packages("devtools")
 #  devtools::install_github("adamhsparks/GSODRdata")
 #  library("GSODRdata")
 
-## ---- eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE------------
+## ---- eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"----
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&
@@ -172,7 +153,6 @@ if (requireNamespace("ggplot2", quietly = TRUE) &&
   library(mapproj)
   library(ggthemes)
   library(maps)
-  library(data.table)
   library(grid)
   library(gridExtra)
   library(GSODR)

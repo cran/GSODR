@@ -68,8 +68,9 @@
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
 #' 90m Database \url{http://srtm.csi.cgiar.org}}
 #'
-#' @return A \code{\link[base]{data.frame}} object of weather data or a
-#' comma-separated value (CSV) or GeoPackage (GPKG) file saved to local disk.
+#' @return A data frame as a \code{\link[tibble]{tibble}} object of weather data
+#' and/or a comma-separated value (CSV) or GeoPackage (GPKG) file saved to local
+#' disk.
 #'
 #' @seealso \code{\link{get_GSOD}}
 #'
@@ -79,12 +80,8 @@
 #'
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
 
-  # CRAN NOTE avoidance
   isd_history <- NULL
-
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
-  stations <- data.table::setDT(stations)
 
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
@@ -95,8 +92,7 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
   purrr::map(
     .x = file_list,
     .f = .process_gz,
-    stations = stations
+    isd_history = isd_history
   ) %>%
-    dplyr::bind_rows() %>%
-    as.data.frame()
+    dplyr::bind_rows()
 }

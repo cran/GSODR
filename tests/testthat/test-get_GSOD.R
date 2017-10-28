@@ -1,5 +1,7 @@
+
 context("get_GSOD")
 # Check that .validate_years handles invalid years -----------------------------
+
 test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = NULL))
   expect_error(.validate_years(years = "nineteen ninety two"))
@@ -35,11 +37,10 @@ test_that("Station validations are properly handled for years available", {
 
 test_that("Station validations are properly handled for years available", {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  stations <- isd_history
   expect_silent(.validate_station(
     years = 2010,
     station = "955510-99999",
-    stations = stations
+    isd_history = isd_history
   ))
 })
 
@@ -55,7 +56,8 @@ test_that("GSOD filename is used when user does not specify a filename", {
 })
 
 # Check that invalid dsn is handled --------------------------------------------
-test_that("Missing or invalid dsn is handled", {
+
+test_that("dsn is checked if specified", {
   dsn <- "~/NULL"
   expect_error(if (!is.null(dsn)) {
     outfile <-
@@ -89,7 +91,7 @@ test_that("If dsn is not specified, defaults to working directory", {
       filename = "test",
       GPKG = FALSE
     )
-  expect_match(outfile, paste0(getwd(), "/", "test"))
+  expect_match(outfile, file.path(getwd(), "test"))
 })
 
 # Check missing days in non-leap years -----------------------------------------
@@ -218,6 +220,12 @@ test_that(
 )
 
 test_that("Timeout options are reset on get_GSOD() exit", {
+  # get the original timeout value for net connections for last check to be sure
+  # get_GSOD() resets on exit.
   skip_on_cran()
-
+  original_timeout <- options("timeout")[[1]]
+  x <- get_GSOD(years = 2010, station = "945510-99999")
+  expect_is(x, "data.frame")
+  expect_equal(options("timeout")[[1]], original_timeout)
+  rm(x)
 })
