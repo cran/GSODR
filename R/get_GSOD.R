@@ -1,23 +1,23 @@
 
-#' Download, clean, reformat generate new elements and return a tidy data.frame of GSOD weather data
+#' Download and Return a Tidy Data Frame of GSOD Weather Data
 #'
 #'This function automates downloading, cleaning, reformatting of data from
 #'the Global Surface Summary of the Day (GSOD) data provided by the US National
 #'Centers for Environmental Information (NCEI),
 #'\url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod},
 #'and elements three new variables; saturation vapour pressure (es) – Actual
-#'vapour pressure (ea) and relative humidity (RH).  Stations reporting a latitude
-#'of < -90 or > 90 or longitude of < -180 or > 180 are removed.  Stations may be
-#'individually checked for number of missing days to assure data quality and
-#'omitting stations with too many missing observations.  All units are converted
-#'to International System of Units (SI), e.g., Fahrenheit to Celsius and inches
-#'to millimetres.  Alternative elevation measurements are supplied for missing
-#'values or values found to be questionable based on the Consultative Group for
-#'International Agricultural Research's Consortium for Spatial Information
-#'group's (CGIAR-CSI) Shuttle Radar Topography Mission 90 metre (SRTM 90m)
-#'digital elevation data based on NASA's original SRTM 90m data.  Further
-#'information on these data and methods can be found on GSODR's GitHub
-#'repository here:
+#'vapour pressure (ea) and relative humidity (RH).  Stations reporting a
+#'latitude of < -90 or > 90 or longitude of < -180 or > 180 are removed.
+#'Stations may be individually checked for number of missing days to assure data
+#'quality and omitting stations with too many missing observations.  All units
+#'are converted to International System of Units (SI), \emph{e.g.} Fahrenheit
+#'to Celsius and inches to millimetres.  Alternative elevation measurements are
+#'supplied for missing values or values found to be questionable based on the
+#'Consultative Group for International Agricultural Research's Consortium for
+#'Spatial Information group's (CGIAR-CSI) Shuttle Radar Topography Mission 90
+#'metre (SRTM 90m) digital elevation data based on NASA's original SRTM 90m
+#'data.  Further information on these data and methods can be found on GSODR's
+#'GitHub repository here:
 #'\url{https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md}.
 #'
 #' @param years Year(s) of weather data to download.
@@ -25,7 +25,7 @@
 #' retrieve, check and clean weather data using \code{STNID}. The NCEI reports
 #' years for which the data are available. This function checks against these
 #' years. However, not all cases are properly documented and in some cases files
-#' may not exist on the ftp server even though it is indicated that data was
+#' may not exist on the FTP server even though it is indicated that data was
 #' recorded for the station for a particular year. If a station is specified
 #' that does not have an existing file on the server, this function will
 #' silently fail and move on to existing files for download and cleaning from
@@ -74,14 +74,13 @@
 #' For more information see the description of the data provided by NCEI,
 #'\url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
-#' @note Some of these data are redistributed with this R package.  Originally
-#' from these data come from the US NCEI which states that users of these data
-#' should take into account the following: \dQuote{The following data and
-#' products may have conditions placed on their international commercial use.
-#' They can be used within the U.S. or for non-commercial international
-#' activities without restriction.  The non-U.S. data cannot be redistributed
-#' for commercial purposes.  Re-distribution of these data by others must
-#' provide this same notification.}
+#' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
+#' the data should note the conditions that the U.S. NCEI places upon the GSOD
+#' data.  \dQuote{The following data and products may have conditions placed on
+#' their international commercial use.  They can be used within the U.S. or for
+#' non-commercial international activities without restriction. The non-U.S.
+#' data cannot be redistributed for commercial purposes. Re-distribution of
+#' these data by others must provide this same notification.}
 #'
 #' @examples
 #' \dontrun{
@@ -187,7 +186,6 @@ get_GSOD <- function(years = NULL,
   }
   # Validate stations for missing days -----------------------------------------
   if (!is.null(max_missing)) {
-    message("\nChecking stations against max_missing value.\n")
     GSOD_list <-
       .validate_missing_days(max_missing, GSOD_list)
   }
@@ -202,13 +200,11 @@ get_GSOD <- function(years = NULL,
 
   # Write files to disk --------------------------------------------------------
   if (isTRUE(CSV)) {
-    message("\nWriting CSV file to disk.\n")
     outfile <- paste0(outfile, ".csv")
     readr::write_csv(GSOD_XY, path = outfile)
     rm(outfile)
   }
   if (isTRUE(GPKG)) {
-    message("\nWriting GeoPackage file to disk.\n")
     outfile <- paste0(outfile, ".gpkg")
     sp::coordinates(GSOD_XY) <- ~ LON + LAT
     sp::proj4string(GSOD_XY) <-
@@ -306,7 +302,7 @@ get_GSOD <- function(years = NULL,
       " is not a valid station ID number, please check your entry.\n",
       "Valid Station IDs can be found in the isd-history.txt file\n",
       "available from the US NCEI FTP server by combining the USAF and WBAN\n",
-      "columns, e.g., '007005' '99999' is '007005-99999' from this file \n",
+      "columns, e.g. '007005' '99999' is '007005-99999' from this file \n",
       "<ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>\n"
     )
   }
@@ -403,8 +399,7 @@ get_GSOD <- function(years = NULL,
         list.files(cache_dir, pattern = "^.*\\.op.gz$", full.names = TRUE)
     }
     if (!is.null(station)) {
-      # Written by @hrbrmstr on stackoverflow
-      message("\nChecking requested station file for availability on server\n")
+      # Written by @hrbrmstr
       max_retries <- 6
       dir_list_handle <-
         curl::new_handle(
@@ -448,7 +443,7 @@ get_GSOD <- function(years = NULL,
               return()
           }
         }
-      message("\nDownloading individual station files.\n")
+
       pb <- dplyr::progress_estimated(length(years))
       purrr::walk(years, function(yr) {
         year_url <- sprintf(ftp_base, yr)

@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day (GSOD) Weather Data from R
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = "https://orcid.org/0000-0002-0061-8359"),
@@ -13,12 +13,9 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     comment = "https://orcid.org/0000-0002-7249-3778"),
     person("Hugh", "Parsonage", role = c("cph", "ctb"),
     email = "hugh.parsonage@gmail.com",
-    comment = "Wrote internal function to calcuate distances for 
-    nearest_stations() and map code for station location figure, both taken from
-    our bomrang package, https://orcid.org/0000-0003-4055-0835"),
+    comment = "https://orcid.org/0000-0003-4055-0835"),
     person("Bob", "Rudis", email = "bob@rud.is", role = c("cph", "ctb"),
-    comment = "Wrote functionality to interface with NCEI server and cache files
-    for download, https://orcid.org/0000-0001-5670-2640"))
+    comment = "https://orcid.org/0000-0001-5670-2640"))
 URL: https://github.com/ropensci/GSODR
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
@@ -38,11 +35,11 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     GeoPackage (GPKG) file.  Additional data are included with this R package: a
     list of elevation values for stations between -60 and 60 degrees latitude 
     derived from the Shuttle Radar Topography Measuring Mission (SRTM).  For
-    information on the GSOD data from NCEI, please see the  GSOD readme.txt file
+    information on the GSOD data from NCEI, please see the GSOD readme.txt file
     available from, <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
-Imports: curl, dplyr (>= 0.7), magrittr, purrr (>= 0.2.0), R.utils,
+Imports: curl, dplyr (>= 0.7.0), magrittr, purrr (>= 0.2.0), R.utils,
         readr, rgdal (>= 1.1-9), rlang, sp, stats, tibble, utils
 Suggests: ggplot2, ggthemes, gridExtra, knitr, lubridate, mapproj,
         maps, plotKML, raster, reshape2, rgeos, rmarkdown, roxygen2 (>=
@@ -55,16 +52,11 @@ LazyData: FALSE
 LazyLoad: FALSE
 ByteCompile: TRUE
 VignetteBuilder: knitr
-Packaged: 2017-10-28 08:06:37 UTC; adamsparks
+Packaged: 2017-11-27 04:01:59 UTC; U8004755
 Author: Adam Sparks [aut, cre] (https://orcid.org/0000-0002-0061-8359),
   Tomislav Hengl [aut] (https://orcid.org/0000-0002-9921-5129),
   Andrew Nelson [aut] (https://orcid.org/0000-0002-7249-3778),
-  Hugh Parsonage [cph, ctb] (Wrote internal function to calcuate
-    distances for nearest_stations() and map code for station location
-    figure, both taken from our bomrang package,
-    https://orcid.org/0000-0003-4055-0835),
-  Bob Rudis [cph, ctb] (Wrote functionality to interface with NCEI server
-    and cache files for download,
-    https://orcid.org/0000-0001-5670-2640)
+  Hugh Parsonage [cph, ctb] (https://orcid.org/0000-0003-4055-0835),
+  Bob Rudis [cph, ctb] (https://orcid.org/0000-0001-5670-2640)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2017-10-28 08:13:09 UTC
+Date/Publication: 2017-11-27 04:30:55 UTC

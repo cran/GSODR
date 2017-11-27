@@ -1,3 +1,27 @@
+
+# GSODR 1.1.1 (Release Date 2017-11-27)
+
+## Bug fixes
+
+- `MAX_FLAG` and `MIN_FLAG` columns now report `NA` when there is no flag
+
+## Minor changes
+
+- Comment for Bob and Hugh in DESCRIPTION now only ORCID url
+
+- dplyr version set to >= 0.7.0 not 0.7 as before
+
+- Start-up message statement is more clear in relation to WMO resolution 40,
+that GSODR does not redistribute any weather data itself
+
+- Remove unnecessary function, .onLoad(), from zzz.R
+
+- Function titles in documentation now in title case
+
+- Correct grammar in documentation
+
+--------------------------------------------------------------------------------
+
 # GSODR 1.1.0
 
 ## Bug fixes
@@ -9,7 +33,7 @@ Error in .f(.x[[i]], ...) :
 955510-99999 is not a valid station ID number, please check your entry.
 Valid Station IDs can be found in the isd-history.txt file
 available from the US NCEI FTP server by combining the USAF and WBAN
-columns, e.g., '007005' '99999' is '007005-99999' from this file 
+columns, e.g. '007005' '99999' is '007005-99999' from this file 
 <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.txt>
 ```
 
@@ -34,6 +58,7 @@ inventory document and returns a `tibble()` object of the data
 
 - Update internal stations list
 
+--------------------------------------------------------------------------------
 
 # GSODR 1.0.7
 
@@ -62,6 +87,8 @@ clear and follow same format as that of `bomrang` package
 ## Major changes
 
 - Update internal stations list
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.0.6
 
@@ -101,6 +128,8 @@ presented and some have been combined for easier use
 ## Minor changes
 
 - Clean code using linting
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.0.3
 

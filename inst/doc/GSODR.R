@@ -27,21 +27,21 @@ tbar <- get_GSOD(years = 2010, station = "955510-99999")
 
 tbar
 
-## ---- eval=TRUE----------------------------------------------------------
-tbar_stations <- nearest_stations(LAT = -27.5598,
-                                  LON = 151.9507,
-                                  distance = 50)
+## ---- eval=FALSE---------------------------------------------------------
+#  tbar_stations <- nearest_stations(LAT = -27.5598,
+#                                    LON = 151.9507,
+#                                    distance = 50)
+#  
+#  tbar <- get_GSOD(years = 2010, station = tbar_stations)
 
-tbar <- get_GSOD(years = 2010, station = tbar_stations)
-
-## ---- eval=TRUE, message=FALSE-------------------------------------------
-remove <- c("949999-00170", "949999-00183")
-
-tbar_stations <- tbar_stations[!tbar_stations %in% remove]
-
-tbar <- get_GSOD(years = 2010,
-                 station = tbar_stations,
-                 dsn = "~/")
+## ---- eval=FALSE, message=FALSE------------------------------------------
+#  remove <- c("949999-00170", "949999-00183")
+#  
+#  tbar_stations <- tbar_stations[!tbar_stations %in% remove]
+#  
+#  tbar <- get_GSOD(years = 2010,
+#                   station = tbar_stations,
+#                   dsn = "~/")
 
 ## ---- eval=TRUE, fig.width = 7, fig.height = 7, fig.align = "center"-----
 library(ggplot2)
@@ -105,22 +105,6 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 #  AUS_sqlite <- tbl(src_sqlite(path.expand("~/AUS.gpkg")), "GSOD")
 #  class(AUS_sqlite)
 #  #> [1] "tbl_dbi"  "tbl_sql"  "tbl_lazy" "tbl"
-#  
-#  print(AUS_sqlite, n = 5)
-#  #> Source:   table<GSOD> [?? x 48]
-#  #> Database: sqlite 3.19.3 [/Users/U8004755/AUS.gpkg]
-#  #>    fid         geom   USAF  WBAN        STNID  STN_NAME  CTRY STATE  CALL ELEV_M ELEV_M_SRTM_90m    BEGIN      END YEARMODA
-#  #>  <int>       <blob>  <chr> <chr>        <chr>     <chr> <chr> <chr> <chr>  <dbl>           <dbl>    <dbl>    <dbl>    <chr>
-#  #> 1     1 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150101
-#  #> 2     2 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150102
-#  #> 3     3 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150103
-#  #> 4      4 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150104
-#  #> 5     5 <blob[29 B]> 941000 99999 941000-99999 KALUMBURU    AS  <NA>  <NA>     24              17 20010912 20170916 20150105
-#  #> ... with more rows, and 34 more variables: YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>,
-#  #>   DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
-#  #>   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>,
-#  #>   SNDP <dbl>, I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>, I_TORNADO_FUNNEL <int>,
-#  #>   EA <dbl>, ES <dbl>, RH <dbl>
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  y <- c("~/GSOD/gsod_1960/200490-99999-1960.op.gz",
@@ -130,19 +114,19 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
 ## ---- eval=FALSE---------------------------------------------------------
 #  x <- reformat_GSOD(dsn = "~/GSOD/gsod_1960")
 
-## ---- eval=TRUE----------------------------------------------------------
-inventory <- get_inventory()
-
-inventory
-
-subset(inventory, STNID == "955510-99999")
+## ---- eval=FALSE---------------------------------------------------------
+#  inventory <- get_inventory()
+#  
+#  inventory
+#  
+#  subset(inventory, STNID == "955510-99999")
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  #install.packages("devtools")
 #  devtools::install_github("adamhsparks/GSODRdata")
 #  library("GSODRdata")
 
-## ---- eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 7, fig.align = "center"----
+## ---- eval=TRUE, message = FALSE, echo = FALSE, warning=FALSE, fig.width = 7, fig.height = 5, fig.align = "center"----
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("ggthemes", quietly = TRUE) &&
     requireNamespace("maps", quietly = TRUE) &&

@@ -4,7 +4,7 @@
 \name{GSODR}
 \alias{GSODR}
 \alias{GSODR-package}
-\title{GSODR: Global Surface Summary Daily Weather Data in R.}
+\title{GSODR: Global Surface Summary of the Day (GSOD) Weather Data from R}
 \source{
 \url{https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod}
 }
@@ -20,14 +20,14 @@ missing observations are omitted.  Only stations with valid reported latitude
 and longitude values are permitted in the final data.  Additional useful
 elements, saturation vapour pressure (es), actual vapour pressure (ea) and
 relative humidity are calculated from the original data and included in the
-final data set.  The resulting data include station identification information,
-state, country, latitude, longitude, elevation, weather observations and
-associated flags.  Data may be automatically saved to disk.  File output may be
-returned as a comma-separated values (CSV) or GeoPackage (GPKG) file.
-Additional data are included with this R package: a list of elevation values
-for stations between -60 and 60 degrees latitude derived from the Shuttle
-Radar Topography Measuring Mission (SRTM).  For information on the GSOD data
-from NCEI, please see the  GSOD readme.txt file available from,
+final data set.  The resulting data include station identification
+information, state, country, latitude, longitude, elevation, weather
+observations and associated flags.  Data may be automatically saved to disk.
+File output may be saved as a comma-separated values (CSV) or GeoPackage
+(GPKG) file.  Additional data are included with this R package: a list of
+elevation values for stations between -60 and 60 degrees latitude derived from
+the Shuttle Radar Topography Measuring Mission (SRTM).  For information on the
+GSOD data from NCEI, please see the  GSOD readme.txt file available from,
 \url{http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt}.
 For climate data that have been formatted specifically for use with the
 \code{GSODR} package, please see the \code{GSODRdata} package
@@ -55,22 +55,25 @@ Dynamics for Predicting Ecosystem and Biodiversity Distributions.
 \seealso{
 \strong{GSODR functions:}
 
-\code{\link{get_GSOD}} Fetch, clean and reformat data from NCEI GSOD
-database
+\code{\link{get_GSOD}} Download, Clean, Reformat Generate New Elements and
+Return a Tidy Data Frame of GSOD Weather Data
 
-\code{\link{reformat_GSOD}} Clean and reformat local files from NCEI
-GSOD database
+\code{\link{reformat_GSOD}} Clean, Reformat Generate New Elements and Return
+a Tidy Data Frame of GSOD Weather Data from Local Disk
 
-\code{\link{nearest_stations}} Find stations within a given radius
-expressed in kilometres for a given point using Latitude and Longitude
+\code{\link{nearest_stations}} Find Nearest GSOD Stations to Specified
+a Latitude and Longitude
 
-\code{\link{update_station_list}} Download the latest station list from the
-NCEI FTP server updates the package's internal database of stations and their
-metadata.
+\code{\link{update_station_list}} Download the Latest Station List
+Information and Update GSODR's Internal Database
+
+\code{\link{get_inventory}} Download and return a tidy data frame of GSOD
+weather station data inventories
 
 \strong{Useful links:}
 \itemize{
-\item{\url{https://github.com/ropensci/GSODR}}
+\item{Static documentation at \url{https://ropensci.github.io/GSODR/}}
+\item{Development repository at \url{https://github.com/ropensci/GSODR}}
 \item{Report bugs at \url{https://github.com/ropensci/GSODR/issues}}
 }
 }
