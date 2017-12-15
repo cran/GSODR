@@ -1,3 +1,18 @@
+# GSODR 1.1.2  (Release Date 2017-12-15)
+
+## Bug fixes
+
+- Fix startup message formatting
+
+- Correct ORCID comment in author field of DESCRIPTION
+
+- Update internal databases for country list and isd_history
+
+## Minor changes
+
+- Add X-schema tags to DESCRIPTION
+
+--------------------------------------------------------------------------------
 
 # GSODR 1.1.1 (Release Date 2017-11-27)
 
@@ -559,7 +574,7 @@ rather than the conversion of the existing
 comma-separated values and geographic information system rather than just using
 "CSV" or "GIS" in DESCRIPTION.
 
-- Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://data.noaa.gov/dataset/global-surface-summary-of-the-day-gsod> to
+- Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/> to
 DESCRIPTION as requested by CRAN.
 
 - Require user to specify directory for resulting .csv file output so that any
