@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day (GSOD) Weather Data from R
-Version: 1.1.2
+Version: 1.2.0
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -40,10 +40,11 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
 Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
 Imports: curl, dplyr (>= 0.7.0), magrittr, purrr (>= 0.2.0), R.utils,
-        readr, rgdal (>= 1.1-9), rlang, sp, stats, tibble, utils
+        readr, rlang, stats, tibble, utils
 Suggests: ggplot2, ggthemes, gridExtra, knitr, lubridate, mapproj,
-        maps, plotKML, raster, reshape2, rgeos, rmarkdown, roxygen2 (>=
-        6.0.1), spacetime, testthat, tidyr, covr
+        maps, plotKML, raster, reshape2, rgdal (>= 1.1-9), rgeos,
+        rmarkdown, roxygen2 (>= 6.0.1), sf, sp, spacetime, testthat,
+        tidyr, covr
 RoxygenNote: 6.0.1
 Encoding: UTF-8
 NeedsCompilation: no
@@ -57,11 +58,11 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2017-12-15 04:55:09 UTC; adamsparks
-Author: Adam Sparks [aut, cre] (0000-0002-0061-8359),
-  Tomislav Hengl [aut] (0000-0002-9921-5129),
-  Andrew Nelson [aut] (0000-0002-7249-3778),
-  Hugh Parsonage [cph, ctb] (0000-0003-4055-0835),
-  Bob Rudis [cph, ctb] (0000-0001-5670-2640)
+Packaged: 2018-03-30 02:10:59 UTC; adamsparks
+Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
+  Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
+  Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
+  Hugh Parsonage [cph, ctb] (<https://orcid.org/0000-0003-4055-0835>),
+  Bob Rudis [cph, ctb] (<https://orcid.org/0000-0001-5670-2640>)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2017-12-15 08:17:22 UTC
+Date/Publication: 2018-03-30 03:06:17 UTC

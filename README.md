@@ -13,8 +13,8 @@ status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1/branch/mast
 
 ## Introduction to *GSODR*
 
-The GSOD or \[Global Surface Summary of the Day
-(GSOD)\]<https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/>)
+The GSOD or [Global Surface Summary of the Day
+(GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod)
 data provided by the US National Centers for Environmental Information
 (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
@@ -23,8 +23,11 @@ need for use in analysis and provides five main functions for
 facilitating this:
 
   - `get_GSOD()` - this function queries and transfers files from the
-    NCEI’s FTP server, reformats them and returns a tidy data frame in R
-    or saves a file to disk
+    NCEI’s FTP server, reformats them and returns a tidy data frame in
+    R. **NOTE** If you have used file exporting capabilities in versions
+    prior to 1.2.0, these have been removed now in the latest version.
+    This means less dependencies when installing. Examples of how to
+    export the data are found in the GSODR vignette.
 
   - `reformat_GSOD()` - this function takes individual station files
     from the local disk and re-formats them returning a tidy data frame
@@ -46,16 +49,12 @@ facilitating this:
 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`,
 all units are converted to International System of Units (SI), *e.g.*,
-inches to millimetres and Fahrenheit to Celsius. File output can be used
-in an R session as a `tibble()`, saved as a Comma Separated Value (CSV)
-file or in a spatial GeoPackage (GPKG) file, implemented by most major
-GIS software, summarising each year by station, which also includes
+inches to millimetres and Fahrenheit to Celsius. File output is returned
+as a `tibble()`, summarising each year by station, which also includes
 vapour pressure and relative humidity elements calculated from existing
-data in GSOD.
-
-Additional data are calculated by this R package using the original data
-and included in the final data. These include vapour pressure (ea and
-es) and relative humidity.
+data in GSOD. Additional data are calculated by this R package using the
+original data and included in the final data. These include vapour
+pressure (ea and es) and relative humidity.
 
 It is recommended that you have a good Internet connection to download
 the data files as they can be quite large and slow to download.
@@ -118,9 +117,8 @@ library(GSODR)
     ## 
     ## GSODR does not redistribute any weather data itself. It 
     ## only provides an interface for R users to download these
-    ## data, but it does redistribute station metadata in the
-    ## 
-    ##                 package.
+    ## data, however it does redistribute station metadata in the
+    ## package.
 
 ``` r
 tbar <- get_GSOD(years = 2010, station = "955510-99999")
@@ -129,27 +127,27 @@ tbar
 ```
 
     ## # A tibble: 365 x 48
-    ##      USAF  WBAN        STNID          STN_NAME  CTRY STATE  CALL    LAT
-    ##     <chr> <chr>        <chr>             <chr> <chr> <chr> <chr>  <dbl>
-    ##  1 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  2 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  3 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  4 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  5 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  6 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  7 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  8 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ##  9 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ## 10 955510 99999 955510-99999 TOOWOOMBA AIRPORT    AS  <NA>  <NA> -27.55
-    ## # ... with 355 more rows, and 40 more variables: LON <dbl>, ELEV_M <dbl>,
-    ## #   ELEV_M_SRTM_90m <dbl>, BEGIN <dbl>, END <dbl>, YEARMODA <date>,
-    ## #   YEAR <chr>, MONTH <chr>, DAY <chr>, YDAY <dbl>, TEMP <dbl>,
-    ## #   TEMP_CNT <int>, DEWP <dbl>, DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>,
-    ## #   STP <dbl>, STP_CNT <int>, VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>,
-    ## #   WDSP_CNT <int>, MXSPD <dbl>, GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>,
-    ## #   MIN <dbl>, MIN_FLAG <chr>, PRCP <dbl>, PRCP_FLAG <chr>, SNDP <dbl>,
-    ## #   I_FOG <int>, I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>,
-    ## #   I_THUNDER <int>, I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
+    ##    USAF   WBAN  STNID    STN_NAME     CTRY  STATE CALL    LAT   LON ELEV_M
+    ##    <chr>  <chr> <chr>    <chr>        <chr> <chr> <chr> <dbl> <dbl>  <dbl>
+    ##  1 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  2 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  3 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  4 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  5 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  6 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  7 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  8 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ##  9 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ## 10 955510 99999 955510-… TOOWOOMBA A… AS    <NA>  <NA>  -27.6  152.   642.
+    ## # ... with 355 more rows, and 38 more variables: ELEV_M_SRTM_90m <dbl>,
+    ## #   BEGIN <dbl>, END <dbl>, YEARMODA <date>, YEAR <chr>, MONTH <chr>,
+    ## #   DAY <chr>, YDAY <dbl>, TEMP <dbl>, TEMP_CNT <int>, DEWP <dbl>,
+    ## #   DEWP_CNT <int>, SLP <dbl>, SLP_CNT <int>, STP <dbl>, STP_CNT <int>,
+    ## #   VISIB <dbl>, VISIB_CNT <int>, WDSP <dbl>, WDSP_CNT <int>, MXSPD <dbl>,
+    ## #   GUST <dbl>, MAX <dbl>, MAX_FLAG <chr>, MIN <dbl>, MIN_FLAG <chr>,
+    ## #   PRCP <dbl>, PRCP_FLAG <chr>, SNDP <dbl>, I_FOG <int>,
+    ## #   I_RAIN_DRIZZLE <int>, I_SNOW_ICE <int>, I_HAIL <int>, I_THUNDER <int>,
+    ## #   I_TORNADO_FUNNEL <int>, EA <dbl>, ES <dbl>, RH <dbl>
 
 ## Other Sources of Weather Data in R
 

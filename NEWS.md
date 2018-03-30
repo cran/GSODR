@@ -1,4 +1,38 @@
-# GSODR 1.1.2  (Release Date 2017-12-15)
+# GSODR 1.2.0
+
+## Major changes
+
+- Remove ability to export files from `get_GSOD()` to slim down the package
+dependencies and this functions parameters. Examples of how to convert to a
+spatial object (both _sp_ and _sf_ are shown) and export ESRI Shapefiles and
+GeoPackage files are now included in the vignette.
+
+- As a result of the previous point, the _sp_ and _rgdal_ packages are no longer
+Imports but are now in Suggests along with _sf_ for examples in the GSOD
+vignette.
+
+## Bug fixes
+
+- Fix a nasty bug where GSOD files downloaded using Windows would not untar
+properly. This caused the `get_GSOD()` function to fail. Thanks to Ross Darnell,
+CSIRO, for reporting this.
+
+- Correct options in "GSODR use case: Specified years/stations vignette" on line
+201 where `file` was incorrectly used in place of `path`. Thanks to Ross
+Darnell, CSIRO, for reporting this.
+
+- Correct documentation for `reformat_GSOD()`
+
+## Minor changes
+
+- Update internal databases of station metadata
+
+- Vignettes contain pre-built figures for faster package installation when
+building vignettes
+
+--------------------------------------------------------------------------------
+
+# GSODR 1.1.2
 
 ## Bug fixes
 
@@ -14,7 +48,7 @@
 
 --------------------------------------------------------------------------------
 
-# GSODR 1.1.1 (Release Date 2017-11-27)
+# GSODR 1.1.1
 
 ## Bug fixes
 
