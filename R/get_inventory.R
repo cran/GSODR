@@ -2,9 +2,9 @@
 #' Download and Return a Tidy Data Frame of GSOD Weather Station Data Inventories
 #'
 #' The NCEI maintains a document,
-#' <ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt>, which shows the
-#' number of weather observations by station-year-month from the beginning of
-#' the stations' records.  This function retrieves that document, prints the
+#' \url{ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt}, which lists
+#' the number of weather observations by station-year-month from the beginning
+#' of the stations' records.  This function retrieves that document, prints the
 #' header to display the last update time and returns a data frame of the
 #' inventory information for each station-year-month.
 #'
@@ -22,7 +22,7 @@
 #'}
 #' @return A data frame as a tibble \code{\link[tibble]{tibble}} object of
 #' station inventories
-#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #' @note The download process can take quite some time to complete.
 #' @importFrom rlang .data
 #' @export
@@ -30,16 +30,26 @@
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 
+  ftp_handle <-
+    curl::new_handle(
+      ftp_use_epsv = FALSE,
+      crlf = TRUE,
+      ssl_verifypeer = FALSE,
+      ftp_response_timeout = 30,
+      ftp_skip_pasv_ip = TRUE
+    )
+
   file_in <-
     curl::curl_download(
       "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-inventory.txt",
       destfile = tempfile(),
-      quiet = FALSE
+      quiet = FALSE,
+      handle = ftp_handle
     )
 
   header <- readLines(file_in, n = 5)
 
-  message(paste0(header[3:5], collapse = " "))
+  message("\n", paste(header[3:5], collapse = " "), "\n")
 
   body <-
     readr::read_fwf(

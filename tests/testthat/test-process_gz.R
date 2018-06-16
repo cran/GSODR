@@ -6,7 +6,6 @@ test_that(
   agroclimatology works and .process_gz returns a tibble",
   {
     skip_on_cran()
-    skip_on_appveyor() # appveyor will not properly untar the file
     do.call(file.remove, list(list.files(
       tempdir(),
       pattern = ".gz$",
@@ -35,7 +34,7 @@ test_that(
                                        stations,
                                        cache_dir,
                                        years)
-    expect_length(agro_list, 7556)
+    expect_length(agro_list, 7555)
 
     RP_list <- .subset_country_list(country,
                                     country_list,

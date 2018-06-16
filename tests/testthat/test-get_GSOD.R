@@ -6,7 +6,8 @@ test_that(".validate_years handles invalid years", {
   expect_error(.validate_years(years = NULL))
   expect_error(.validate_years(years = "nineteen ninety two"))
   expect_error(.validate_years(years = 1923))
-  expect_error(.validate_years(years = 1901 + as.POSIXlt(Sys.Date())$year))
+  expect_error(.validate_years(years = 1901 +
+                                         as.POSIXlt(Sys.Date())$year))
   expect_error(.validate_years(years = 0))
   expect_error(.validate_years(years = -1))
 })

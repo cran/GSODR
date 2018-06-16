@@ -130,7 +130,7 @@ if (!all(unlist(lapply(required, function(pkg) requireNamespace(pkg, quietly = T
 #  
 #  readr::write_csv(loop_data, path = "Loop_Survey_Weather_1960-2015", path = "./")
 
-## ----cleanup GADM files, eval=TRUE, echo=FALSE, message = FALSE----------
-unlink("GADM_2.8_PHL_adm0.rds")
-unlink("GADM_2.8_PHL_adm1.rds")
+## ----cleanup GADM files, eval=FALSE, echo=FALSE, message = FALSE---------
+#  unlink("GADM_2.8_PHL_adm0.rds")
+#  unlink("GADM_2.8_PHL_adm1.rds")
 

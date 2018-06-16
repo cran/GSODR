@@ -276,6 +276,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -339,7 +342,7 @@ $(document).ready(function () {
 </ul>
 <div id="retrieve-phl-provincial-data-and-select-loop-provinces" class="section level3">
 <h3>Retrieve PHL Provincial Data and Select Loop Provinces</h3>
-<p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="http://www.gadm.org/">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code>raster::getData()</code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
+<p>As a first step, we’ll use the <a href="https://cran.r-project.org/package=raster"><em>raster</em></a> package to retrieve data from <a href="https://gadm.org/data.html">GADM</a> that will provide the provincial spatial data for the survey area. We will then use this to find the centroid of the area of interest, which will be used to find the nearest stations. Using <code>raster::getData()</code> fetch level 0 (national) and 1 (provincial) data for the Philippines.</p>
 <pre class="r"><code>library(raster)
 RP0 &lt;- raster::getData(country = &quot;Philippines&quot;, level = 0)
 RP1 &lt;- raster::getData(country = &quot;Philippines&quot;, level = 1)</code></pre>

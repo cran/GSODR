@@ -32,7 +32,7 @@ tbar
 #  
 #  tbar <- get_GSOD(years = 2010, station = tbar_stations)
 
-## ---- eval=FALSE, message=FALSE------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  remove <- c("949999-00170", "949999-00183")
 #  
 #  tbar_stations <- tbar_stations[!tbar_stations %in% remove]

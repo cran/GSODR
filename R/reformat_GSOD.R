@@ -1,26 +1,23 @@
 
 #' Tidy and Return a Data Frame of GSOD Weather from Local Data
 #'
-#'This function automates cleaning and reformatting of GSOD,
-#'\url{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/},
-#'station files in "WMO-WBAN-YYYY.op.gz" format that have been downloaded from
-#' the United States National Center for Environmental Information's (NCEI)
-#' FTP server.
+#' This function automates cleaning and reformatting of GSOD station files in
+#' "WMO-WBAN-YYYY.op.gz" format that have been downloaded from the United States
+#' National Center for Environmental Information's (NCEI) FTP server. Three
+#' new elements; saturation vapour pressure (es), actual vapour pressure (ea)
+#' and relative humidity (RH) are calculated and returned in the final data as
+#' well.  All units are converted to International System of Units (SI),
+#' \emph{e.g.} Fahrenheit to Celsius and inches to millimetres.  Alternative
+#' elevation measurements are supplied for missing values or values found to be
+#' questionable based on the Consultative Group for International Agricultural
+#' Research's Consortium for Spatial Information group's (CGIAR-CSI) Shuttle
+#' Radar Topography Mission 90 metre (SRTM 90m) digital elevation data based on
+#' NASA's original SRTM 90m data.
 #'
-#'This function reformats the data into a more usable form and calculates three
-#'new elements; saturation vapour pressure (es), actual vapour pressure (ea) and
-#'relative humidity (RH).  All units are converted to International System of
-#'Units (SI), \emph{e.g.} Fahrenheit to Celsius and inches to millimetres.
-#'Alternative elevation measurements are supplied for missing values or values
-#'found to be questionable based on the Consultative Group for International
-#'Agricultural Research's Consortium for Spatial Information group's (CGIAR-CSI)
-#'Shuttle Radar Topography Mission 90 metre (SRTM 90m) digital elevation data
-#'based on NASA's original SRTM 90m data.
-#'
-#'@param dsn User supplied file path to location of data files on local disk for
-#'tidying.
-#'@param file_list User supplied list of files of data on local disk for
-#'tidying.
+#' @param dsn User supplied file path to location of data files on local disk
+#' for tidying.
+#' @param file_list User supplied list of files of data on local disk for
+#' tidying.
 #'
 #' @details
 #' If multiple stations are given, data are summarised for each year by station,
@@ -28,8 +25,8 @@
 #' existing data in GSOD. Else, single stations are tidied and a data frame is
 #' returned.
 #'
-#' All missing values in resulting files are represented as NA regardless of
-#' which field they occur in.
+#' All missing values in resulting files are represented as \code{NA} regardless
+#' of which field they occur in.
 #'
 #' Only station files in the original ".op.gz" file format are supported by this
 #' function.  If you have downloaded the full annual "gsod_YYYY.tar" file you
@@ -37,7 +34,7 @@
 #' use this function.
 #'
 #' For a complete list of the fields and description of the contents and units,
-#' please refer to Appendix 1 in the GSODR vignette,
+#' please refer to Appendix 1 in the \pkg{GSODR} vignette,
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
 #' @note While \pkg{GSODR} does not distribute GSOD weather data, users of
@@ -49,9 +46,9 @@
 #' these data by others must provide this same notification.}
 #'
 #' @seealso
-#'For automated downloading and tidying see the \code{\link{get_GSOD}}
-#'function which provides expanded functionality for automatically downloading
-#'and expanding annual GSOD files and cleaning station files.
+#' For automated downloading and tidying see the \code{\link{get_GSOD}}
+#' function which provides expanded functionality for automatically downloading
+#' and expanding annual GSOD files and cleaning station files.
 #'
 #' @examples
 #' \dontrun{
@@ -65,7 +62,7 @@
 #' x <- reformat_GSOD(file_list = y)
 #' }
 #'
-#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @references {Jarvis, A., Reuter, H.I, Nelson, A., Guevara, E. (2008)
 #' Hole-filled SRTM for the globe Version 4, available from the CGIAR-CSI SRTM
@@ -81,9 +78,8 @@
 #' @export
 #'
 reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
-
-  isd_history <- NULL
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+  isd_history <- NULL # nocov
+  load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
 
   # If dsn !NULL, create a list of files to reformat
   if (!is.null(dsn)) {
@@ -93,10 +89,8 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     if (length(file_list) == 0)
       stop("No files were found, please check your file location.")
   }
-  purrr::map(
-    .x = file_list,
-    .f = .process_gz,
-    isd_history = isd_history
-  ) %>%
+  purrr::map(.x = file_list,
+             .f = .process_gz,
+             isd_history = isd_history) %>%
     dplyr::bind_rows()
 }
