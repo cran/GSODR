@@ -1,6 +1,3 @@
-_GSODR_: Global Surface Summary of the Day (GSOD) Weather Data from R <img src="man/figures/logo.png" align="right" />
-================
-
 [![CircleCI Build Status](https://circleci.com/gh/ropensci/GSODR.svg?style=shield)](https://circleci.com/gh/ropensci/GSODR)
 [![Build status](https://ci.appveyor.com/api/projects/status/s09kh2nj59o35ob1?svg=true)](https://ci.appveyor.com/project/adamhsparks/gsodr)
 [![codecov](https://codecov.io/gh/ropensci/GSODR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/GSODR)
@@ -9,6 +6,9 @@ _GSODR_: Global Surface Summary of the Day (GSOD) Weather Data from R <img src="
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![JOSS](http://joss.theoj.org/papers/10.21105/joss.00177/status.svg)](http://joss.theoj.org/papers/14021f4e4931cdaab4ea41be27df2df6)
 [![](https://badges.ropensci.org/79_status.svg)](https://github.com/ropensci/onboarding/issues/79)
+
+_GSODR_: Global Surface Summary of the Day (GSOD) Weather Data from R <img src="man/figures/logo.png" align="right" />
+================
 
 ## Introduction
 
@@ -173,9 +173,9 @@ _Users of these data should take into account the following (from the [NCEI webs
   Daily Weather Data in R. _The Journal of Open Source Software_, **2(10)**.
   DOI: 10.21105/joss.00177.
   
-- Please note that this project is released with a
-  [Contributor Code of Conduct](CONDUCT.md). By participating in this project
-  you agree to abide by its terms.
+- Please note that the _GSODR_ project is released with a
+[Contributor Code of Conduct](CONDUCT.md). By participating in the _GSODR_
+project you agree to abide by its terms.
 
 ## References
 

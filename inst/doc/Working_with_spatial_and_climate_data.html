@@ -388,7 +388,7 @@ devtools::install_github(&quot;adamhsparks/GSODRdata&quot;)</code></pre>
 
 str(CHELSA)
 
-#&gt; 'data.frame':    23927 obs. of  46 variables:
+#&gt; &#39;data.frame&#39;:    23927 obs. of  46 variables:
 #&gt;   $ STNID                      : chr  &quot;008268-99999&quot; &quot;010014-99999&quot; &quot;010015-99999&quot; &quot;010882-99999&quot; ...
 #&gt; $ CHELSA_bio10_1979-2013_V1_1: num  30 14.3 12.5 12.6 15.2 16.3 13.9 12.7 13.4 12.9 ...
 #&gt; $ CHELSA_bio11_1979-2013_V1_1: num  5.8 1 -3.2 -7 -0.2 -2.2 -3 -6.9 -2.1 -1.2 ...
@@ -438,11 +438,11 @@ str(CHELSA)
 <p>Compare the GSOD weather data from the Philippines with climatic data provided by the <em>GSODR</em> package in the <code>CHELSA</code> data set using <code>dplyr</code> functions to join the CHELSA and <em>GSODR</em> data for plotting.</p>
 <pre class="r"><code>library(dplyr)
 #&gt; 
-#&gt; Attaching package: 'dplyr'
-#&gt; The following objects are masked from 'package:stats':
+#&gt; Attaching package: &#39;dplyr&#39;
+#&gt; The following objects are masked from &#39;package:stats&#39;:
 #&gt; 
 #&gt;     filter, lag
-#&gt; The following objects are masked from 'package:base':
+#&gt; The following objects are masked from &#39;package:base&#39;:
 #&gt; 
 #&gt;     intersect, setdiff, setequal, union
 library(ggplot2)

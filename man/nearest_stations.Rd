@@ -2,14 +2,14 @@
 % Please edit documentation in R/nearest_stations.R
 \name{nearest_stations}
 \alias{nearest_stations}
-\title{Find Nearest GSOD Stations to a Specified Latitude and Longitude}
+\title{Find Nearest \acronym{GSOD} Stations to a Specified Latitude and Longitude}
 \usage{
 nearest_stations(LAT, LON, distance)
 }
 \arguments{
-\item{LAT}{Latitude expressed as decimal degrees (DD) [WGS84]}
+\item{LAT}{Latitude expressed as decimal degrees (DD) (WGS84)}
 
-\item{LON}{Longitude expressed as decimal degrees (DD) [WGS84]}
+\item{LON}{Longitude expressed as decimal degrees (DD) (WGS84)}
 
 \item{distance}{Distance in kilometres from point for which stations are to
 be returned.}
@@ -19,24 +19,25 @@ be returned.}
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of STNID values, which can be used in
-\code{\link{get_GSOD}} to query for specific stations as an argument in the
-\code{station} parameter of that function.
+function returns a list (atomic vector) of \acronym{STNID} values, which can
+be used in \code{\link{get_GSOD}} to query for specific stations as an
+argument in the \code{station} parameter of that function.
 }
 \note{
-The GSOD data, which are downloaded and manipulated by this R package,
-stipulate that the following notice should be given.  \dQuote{The following
-data and products may have conditions placed on their international
-commercial use.  They can be used within the U.S. or for non-commercial
-international activities without restriction.  The non-U.S. data cannot be
-redistributed for commercial purposes.  Re-distribution of these data by
-others must provide this same notification.}
+The \acronym{GSOD} data, which are downloaded and manipulated by
+\pkg{GSODR} stipulate that the following notice should be given.
+\dQuote{The following data and products may have conditions placed on their
+international commercial use.  They can be used within the U.S. or for non-
+commercial international activities without restriction.  The non-U.S. data
+cannot be redistributed for commercial purposes.  Re-distribution of these
+data by others must provide this same notification.}
 }
 \examples{
-\dontrun{
+\donttest{
 # Find stations within a 100km radius of Toowoomba, QLD, AUS
 
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
+n
 }
 }
 \author{
