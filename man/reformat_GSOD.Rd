@@ -33,6 +33,10 @@ metre (\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
 original \acronym{SRTM} 90m data.
 }
 \details{
+Parallel processing can be enabled using \code{\link[future]{plan}} to set
+up a parallel backend of your choice, e.g.,
+\code{future::plan(multisession)}.  See examples for more.
+
 If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
 existing data in \acronym{GSOD}. Else, single stations are tidied and a data
@@ -64,14 +68,15 @@ these data by others must provide this same notification.}
 \donttest{
 
 # Download data to 'tempdir()'
-download.file(url = 
-  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz", 
+download.file(url =
+  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz",
      	destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),
      	mode = "wb")
-# Reformat station data files in R's tempdir() directory
-x <- reformat_GSOD(dsn = tempdir())
 
-x
+# Reformat station data files in R's tempdir() directory
+tbar <- reformat_GSOD(dsn = tempdir())
+
+tbar
 }
 
 }

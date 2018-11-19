@@ -15,6 +15,10 @@
 #' metre (\acronym{SRTM} 90m) digital elevation data based on \acronym{NASA}'s
 #' original \acronym{SRTM} 90m data.
 #'
+#' Parallel processing can be enabled using \code{\link[future]{plan}} to set
+#' up a parallel backend of your choice, e.g.,
+#' \code{future::plan(multisession)}.  See examples for more.
+#'
 #' @param dsn User supplied file path to location of data files on local disk
 #' for tidying.
 #' @param file_list User supplied list of files of data on local disk for
@@ -56,14 +60,15 @@
 #' \donttest{
 #'
 #' # Download data to 'tempdir()'
-#' download.file(url = 
-#'	  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz", 
+#' download.file(url =
+#'	  "ftp://ftp.ncdc.noaa.gov/pub/data/gsod/2010/955510-99999-2010.op.gz",
 #'      	destfile = file.path(tempdir(), "955510-99999-2010.op.gz"),
 #'      	mode = "wb")
-#' # Reformat station data files in R's tempdir() directory
-#' x <- reformat_GSOD(dsn = tempdir())
 #'
-#' x
+#' # Reformat station data files in R's tempdir() directory
+#' tbar <- reformat_GSOD(dsn = tempdir())
+#'
+#' tbar
 #' }
 #'
 #' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
@@ -93,8 +98,5 @@ reformat_GSOD <- function(dsn = NULL, file_list = NULL) {
     if (length(file_list) == 0)
       stop("No files were found, please check your file location.")
   }
-  purrr::map(.x = file_list,
-             .f = .process_gz,
-             isd_history = isd_history) %>%
-    dplyr::bind_rows()
+  GSOD_XY <- apply_process_gz(file_list, isd_history)
 }
