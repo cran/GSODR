@@ -62,7 +62,7 @@ ggplot(data = tbar_temps, aes(x = ymd(YEARMODA), y = value,
   theme_bw()
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  future::plan(multisession)
+#  future::plan("multisession")
 #  global <- get_GSOD(years = 2010:2015)
 
 ## ----spatial_convert, eval = FALSE---------------------------------------

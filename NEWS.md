@@ -1,3 +1,13 @@
+# GSODR 1.3.1
+
+## Bug fixes
+
+- Fix examples that did not run properly
+
+## Minor changes
+
+- Update internal database of station locations
+
 # GSODR 1.3.0
 
 ## New Functionality
