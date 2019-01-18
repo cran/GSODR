@@ -1,3 +1,16 @@
+
+# GSODR 1.3.2
+## Bug fixes
+
+- Fixes a bug where extra data could be appended to dataframe. See
+<https://github.com/ropensci/GSODR/issues/49>. This also means that when you are
+retrieving large amounts of data, e.g. global data for 20+ years, you won't fill
+up your hard disk space due to the raw data before processing.
+
+## Minor changes
+
+- Update internal database of station locations
+
 # GSODR 1.3.1
 
 ## Bug fixes
@@ -20,10 +33,10 @@
 ## Bug fixes
 
 - Refactor internal functionality to be more clear and efficient in execution
-    
+
     - `country-list` is not loaded unless user has specified a country in
       `get_GSOD()`
-      
+
     - An instance where the FIPS code was determined twice was removed
 
 - Replace `\dontrun{}` with `\donttest{}` in documentation examples
@@ -38,19 +51,19 @@
 
 - Store internal database of station locations fields `BEGIN` and `END` as
   integer, not double
-  
+
 - Clarify code of conduct statement in README that it only applies to this,
   GSODR, project
-  
+
 - Prompt user for input with warning about reproducibility if using the
   `update_station_list()` function
 
 - Adds metadata header to the `tibble` returned by `get_inventory()`
 
 - Remove startup message to conform with rOpenSci guidelines
-  
+
 - Remove extra code, clean up code-chunks and use `hrbrthemes::theme_ipsum()`
-  for 
+  for
   [data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/master/data-raw/fetch_isd-history.md)
 
 --------------------------------------------------------------------------------
