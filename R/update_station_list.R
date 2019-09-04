@@ -1,12 +1,10 @@
 
-#' Download Latest Station List Information and Update Internal Database
+#' Download latest station list information and update internal database
 #'
 #' This function downloads the latest station list (isd-history.csv) from the
-#' \acronym{NCEI} \acronym{FTP} server and updates the data distributed with
-#' \pkg{GSODR} to the latest stations available.  These data provide unique
-#' identifiers, country, state (if in U.S.), latitude, longitude, elevation and
-#' when weather observations begin and end.  Stations with invalid latitude and
-#' longitude values will not be included.
+#' \acronym{NCEI} server and updates the data distributed with \pkg{GSODR} to
+#' the latest stations available.  These data provide unique identifiers,
+#' country, state (if in U.S.) and when weather observations begin and end.
 #'
 #' Care should be taken when using this function if reproducibility is necessary
 #' as different machines with the same version of \pkg{GSODR} can end up with
@@ -23,14 +21,17 @@
 #' update_station_list()
 #' }
 #'
-#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
+#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export update_station_list
 
 update_station_list <- function() {
+  "STNID" <- "USAF" <- "WBAN" <- "COUNTRY_NAME" <- "STNID_len" <- NULL
+
   message(
     "This will overwrite GSODR's current internal list of GSOD stations.\n",
     "If reproducibility is necessary, you may not wish to proceed.\n",
-    "Do you understand and wish to proceed (Y/n)?\n")
+    "Do you understand and wish to proceed (Y/n)?\n"
+  )
 
   answer <-
     readLines(con = getOption("GSODR_connection"), n = 1)
@@ -42,70 +43,79 @@ update_station_list <- function() {
          call. = FALSE)
   }
 
-  original_timeout <- options("timeout")[[1]]
-  options(timeout = 300)
-  on.exit(options(timeout = original_timeout))
+  tryCatch({
+    # download data
+    isd_history <-
+      fread("https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 
-  load(system.file("extdata", "isd_history.rda", package = "GSODR"))
-  old_isd_history <- isd_history
+    # add STNID column
+    isd_history[, STNID := paste(USAF, WBAN, sep = "-")]
+    setcolorder(isd_history, "STNID")
+    setnames(isd_history, "STATION NAME", "NAME")
+    setkey(isd_history, "STNID")
 
-  # fetch new isd_history from NCEI server
-  new_isd_history <- readr::read_csv(
-    "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv",
-    col_types = "ccccccddddd",
-    col_names = c(
-      "USAF",
-      "WBAN",
-      "STN_NAME",
-      "CTRY",
-      "STATE",
-      "CALL",
+    # drop stations not in GSOD data
+    isd_history[, STNID_len := nchar(STNID)]
+    isd_history <- subset(isd_history, STNID_len == 12)
+
+    # remove extra columns
+    isd_history[, c("USAF", "WBAN", "ICAO", "ELEV(M)", "STNID_len") := NULL]
+
+    isd_history <-
+      isd_history[countrycode::codelist, on = c("CTRY" = "fips")]
+
+    isd_history <- isd_history[, c(
+      "STNID",
+      "NAME",
       "LAT",
       "LON",
-      "ELEV_M",
+      "CTRY",
+      "STATE",
       "BEGIN",
-      "END"
-    ),
-    skip = 1
-  )
-  new_isd_history[new_isd_history == -999.9] <- NA
-  new_isd_history[new_isd_history == -999] <- NA
-  new_isd_history <-
-    new_isd_history[new_isd_history$LAT != 0 &
-                      new_isd_history$LON != 0,]
-  new_isd_history <-
-    new_isd_history[new_isd_history$LAT > -90 &
-                      new_isd_history$LAT < 90,]
-  new_isd_history <-
-    new_isd_history[new_isd_history$LON > -180 &
-                      new_isd_history$LON < 180,]
-  new_isd_history$STNID <-
-    as.character(paste(new_isd_history$USAF, new_isd_history$WBAN, sep = "-"))
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LAT),]
-  new_isd_history <- new_isd_history[!is.na(new_isd_history$LON),]
+      "END",
+      "country.name.en",
+      "iso2c",
+      "iso3c"
+    )]
 
-  # left join the old and new data
-  isd_history <- dplyr::left_join(
-    old_isd_history,
-    new_isd_history,
-    by = c(
-      "USAF" = "USAF",
-      "WBAN" = "WBAN",
-      "STN_NAME" = "STN_NAME",
-      "CTRY" = "CTRY",
-      "STATE" = "STATE",
-      "CALL" = "CALL",
-      "LAT" = "LAT",
-      "LON" = "LON",
-      "ELEV_M" = "ELEV_M",
-      "BEGIN" = "BEGIN",
-      "END" = "END",
-      "STNID" = "STNID"
+    # clean data
+    isd_history[isd_history == -999] <- NA
+    isd_history[isd_history == -999.9] <- NA
+    isd_history <-
+      isd_history[!is.na(isd_history$LAT) & !is.na(isd_history$LON),]
+    isd_history <-
+      isd_history[isd_history$LAT != 0 & isd_history$LON != 0,]
+    isd_history <-
+      isd_history[isd_history$LAT > -90 & isd_history$LAT < 90,]
+    isd_history <-
+      isd_history[isd_history$LON > -180 & isd_history$LON < 180,]
+
+    # set colnames to upper case
+    names(isd_history) <- toupper(names(isd_history))
+    setnames(isd_history,
+             old = "COUNTRY.NAME.EN",
+             new = "COUNTRY_NAME")
+
+    # set country names to be upper case for easier internal verifications
+    isd_history[, COUNTRY_NAME := toupper(COUNTRY_NAME)]
+
+    # write rda file to disk for use with GSODR package
+    fname <-
+      system.file("extdata", "isd_history.rda", package = "GSODR")
+    save(
+      isd_history,
+      file = fname,
+      compress = "bzip2",
+      version = 2
     )
-  )
+  },
 
-  # overwrite the existing isd_history.rda file on disk
-  fname <-
-    system.file("extdata", "isd_history.rda", package = "GSODR")
-  save(isd_history, file = fname, compress = "bzip2")
+  error = function(cond) {
+    stop(
+      "There was a problem retrieving the station list file. Perhaps \n",
+      "the server is not responding currently or there is no \n",
+      "Internet connection. Please try again later.",
+      call. = FALSE
+    )
+  })
 }
