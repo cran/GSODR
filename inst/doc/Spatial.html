@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="Adam H Sparks" />
 
 
 <title>Using GSODR with sf</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -52,7 +63,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -119,9 +130,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -290,7 +298,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -309,7 +318,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <div id="TOC">
 <ul>
-<li><a href="#creating-spatial-files">Creating Spatial Files</a><ul>
+<li><a href="#creating-spatial-files">Creating Spatial Files</a>
+<ul>
 <li><a href="#converting-to-an-sf-object">Converting to an <em>sf</em> object</a></li>
 <li><a href="#saving-sf-objects">Saving <em>sf</em> objects</a></li>
 </ul></li>
@@ -346,8 +356,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ##  $ STATE           : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
 ##  $ ELEVATION       : num  24 24 24 24 24 24 24 24 24 24 ...
 ##  $ BEGIN           : int  20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 20010912 ...
-##  $ END             : int  20190831 20190831 20190831 20190831 20190831 20190831 20190831 20190831 20190831 20190831 ...
-##  $ YEARMODA        : Date, format: &quot;2017-01-01&quot; &quot;2017-01-02&quot; ...
+##  $ END             : int  20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 20200107 ...
+##  $ YEARMODA        : Date, format: &quot;2017-01-01&quot; ...
 ##  $ YEAR            : int  2017 2017 2017 2017 2017 2017 2017 2017 2017 2017 ...
 ##  $ MONTH           : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ DAY             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -391,8 +401,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h2>Saving <em>sf</em> objects</h2>
 <p>Writing a shapefile is a simple matter.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">write_sf</span>(<span class="dt">obj =</span> GSOD_SF, <span class="dt">dsn =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;GSOD.shp&quot;</span>))</span></code></pre></div>
-<pre><code>## Warning in abbreviate_shapefile_names(obj): Field names abbreviated for
-## ESRI Shapefile driver</code></pre>
+<pre><code>## Warning in abbreviate_shapefile_names(obj): Field names abbreviated
+## for ESRI Shapefile driver</code></pre>
 <p>As is writing a GeoPackage from the <em>sf</em> object.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">write_sf</span>(<span class="dt">obj =</span> GSOD_SF, <span class="dt">dsn =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;GSOD.gpkg&quot;</span>))</span></code></pre></div>
 <p>After getting weather stations for Australia and creating a GeoPackage file, <em>sf</em> can import the data into R again in a spatial format.</p>
@@ -400,7 +410,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb6-2"><a href="#cb6-2"></a></span>
 <span id="cb6-3"><a href="#cb6-3"></a>AUS_stations &lt;-</span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="st">  </span><span class="kw">st_read</span>(<span class="dt">dsn =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;GSOD.gpkg&quot;</span>), <span class="dt">layer =</span> <span class="st">&quot;GSOD&quot;</span>)</span></code></pre></div>
-<pre><code>## Reading layer `GSOD&#39; from data source `/private/var/folders/_x/gqh2xrvn4qb0qs5d8795n8vr0000gn/T/RtmpS2DFky/GSOD.gpkg&#39; using driver `GPKG&#39;
+<pre><code>## Reading layer `GSOD&#39; from data source `/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpFRWu1r/GSOD.gpkg&#39; using driver `GPKG&#39;
 ## Simple feature collection with 182508 features and 42 fields
 ## geometry type:  POINT
 ## dimension:      XY
@@ -413,8 +423,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb10-2"><a href="#cb10-2"></a>AUS_sqlite &lt;-<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">src_sqlite</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;GSOD.gpkg&quot;</span>)), <span class="st">&quot;GSOD&quot;</span>)</span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="kw">class</span>(AUS_sqlite)</span></code></pre></div>
-<pre><code>## [1] &quot;tbl_SQLiteConnection&quot; &quot;tbl_dbi&quot;              &quot;tbl_sql&quot;             
-## [4] &quot;tbl_lazy&quot;             &quot;tbl&quot;</code></pre>
+<pre><code>## [1] &quot;tbl_SQLiteConnection&quot; &quot;tbl_dbi&quot;             
+## [3] &quot;tbl_sql&quot;              &quot;tbl_lazy&quot;            
+## [5] &quot;tbl&quot;</code></pre>
 </div>
 </div>
 <div id="references" class="section level1">
