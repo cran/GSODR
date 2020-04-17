@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_GSOD.R
 \name{get_GSOD}
 \alias{get_GSOD}
-\title{Download and return a tidy data frame of \acronym{GSOD} weather data}
+\title{Download and Return a data.table Object of GSOD Weather Data}
 \usage{
 get_GSOD(
   years,
@@ -33,8 +33,8 @@ can be used. All stations within the specified country will be returned.}
 from a station's data before it is excluded from final file output.}
 
 \item{agroclimatology}{Optional. Logical. Only clean data for stations
-between latitudes 60 and -60 for agroclimatology work, defaults to \code{FALSE}.
-Set to \code{TRUE} to include only stations within the confines of these
+between latitudes 60 and -60 for agroclimatology work, defaults to `FALSE`.
+Set to `TRUE` to include only stations within the confines of these
 latitudes.}
 }
 \value{
@@ -47,7 +47,8 @@ the Global Surface Summary of the Day (\acronym{GSOD}) data provided by the
 \href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}{US National Centers for Environmental Information (NCEI)},
 Three additional useful elements: saturation vapour pressure (es), actual
 vapour pressure (ea) and relative humidity (RH) are calculated and returned
-in the final data frame.
+in the final data frame using the improved August-Roche-Magnus approximation
+(Alduchov and Eskridge 1996).
 
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
 up a parallel backend of your choice, \emph{e.g.},
@@ -60,8 +61,8 @@ Fahrenheit to Celsius and inches to millimetres.
 Data summarise each year by station, which include vapour pressure and
 relative humidity elements calculated from existing data in \acronym{GSOD}.
 
-All missing values in resulting files are represented as \code{NA} regardless
-of which field they occur in.
+All missing values in resulting files are represented as \code{NA}
+regardless of which field they occur in.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the \pkg{GSODR} vignette,
@@ -76,7 +77,7 @@ however, in certain cases the start and end date may encompass years where
 no data is available. In these cases no data will be returned. It is
 suggested that the user check the latest data availability for the station(s)
 desired using \link{get_inventory} as this list is frequently updated by the
-'NCEI' and is not shipped with \pkg{GSODR}.
+\acronym{NCEI} and is not shipped with \pkg{GSODR}.
 
 While \pkg{GSODR} does not distribute GSOD weather data, users of
 the data should note the conditions that the U.S. \acronym{NCEI} places upon
@@ -84,9 +85,18 @@ the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on
 their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
-data cannot be redistributed for commercial purposes. Re-distribution of
+data cannot be redistributed for commercial purposes.  Re-distribution of
 these data by others must provide this same notification.}
 }
+\section{References}{
+
+
+Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
+of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
+35(4), pp.601-609. DOI:
+<10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
+}
+
 \examples{
 \donttest{
 # Download weather station for Toowoomba, Queensland for 2010

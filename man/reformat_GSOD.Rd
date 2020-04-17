@@ -2,7 +2,7 @@
 % Please edit documentation in R/reformat_GSOD.R
 \name{reformat_GSOD}
 \alias{reformat_GSOD}
-\title{Tidy and return a data frame of \acronym{GSOD} weather from local storage}
+\title{Tidy and Return a data.table Object of GSOD Weather From Local Storage}
 \usage{
 reformat_GSOD(dsn = NULL, file_list = NULL)
 }
@@ -19,35 +19,38 @@ A data frame as a \code{\link[data.table]{data.table}} object of
 }
 \description{
 This function automates cleaning and reformatting of \acronym{GSOD} station
-files in\cr "YEAR.tar.gz", provided that they have been untarred or
-"STATION.csv" format that have been downloaded from the #' United States
+files in\cr \dQuote{YEAR.tar.gz}, provided that they have been untarred or
+\dQuote{STATION.csv} format that have been downloaded from the United States
 National Center for Environmental Information's (\acronym{NCEI})
-download page. Three new elements; saturation vapour pressure (es), actual
-vapour pressure (ea) and relative humidity are calculated and returned in the
-final data.  All units are converted to International System of Units (SI),
-\emph{e.g.}, Fahrenheit to Celsius and inches to millimetres.
+download page.  Three additional useful elements: saturation vapour pressure
+(es), actual vapour pressure (ea) and relative humidity (RH) are calculated
+and returned in the final data frame using the improved August-Roche-Magnus
+approximation (Alduchov and Eskridge 1996).  All units are converted to
+International System of Units (SI), \emph{e.g.}, Fahrenheit to Celsius and
+inches to millimetres.
 }
 \details{
 Parallel processing can be enabled using \code{\link[future]{plan}} to set
 up a parallel backend of your choice, \emph{e.g.},
-\code{future::plan("multisession")}.  See examples for more.
+\code{future::plan("multisession")}.  See Examples for more.
+
 
 If multiple stations are given, data are summarised for each year by station,
 which include vapour pressure and relative humidity elements calculated from
-existing data in \acronym{GSOD}.  Else, single stations are tidied and a data
+existing data in \acronym{GSOD}.  Else, a single station is tidied and a data
 frame is returned.
 
 All missing values in resulting files are represented as \code{NA} regardless
 of which field they occur in.
 
-Only station files in the original "csv" file format are supported by this
-function.  If you have downloaded the full annual "YYYY.tar.gz" file you
-will need to extract the individual station files from the tar file first to
-use this function.
+Only station files in the original \dQuote{csv} file format are supported by
+this function.  If you have downloaded the full annual (\dQuote{YYYY.tar.gz})
+file you will need to extract the individual station files from the tar file
+first to use this function.
 
-Note that \code{reformat_GSOD()} will attempt to reformat any ".csv" files
-found in the \code{dsn} that you provide.  If there are non-GSOD files present
-this will lead to errors.
+Note that \code{reformat_GSOD()} will attempt to reformat any \dQuote{.csv}
+files found in the \code{dsn} that you provide.  If there are non-
+\acronym{GSOD} files present this will lead to errors.
 
 For a complete list of the fields and description of the contents and units,
 please refer to Appendix 1 in the \pkg{GSODR} vignette,
@@ -60,9 +63,18 @@ places upon the \acronym{GSOD} data.
 \dQuote{The following data and products may have conditions placed on
 their international commercial use.  They can be used within the U.S. or for
 non-commercial international activities without restriction. The non-U.S.
-data cannot be redistributed for commercial purposes. Re-distribution of
+data cannot be redistributed for commercial purposes.  Re-distribution of
 these data by others must provide this same notification.}
 }
+\section{References}{
+
+
+Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
+of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
+35(4), pp.601-609. DOI:
+<10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
+}
+
 \examples{
 \donttest{
 
@@ -85,8 +97,6 @@ tbar
 For automated downloading and tidying see the \code{\link{get_GSOD}}
 function which provides expanded functionality for automatically downloading
 and expanding annual \acronym{GSOD} files and cleaning station files.
-
-\code{\link{get_GSOD}}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

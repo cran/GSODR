@@ -386,7 +386,7 @@ summary {
 <ul>
 <li><a href="#example---download-and-plot-data-for-a-single-country">Example - Download and Plot Data for a Single Country</a></li>
 <li><a href="#example---use-the-geopackage-file-to-create-a-kml-file">Example - Use the GeoPackage File to Create a KML File</a></li>
-<li><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate">Example - Compare the GSOD Weather Data From the Philippines With Climate</a></li>
+<li><a href="#example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package.">Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the <em>GSODRdata</em> Package.</a></li>
 </ul></li>
 <li><a href="#notes">Notes</a>
 <ul>
@@ -410,9 +410,40 @@ library(sf)
 PHL &lt;-
   get_GSOD(years = 2010,
            country = &quot;Philippines&quot;,
-           max_missing = 5)
-
-PHL &lt;- st_as_sf(
+           max_missing = 5)</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:stats&#39; may not be
+## available when loading</code></pre>
+<pre><code>## Warning in serialize(data, node$con): &#39;package:utils&#39; may not be
+## available when loading</code></pre>
+<pre class="r"><code>PHL &lt;- st_as_sf(
   x = PHL,
   coords = c(&quot;LONGITUDE&quot;, &quot;LATITUDE&quot;),
   crs = &quot;+proj=longlat +datum=WGS84&quot;
@@ -431,7 +462,7 @@ layers &lt;- ogrListLayers(dsn = file.path(tempdir(), &quot;PHL-2010.gpkg&quot;)
 pnts &lt;-
   readOGR(dsn = file.path(tempdir(), &quot;PHL-2010.gpkg&quot;), layers[1])</code></pre>
 <pre><code>## OGR data source with driver: GPKG 
-## Source: &quot;/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpFRWu1r/PHL-2010.gpkg&quot;, layer: &quot;PHL-2010&quot;
+## Source: &quot;/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/RtmpEinr0P/PHL-2010.gpkg&quot;, layer: &quot;PHL-2010&quot;
 ## with 4709 features
 ## It has 42 fields</code></pre>
 <pre class="r"><code># Plot results in Google Earth as a spacetime object:
@@ -459,9 +490,8 @@ kml(
 
 system(&quot;zip -m Temperatures_PHL_2010-2010.kmz Temperatures_PHL_2010-2010.kml&quot;)</code></pre>
 </div>
-<div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate" class="section level2">
-<h2>Example - Compare the GSOD Weather Data From the Philippines With Climate</h2>
-<p>Data Provided by the <em>GSODRdata</em> Package.</p>
+<div id="example---compare-the-gsod-weather-data-from-the-philippines-with-climate-data-provided-by-the-gsodrdata-package." class="section level2">
+<h2>Example - Compare the GSOD Weather Data From the Philippines With Climate Data Provided by the <em>GSODRdata</em> Package.</h2>
 <p>The <a href="https://adamhsparks.github.io/GSODRdata/"><code>GSODRdata</code></a> package provides climate data from four climate data sets that have been formatted for easy use with the <em>GSODR</em> package. Following is a description how to install the <em>GSODRdata</em> package and use it to visualise the weather data for the Philippines in 2010 against CHELSA data.</p>
 <p>CHELSA (Climatologies at High resolution for the Earth’s Land Surface Areas) are climate data at 30 arc seconds for the Earth’s land surface areas.</p>
 <p><strong>Description of CHELSA data from CHELSA website</strong></p>

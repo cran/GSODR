@@ -3,8 +3,7 @@ context("process_csv()")
 # Check that .process_csv() works properly and returns a tibble
 test_that(
   ".download_files properly works, subsetting for country and
-  agroclimatology works and .process_gz returns a tibble",
-  {
+  agroclimatology works and .process_gz returns a tibble", {
     skip_on_cran()
     do.call(file.remove, list(list.files(
       tempdir(),
@@ -29,7 +28,7 @@ test_that(
     agro_list <- .agroclimatology_list(GSOD_list,
                                        stations,
                                        years)
-    expect_length(agro_list, 7477)
+    expect_length(agro_list, 7480)
 
     RP_list <- .subset_country_list(country,
                                     GSOD_list,
