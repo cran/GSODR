@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 2.1.0
+Version: 2.1.1
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -49,9 +49,8 @@ Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Imports: countrycode, curl, data.table (>= 1.11.6), future.apply, httr,
         R.utils, stats, utils
-Suggests: covr, dplyr, future, ggplot2, gridExtra, knitr, mapproj,
-        maps, plotKML, reshape2, rgdal (>= 1.1-9), rmarkdown, roxygen2
-        (>= 6.1.0), sf, skimr, sp, spacetime, testthat, tidyr
+Suggests: dplyr, future, ggplot2, gridExtra, knitr, mapproj, maps,
+        remotes, rmarkdown, roxygen2 (>= 6.1.0), testthat, tidyr
 RoxygenNote: 7.1.0
 Encoding: UTF-8
 Language: en-AU
@@ -66,7 +65,7 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2020-04-17 12:24:19 UTC; adamsparks
+Packaged: 2020-06-12 23:41:53 UTC; adamsparks
 Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -79,4 +78,4 @@ Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Ross Darnell [ctb] (Reported bug in 'Windows OS' versions causing
     'GSOD' data untarring to fail)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2020-04-17 13:40:17 UTC
+Date/Publication: 2020-06-13 04:10:03 UTC
