@@ -1,10 +1,10 @@
 
-#' Find Nearest GSOD Stations to a Specified Latitude and Longitude
+#' Find nearest GSOD stations to a specified latitude and longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
-#' function returns a list (atomic vector) of \acronym{STATION} values, which
-#' can be used in \code{\link{get_GSOD}} to query for specific stations as an
-#' argument in the \code{station} parameter of that function.
+#' function returns a list (as an atomic vector) of station ID
+#' values, which can be used in \code{\link{get_GSOD}} to query for specific
+#' stations as an argument in the \code{station} parameter of that function.
 #'
 #' @param LAT Latitude expressed as decimal degrees (DD) (WGS84)
 #' @param LON Longitude expressed as decimal degrees (DD) (WGS84)
@@ -26,15 +26,23 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'}
-#' @return \code{\link[base]{vector}} object of station identification numbers
+#' @return By default a class \code{\link[base]{character}}
+#'  \code{\link[base]{vector}} object of station identification numbers.
+#'  in order from nearest to farthest in increasing order. If \code{return_full}
+#'  is \code{TRUE}, a \code{\link[data.table]{data.table}} with full station
+#'  metadata including the distance from the user specified coordinates is
+#'  returned.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @export nearest_stations
 
 nearest_stations <- function(LAT, LON, distance) {
   # CRAN NOTE avoidance
-  isd_history <- NULL
+  isd_history <- distance_km <- NULL #nocov
   # load current local copy of isd_history
   load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+
+  user_LAT <- LAT
+  user_LON <- LON
 
   # Distance over a great circle. Reasonable approximation.
   # From HughParsonage in our bomrang package,
@@ -56,9 +64,14 @@ nearest_stations <- function(LAT, LON, distance) {
     )))
   }
 
-  nearby <-
-    haversine_distance(isd_history$LAT, isd_history$LON, LAT, LON)
 
-  nearby <- which(nearby < distance)
-  return(isd_history[as.numeric(nearby), ]$STNID)
+  isd_history[, distance_km := haversine_distance(
+    lat1 = LAT,
+    lon1 = LON,
+    lat2 = user_LAT,
+    lon2 = user_LON
+  )]
+
+  return(subset(isd_history[order(distance_km)], distance_km < distance)[[1]])
+
 }

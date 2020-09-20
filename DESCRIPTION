@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 2.1.1
+Version: 2.1.2
 Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -24,8 +24,14 @@ Authors@R: c(person("Adam", "Sparks", role = c("aut", "cre"),
     person("Łukasz", "Pawlik", role = "ctb", email = "lukpawlik@gmail.com", 
     comment = "Reported bug in windspeed conversion calculation"),
     person("Ross","Darnell", role = "ctb",
-    email = "Ross.Darnell@data61.csiro.au", comment = "Reported bug in 'Windows
-    OS' versions causing 'GSOD' data untarring to fail"))
+    email = "Ross.Darnell@data61.csiro.au", comment = c(
+    "Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to
+    fail",
+    ORCID = "0000-0002-7973-6322")),
+    person("Tyler", "Widdison", role = "ctb",
+    email = "Tyler.Widdison@usav.org", comment = "Reported bug where
+    `nearest_stations()` did not return stations in order of nearest to
+    farthest."))
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
@@ -44,14 +50,14 @@ Description: Provides automated downloading, parsing, cleaning, unit conversion
     longitude, elevation, weather observations and associated flags.  For
     information on the 'GSOD' data from 'NCEI', please see the 'GSOD'
     'readme.txt' file available from,
-    <http://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
+    <https://www1.ncdc.noaa.gov/pub/data/gsod/readme.txt>.
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Imports: countrycode, curl, data.table (>= 1.11.6), future.apply, httr,
         R.utils, stats, utils
 Suggests: dplyr, future, ggplot2, gridExtra, knitr, mapproj, maps,
         remotes, rmarkdown, roxygen2 (>= 6.1.0), testthat, tidyr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 Language: en-AU
 NeedsCompilation: no
@@ -65,7 +71,7 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2020-06-12 23:41:53 UTC; adamsparks
+Packaged: 2020-09-20 02:04:56 UTC; adamsparks
 Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -76,6 +82,9 @@ Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
     testing feedback),
   Łukasz Pawlik [ctb] (Reported bug in windspeed conversion calculation),
   Ross Darnell [ctb] (Reported bug in 'Windows OS' versions causing
-    'GSOD' data untarring to fail)
+    'GSOD' data untarring to fail,
+    <https://orcid.org/0000-0002-7973-6322>),
+  Tyler Widdison [ctb] (Reported bug where `nearest_stations()` did not
+    return stations in order of nearest to farthest.)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
-Date/Publication: 2020-06-13 04:10:03 UTC
+Date/Publication: 2020-09-20 04:20:08 UTC

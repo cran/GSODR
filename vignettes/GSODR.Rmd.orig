@@ -24,15 +24,15 @@ if (!all(unlist(lapply(required, function(pkg)
 
 # Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
 _GSODR_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
-- `get_GSOD()` - this function queries and transfers files from the NCEI's webpage, reformats them and returns a tidy data frame in R
+- `get_GSOD()` - this function queries and transfers files from the NCEI's webpage, reformats them and returns a tidy data frame in R.
 
-- `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R
+- `reformat_GSOD()` - this function takes individual station files from the local disk and re-formats them returning a tidy data frame in R.
 
-- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude
+- `nearest_stations()` - this function returns a vector of station IDs that fall within the given radius (kilometres) of a point given as latitude and longitude in order from nearest to farthest.
 
 - `update_station_list()` - this function downloads the latest station list from the NCEI's server updates the package's internal database of stations and their metadata.
 
@@ -41,7 +41,7 @@ _GSODR_ aims to make it easy to find, transfer and format the data you need for 
 When reformatting data either with `get_GSOD()` or `reformat_GSOD()`, all units are converted from United States Customary System (USCS) to International System of Units (SI), _e.g._, inches to millimetres and Fahrenheit to Celsius.
 Data in the R session summarise each year by station, which also includes vapour pressure and relative humidity elements calculated from existing data in GSOD.
 
-For more information see the description of the data provided by NCEI, <http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
+For more information see the description of the data provided by NCEI, <https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt>.
 
 # Using get_GSOD()
 
@@ -187,28 +187,11 @@ inventory
 subset(inventory, STNID %in% "955510-99999")
 ```
 
-# Additional Climate Data Availability
-
-Additional climate data,
-[_GSODRdata_](https://github.com/adamhsparks/GSODRdata), formatted for use with GSOD data provided by _GSODR_ are available as an R package, which can only be installed through GitHub due to the package size, >5Mb, being too large for CRAN.
-
-```{r Ex19, eval=FALSE}
-if (!require(remotes)) {
-  install.packages(
-    "devtools",
-    repos = c(CRAN = "https://cloud.r-project.org/")
-  )
-  library("remotes")
-}
-remotes::install_github("adamhsparks/GSODRdata")
-library("GSODRdata")
-```
-
 # Notes
 
 ## WMO Resolution 40. NOAA Policy
 
-_Users of these data should take into account the following (from the [NCEI website](http://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
+_Users of these data should take into account the following (from the [NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
 
 > "The following data and products may have conditions placed on their international commercial use.
 They can be used within the U.S. or for non-commercial international activities without restriction.
@@ -314,7 +297,7 @@ See `FLAGS_PRCP` column for source of data;
 
     - G = 1 report of 24-hour precipitation amount;
 
-    - H = Station reported '0' as the amount for the day (e.g. from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a rrace occurred, but should be considered as incomplete data for the day;
+    - H = Station reported '0' as the amount for the day (*e.g.* from 6-hour reports), but also reported at least one occurrence of precipitation in hourly observations--this could indicate a trace occurred, but should be considered as incomplete data for the day;
 
     - I = Station did not report any precipitation data for the day and did not report any occurrences of precipitation in its hourly observations--it's still possible that precipitation occurred but was not reported;
 

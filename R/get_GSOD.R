@@ -1,10 +1,10 @@
 
-#' Download and Return a data.table Object of GSOD Weather Data
+#' Download and return a data.table object of GSOD weather data
 #'
 #' @description
 #' This function automates downloading, cleaning, reformatting of data from
 #' the Global Surface Summary of the Day (\acronym{GSOD}) data provided by the
-#' \href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod/}{US National Centers for Environmental Information (NCEI)},
+#' \href{https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod}{US National Centers for Environmental Information (NCEI)},
 #' Three additional useful elements: saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity (RH) are calculated and returned
 #' in the final data frame using the improved August-Roche-Magnus approximation
@@ -26,11 +26,11 @@
 #' regardless of which field they occur in.
 #'
 #' For a complete list of the fields and description of the contents and units,
-#' please refer to Appendix 1 in the \pkg{GSODR} vignette,
+#' please refer to Appendix 1 in the \CRANpkg{GSODR} vignette,
 #' \code{vignette("GSODR", package = "GSODR")}.
 #'
 #' For more information see the description of the data provided by
-#' \acronym{NCEI}, \url{http://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
+#' \acronym{NCEI}, \url{https://www7.ncdc.noaa.gov/CDO/GSOD_DESC.txt}.
 #'
 #' @param years Year(s) of weather data to download.
 #' @param station Optional. Specify a station or multiple stations for which to

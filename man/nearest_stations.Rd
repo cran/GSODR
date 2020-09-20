@@ -2,7 +2,7 @@
 % Please edit documentation in R/nearest_stations.R
 \name{nearest_stations}
 \alias{nearest_stations}
-\title{Find Nearest GSOD Stations to a Specified Latitude and Longitude}
+\title{Find nearest GSOD stations to a specified latitude and longitude}
 \usage{
 nearest_stations(LAT, LON, distance)
 }
@@ -15,13 +15,18 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-\code{\link[base]{vector}} object of station identification numbers
+By default a class \code{\link[base]{character}}
+ \code{\link[base]{vector}} object of station identification numbers.
+ in order from nearest to farthest in increasing order. If \code{return_full}
+ is \code{TRUE}, a \code{\link[data.table]{data.table}} with full station
+ metadata including the distance from the user specified coordinates is
+ returned.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
-function returns a list (atomic vector) of \acronym{STATION} values, which
-can be used in \code{\link{get_GSOD}} to query for specific stations as an
-argument in the \code{station} parameter of that function.
+function returns a list (as an atomic vector) of station ID
+values, which can be used in \code{\link{get_GSOD}} to query for specific
+stations as an argument in the \code{station} parameter of that function.
 }
 \note{
 The \acronym{GSOD} data, which are downloaded and manipulated by
