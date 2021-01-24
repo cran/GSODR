@@ -24,7 +24,7 @@ if (!all(unlist(lapply(required, function(pkg)
 
 # Introduction
 
-The GSOD or [Global Surface Summary of the Day (GSOD)](https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
+The GSOD or [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) data provided by the US National Centers for Environmental Information (NCEI) are a valuable source of weather data with global coverage.
 However, the data files are cumbersome and difficult to work with.
 _GSODR_ aims to make it easy to find, transfer and format the data you need for use in analysis and provides four main functions for facilitating this:
 
@@ -116,19 +116,6 @@ ggplot(data = tbar_temps, aes(x = YEARMODA,
   theme_classic()
 ```
 
-## Download and Process Files in Parallel
-
-`GSODR` supports the [`future`]( https://CRAN.R-project.org/package=future) package for parallel processing on varied platforms with the user determining the parallel back end to be used.
-The most simple way is to use `multisession` as an argument for `future::plan()`, which will default to available local cores as workers for the run.
-This can greatly reduce the time necessary to process GSOD files.
-
-```{r Ex6, eval=TRUE, message=FALSE}
-future::plan("multisession")
-global <- get_GSOD(years = 2010:2011)
-
-str(global)
-```
-
 # Using reformat_GSOD()
 
 You may have already downloaded GSOD data or may just wish to use your browser to download the files from the server to you local disk and not use the capabilities of `get_GSOD()`.
@@ -143,7 +130,7 @@ Make sure the directory and file lists are clean.
 
 In this example two STATION.csv files are in subdirectories of user's home directory and are listed for reformatting as a string.
 
-```{r Ex15, eval=FALSE}
+```{r Ex6, eval=FALSE}
 y <- c("~/GSOD/gsod_1960/20049099999.csv",
        "~/GSOD/gsod_1961/20049099999.csv")
 x <- reformat_GSOD(file_list = y)
@@ -169,7 +156,7 @@ The database file `isd_history.rda` can be located on your local system by using
 
 To update _GSODR's_ internal database of station locations simply use `update_station_list()`, which will update the internal station database according to the latest data available from the NCEI.
 
-```{r Ex17, eval=FALSE}
+```{r Ex7, eval=FALSE}
 update_station_list()
 ```
 

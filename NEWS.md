@@ -1,3 +1,19 @@
+# GSODR 3.0.0
+
+## Major changes
+
+* Remove parallel processing functionality.
+A bug that I was unable to properly debug with `future.apply::future_lapply()` caused the `get_GSOD()` and `reformat_GSOD()` functions to run without completing or responding was fixed by simply using R's base `lapply()` function.
+If parallel processing is needed, users should implement their own solutions to download and process in parallel.
+
+## Bug fixes
+
+* Fix bug that caused the package to run without responding.
+
+* Fix test that failed on CRAN's Solaris server for some reason.
+
+* Removes a working DOI link from the reference for the equation used because win-builder checks say it doesn't work (even though it does and there's nothing wrong with the link any time I check).
+
 # GSODR 2.1.2
 
 ## Bug fixes
@@ -447,13 +463,13 @@ This allows for end users to use a parallel process of their choice.
   * New data layers are provided through a separate package, [`GSODRdata`](https://github.com/adamhsparks/GSODRdata), which provide
     climate data formatted for use with GSODR.
 
-     * CHELSA (climatic surfaces at 1 km resolution), <https://chelsa-climate.org/>,
+     * CHELSA (climatic surfaces at 1 km resolution),
 
-     * MODCF  * Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions (<http://www.earthenv.org/cloud>),
+     * MODCF  * Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions,
 
-     * ESACCI  * ESA's CCI-LC snow cover probability (<http://maps.elie.ucl.ac.be/CCI/viewer/index.php>) and
+     * ESACCI  * ESA's CCI-LC snow cover probability and
 
-     * CRU CL2.0 (climatic surfaces at 10 minute resolution) (<https://crudata.uea.ac.uk/%7Etimm/grid/CRU_CL_2_0.html>) 
+     * CRU CL2.0 (climatic surfaces at 10 minute resolution).
 
   * Improved file handling for individual station downloads
 
@@ -658,7 +674,7 @@ This allows for end users to use a parallel process of their choice.
 
 * Add single quotes around possibly misspelled words and spell out comma-separated values and geographic information system rather than just using "CSV" or "GIS" in DESCRIPTION.
 
-* Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://data.noaa.gov/dataset/dataset/global-surface-summary-of-the-day-gsod> to DESCRIPTION as requested by CRAN.
+* Add full name of GSOD (Global Surface Summary of the Day) and URL for GSOD, <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516> to DESCRIPTION as requested by CRAN.
 
 * Require user to specify directory for resulting .csv file output so that any files written to disk are interactive and with user's permission
 
