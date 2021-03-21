@@ -178,12 +178,11 @@ subset(inventory, STNID %in% "955510-99999")
 
 ## WMO Resolution 40. NOAA Policy
 
-_Users of these data should take into account the following (from the [NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)):_
+_Users of these data should take into account the following (from the
+[NCEI website](https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv=&georegionabbv=)): _
 
-> "The following data and products may have conditions placed on their international commercial use.
-They can be used within the U.S. or for non-commercial international activities without restriction.
-The non-U.S. data cannot be redistributed for commercial purposes.
-Re-distribution of these data by others must provide this same notification." [WMO Resolution 40. NOAA Policy](https://public.wmo.int/en/our-mandate/what-we-do/data-exchange-and-technology-transfer)
+> The following data and products may have conditions placed on their international commercial use. They can be used within the U.S. or for non-commercial international activities without restriction. The non-U.S. data cannot be redistributed for commercial purposes. Re-distribution of these data by others must provide this same notification. A log of IP addresses accessing these data and products will be maintained and may be made available to data providers.
+For details, please consult: [WMO Resolution 40. NOAA Policy](https://community.wmo.int/resolution-40)
 
 # Appendices
 
@@ -195,7 +194,13 @@ _GSODR_ formatted data include the following fields and units:
 
 - **NAME** - Unique text identifier;
 
-- **CTRY** - Country in which the station is located;
+- **CTRY** - Country in which the station is located. This field is the original FIPS code that NCEI provides;
+
+- **COUNTRY_NAME** - Country in which the station is located. This field is the country name in English language;
+
+- **ISO2C** - Country in which the station is located. This field is the two letter ISO country code;
+
+- **ISO3C** - Country in which the station is located. This field is the three letter ISO country code;
 
 - **LAT** - Latitude. *Station dropped in cases where values are < -90 or > 90 degrees or Lat = 0 and Lon = 0*;
 
@@ -203,7 +208,7 @@ _GSODR_ formatted data include the following fields and units:
 
 - **ELEVATION** - Elevation in metres;
 
-- **YEARMODA** - Date in YYYY-mm-dd format;
+- **YEARMODA** - Date in YYYYMMDD format;
 
 - **YEAR** - The year (YYYY);
 
