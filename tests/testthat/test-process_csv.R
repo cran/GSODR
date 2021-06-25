@@ -1,8 +1,8 @@
 
-# Check that .process_csv() works properly and returns a tibble ----------------
+# Check that .process_csv() works properly and returns a data.table ------------
 test_that(
   ".download_files properly works, subsetting for country and
-  agroclimatology works and .process_gz returns a tibble", {
+  agroclimatology works and .process_gz returns a data.table", {
     skip_on_cran()
     do.call(file.remove, list(list.files(
       tempdir(),
@@ -76,12 +76,12 @@ test_that(
     expect_is(csv_out$PRCP, "numeric")
     expect_is(csv_out$PRCP_ATTRIBUTES, "character")
     expect_is(csv_out$SNDP, "numeric")
-    expect_is(csv_out$I_FOG, "integer")
-    expect_is(csv_out$I_RAIN_DRIZZLE, "integer")
-    expect_is(csv_out$I_SNOW_ICE, "integer")
-    expect_is(csv_out$I_HAIL, "integer")
-    expect_is(csv_out$I_THUNDER, "integer")
-    expect_is(csv_out$I_TORNADO_FUNNEL, "integer")
+    expect_is(csv_out$I_FOG, "numeric")
+    expect_is(csv_out$I_RAIN_DRIZZLE, "numeric")
+    expect_is(csv_out$I_SNOW_ICE, "numeric")
+    expect_is(csv_out$I_HAIL, "numeric")
+    expect_is(csv_out$I_THUNDER, "numeric")
+    expect_is(csv_out$I_TORNADO_FUNNEL, "numeric")
     expect_is(csv_out$EA, "numeric")
     expect_is(csv_out$ES, "numeric")
     expect_is(csv_out$RH, "numeric")

@@ -44,13 +44,14 @@
     "FRSHTT" <-
     NULL # nocov end
 
-  # Import data from the website for indvidual stations or tempdir() for all ---
+  # Import data from the website for individual stations or tempdir() for all --
   DT <-
     fread(x,
-          colClasses = c("STATION" = "character", "FRSHTT" = "character"))
+          colClasses = c("STATION" = "character"))
 
   # Replace 9999.99 et al. with NA
   for (col in names(DT)[names(DT) == "PRCP"]) {
+    set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
         i = which(DT[[col]] == 99.99),
         j = col,
@@ -64,8 +65,9 @@
                                          "GUST",
                                          "SNDP",
                                          "STP")]) {
+    set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
-        i = which(DT[[col]] == 999.9),
+        i = which(DT[[col]] == "999.9"),
         j = col,
         value = NA)
   }
@@ -76,6 +78,7 @@
                                          "SLP",
                                          "MAX",
                                          "MIN")]) {
+    set(DT, j = col, value = as.character(DT[[col]]))
     set(DT,
         i = which(DT[[col]] == 9999.9),
         j = col,
@@ -150,12 +153,18 @@
                    1)]
 
   # Split FRSHTT into separate columns
-  DT[, I_FOG := as.integer(substr(1, 1, DT$FRSHTT))]
-  DT[, I_RAIN_DRIZZLE := as.integer(substr(2, 2, DT$FRSHTT))]
-  DT[, I_SNOW_ICE := as.integer(substr(3, 3, DT$FRSHTT))]
-  DT[, I_HAIL := as.integer(substr(4, 4, DT$FRSHTT))]
-  DT[, I_THUNDER := as.integer(substr(5, 5, DT$FRSHTT))]
-  DT[, I_TORNADO_FUNNEL := as.integer(substr(6, 6, DT$FRSHTT))]
+  DT[, I_FOG := fifelse(DT$FRSHTT != 0,
+                        as.numeric(substr(DT$FRSHTT, 1, 1)), 0)]
+  DT[, I_RAIN_DRIZZLE := fifelse(DT$FRSHTT != 0,
+                                 as.numeric(substr(DT$FRSHTT, 2, 2)), 0)]
+  DT[, I_SNOW_ICE := fifelse(DT$FRSHTT != 0,
+                             as.numeric(substr(DT$FRSHTT, 3, 3)), 0)]
+  DT[, I_HAIL := fifelse(DT$FRSHTT != 0,
+                         as.numeric(substr(DT$FRSHTT, 4, 4)), 0)]
+  DT[, I_THUNDER := fifelse(DT$FRSHTT != 0,
+                            as.numeric(substr(DT$FRSHTT, 5, 5)), 0)]
+  DT[, I_TORNADO_FUNNEL := fifelse(DT$FRSHTT != 0,
+                                   as.numeric(substr(DT$FRSHTT, 6, 6)), 0)]
   DT[, FRSHTT := NULL]
 
   # Join with internal isd-history for CTRY column -----------------------------

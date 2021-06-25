@@ -19,16 +19,15 @@
 #' cannot be redistributed for commercial purposes.  Re-distribution of these
 #' data by others must provide this same notification.}
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' # Find stations within a 100km radius of Toowoomba, QLD, AUS
 #'
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
-#'}
+#'
 #' @return By default a class \code{\link[base]{character}}
 #'  \code{\link[base]{vector}} object of station identification numbers.
-#'  in order from nearest to farthest in increasing order. If \code{return_full}
+#'  in order from nearest to farthest in increasing order.  If \code{return_full}
 #'  is \code{TRUE}, a \code{\link[data.table]{data.table}} with full station
 #'  metadata including the distance from the user specified coordinates is
 #'  returned.

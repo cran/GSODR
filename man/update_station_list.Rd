@@ -15,7 +15,7 @@ country, state (if in U.S.) and when weather observations begin and end.
 \details{
 Care should be taken when using this function if reproducibility is necessary
 as different machines with the same version of \pkg{GSODR} can end up with
-different versions of the isd_history.csv file internally.
+different versions of the 'isd_history.csv' file internally.
 
 There is no need to use this unless you know that a station exists in the
 isd_history.csv file that is not available in \pkg{GSODR's} self-contained
@@ -25,10 +25,9 @@ To directly access these data, use: \cr
 \code{load(system.file("extdata", "isd_history.rda", package = "GSODR"))}
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 update_station_list()
-}
-
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}
