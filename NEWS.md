@@ -1,3 +1,26 @@
+# GSODR 3.1.2
+
+## Bug fixes
+
+* Fix (more) bugs related to `NA` value replacements.
+
+## Minor changes and improvements
+
+* Simplify `NA` value replacement in "PRCP" column.
+
+* The PRCP column values are rounded to two decimal places as in original GSOD data, not one.
+
+* The TEMP_ATTRIBUTES, DEWP_ATTRIBUTES, SLP_ATTRIBUTES, STP_ATTRIBUTES, VISIB_ATTRIBUTES and WDSP_ATTRIBUTES columns are formatted as an integer not character.
+
+* Better tests for the generated weather data `data.table` output checking values and formats.
+
+* Tests are updated for updated data availability in the GSOD data due to continuous improvements to the data set.
+
+* Standardise handling of author/contributor comments.
+None have a full stop now in the comment.
+
+* Use `on.exit()` to reset the working directory to the original user-space value after changing the working directory to untar files located in `tempdir()`.
+
 # GSODR 3.1.1
 
 ## Bug fixes
@@ -5,6 +28,9 @@
 * Fixes bug reported in [#84](https://github.com/ropensci/GSODR/issues/84) in the FRSHTT columns where the values were all reported as `NA` even if there were observed values.
 
 * Fixes bug where NA values reported as 99.99, 999.9 or 9999.9 were not replaced with `NA`.
+
+* Fix bug where FRSHTT (Fog, Rain/Drizzle, Snow/Ice, Hail, Tornado, Thunder) column values split into the respective columns only returned `NA`, not the proper values as expected.
+Reported in [#84](https://github.com/ropensci/GSODR/issues/84).
 
 ## Minor changes
 

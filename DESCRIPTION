@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.1
+Version: 3.1.2
 Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -31,7 +31,7 @@ Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
     person("Tyler", "Widdison", role = "ctb",
     email = "Tyler.Widdison@usav.org", comment = "Reported bug where
     `nearest_stations()` did not return stations in order of nearest to
-    farthest."))
+    farthest"))
 URL: https://docs.ropensci.org/GSODR/
 BugReports: https://github.com/ropensci/GSODR/issues
 Description: Provides automated downloading, parsing, cleaning, unit conversion
@@ -68,7 +68,7 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2021-06-25 08:45:45 UTC; adamsparks
+Packaged: 2021-07-04 02:21:41 UTC; adamsparks
 Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -82,6 +82,6 @@ Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
     'GSOD' data untarring to fail,
     <https://orcid.org/0000-0002-7973-6322>),
   Tyler Widdison [ctb] (Reported bug where `nearest_stations()` did not
-    return stations in order of nearest to farthest.)
+    return stations in order of nearest to farthest)
 Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
-Date/Publication: 2021-06-25 09:30:02 UTC
+Date/Publication: 2021-07-04 04:10:02 UTC
