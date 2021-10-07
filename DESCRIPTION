@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.2
+Version: 3.1.4
 Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -56,7 +56,7 @@ License: MIT + file LICENSE
 Imports: countrycode, curl, data.table, httr, R.utils, stats, utils
 Suggests: dplyr, spelling, ggplot2, gridExtra, knitr, mapproj, maps,
         remotes, rmarkdown, roxygen2, testthat, tidyr
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.2
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
@@ -68,7 +68,7 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2021-07-04 02:21:41 UTC; adamsparks
+Packaged: 2021-10-06 13:48:25 UTC; adamsparks
 Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -84,4 +84,4 @@ Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tyler Widdison [ctb] (Reported bug where `nearest_stations()` did not
     return stations in order of nearest to farthest)
 Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
-Date/Publication: 2021-07-04 04:10:02 UTC
+Date/Publication: 2021-10-07 04:40:02 UTC
