@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.7
+Version: 3.1.8
 Authors@R: c(person("Adam H.", "Sparks", role = c("aut", "cre"),
     email = "adamhsparks@gmail.com",
     comment = c(ORCID = "0000-0002-0061-8359")),
@@ -71,7 +71,7 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2023-01-05 06:32:44 UTC; adamsparks
+Packaged: 2023-02-25 08:21:08 UTC; adamsparks
 Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -89,4 +89,4 @@ Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Western Australia Agriculture Authority (WAAA) [cph] (Supported the
     development of 'GSODR' through Adam H. Sparks's time.)
 Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
-Date/Publication: 2023-01-05 21:30:09 UTC
+Date/Publication: 2023-02-25 08:40:02 UTC
