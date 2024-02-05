@@ -1,7 +1,7 @@
 Package: GSODR
 Type: Package
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 3.1.9
+Version: 3.1.10
 Authors@R: c(
     person("Adam H.", "Sparks", role = c("aut", "cre"),
         email = "adamhsparks@gmail.com",
@@ -33,7 +33,7 @@ Authors@R: c(
         email = "Tyler.Widdison@usav.org", comment = "Reported bug where
         `nearest_stations()` did not return stations in order of nearest to
         farthest"),
-    person(given = "Western Australia Agriculture Authority (WAAA)",
+    person(given = "Curtin University",
         role = "cph", comment = c("Supported the development of 'GSODR' through
         Adam H. Sparks's time.")))
 URL: https://docs.ropensci.org/GSODR/
@@ -59,8 +59,8 @@ Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Imports: countrycode, curl, data.table, R.utils, stats, utils
 Suggests: dplyr, spelling, ggplot2, gridExtra, knitr, mapproj, maps,
-        rmarkdown, testthat, tidyr
-RoxygenNote: 7.2.3
+        rmarkdown, testthat, tidyr, roxyglobals
+RoxygenNote: 7.3.1
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
@@ -72,7 +72,9 @@ X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
 X-schema.org-isPartOf: https://ropensci.org
-Packaged: 2023-08-22 00:15:43 UTC; adamsparks
+Config/roxyglobals/filename: globals.R
+Config/roxyglobals/unique: FALSE
+Packaged: 2024-02-05 03:46:47 UTC; 283204f
 Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -87,7 +89,7 @@ Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
     <https://orcid.org/0000-0002-7973-6322>),
   Tyler Widdison [ctb] (Reported bug where `nearest_stations()` did not
     return stations in order of nearest to farthest),
-  Western Australia Agriculture Authority (WAAA) [cph] (Supported the
-    development of 'GSODR' through Adam H. Sparks's time.)
+  Curtin University [cph] (Supported the development of 'GSODR' through
+    Adam H. Sparks's time.)
 Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
-Date/Publication: 2023-08-22 07:00:07 UTC
+Date/Publication: 2024-02-05 12:00:05 UTC
