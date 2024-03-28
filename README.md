@@ -1,5 +1,5 @@
 
-<div style="clear:both"><h1><em>GSODR</em>: Global Surface Summary of the Day ('GSOD') Weather Data Client</h1></div>
+<div style="clear:both"><h1>{GSODR}: Global Surface Summary of the Day ('GSOD') Weather Data Client</h1></div>
 <img src="man/figures/logo.png" style="float:right;" alt="logo" width="120" />
 
 <!-- badges: start -->
@@ -99,7 +99,8 @@ However, for non-U.S. locations' data, the data or any derived product shall not
 
 ## Code of Conduct
   
-Please note that the GSODR project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). 
+By contributing to this project, you agree to abide by its terms.
 
 ## References
 
