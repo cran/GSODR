@@ -1,7 +1,7 @@
 Type: Package
 Package: GSODR
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 4.1.0
+Version: 4.1.1
 Authors@R: c(
     person("Adam H.", "Sparks", , "adamhsparks@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0061-8359")),
@@ -65,7 +65,7 @@ X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
-Packaged: 2024-07-21 09:05:43 UTC; adamsparks
+Packaged: 2024-07-22 12:37:00 UTC; adamsparks
 Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
   Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
@@ -83,4 +83,4 @@ Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
   Curtin University [cph] (Supported the development of 'GSODR' through
     Adam H. Sparks's time.)
 Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
-Date/Publication: 2024-07-21 09:20:05 UTC
+Date/Publication: 2024-07-23 21:30:01 UTC

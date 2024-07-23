@@ -1,5 +1,14 @@
 # GSODR 4.1.0
 
+## Bug fixes
+
+- This is a continuation of the bug in the GSOD CSV file format data from the previous release.
+The missing values should be 9999.9 as 999.9 is a valid "STP" value.
+However, this does not appear to be the value that's actually used for missing data in this field.
+So, I've elected to set the STP field to `NA` when "STP_ATTRIBUTES" are equal to "0" or no observations used in reporting "STP" to see if this overcomes the issue.
+
+# GSODR 4.1.0
+
 ## Minor changes
 
 - Added citation information for the data themselves to README.
@@ -11,7 +20,7 @@
 - This is really a bug in the GSOD data, not {GSODR}, but we do our best to please.
 As reported by @geospacedman in [#117](https://github.com/ropensci/GSODR/issues/117), STP values above 1000 were not properly reported.
 Upon further inspection, it was found that the GSOD data in the CSV files is incorrect and the leading "1" is truncated and the values are reported as "034" for _e.g._ "1034".
-Further, {data.table} drops the leading zeros by default on import with `fread()` unless `keepLeadingZeros = TRUE` is set, so that is now set and the "1" is appended when the values are >1000 and all should be well with the world again.
+Further, {data.table} drops the leading zeros by default on import with `fread()` unless `keepLeadingZeros = TRUE` is set, so that is now set and the 1 is appended when the values are >1000 and all should be well with the world again.
 
 - Fixes title that ended with a full stop.
 
@@ -712,7 +721,7 @@ These were always available through GSOD but this bug prevented them from being 
 
 -   stations.rda is compressed
 
--   stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008, see [https://github.com/ropensci/GSODR/blob/main/data-raw/fetch_isd-history.md](https://github.com/ropensci/GSODR/blob/devel/data-raw/fetch_isd-history.md) for a description
+-   stations.rda now includes a field for "corrected" elevation using hole-filled SRTM data from Jarvis et al. 2008
 
 -   Set NA or missing values in CSV or shapefile to -9999 from -9999.99 to align with other data sources such as WorldClim
 
