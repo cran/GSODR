@@ -1,4 +1,12 @@
-# GSODR 4.1.0
+# GSODR 4.1.2
+
+## Bug fixes
+
+- Enforce {data.table} >= 1.15.4 due to issue with `fifelse()` as reported in <https://github.com/ropensci/GSODR/issues/121>
+
+- Fix issue with working directory changing as reported in <https://github.com/ropensci/GSODR/issues/124#issuecomment-2342686025>
+
+# GSODR 4.1.1
 
 ## Bug fixes
 
