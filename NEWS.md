@@ -1,10 +1,14 @@
+# GSODR 4.1.3
+
+- Skip test on CRAN (`test-get_updates()`) that should have been skipped but wasn't
+
 # GSODR 4.1.2
 
 ## Bug fixes
 
 - Enforce {data.table} >= 1.15.4 due to issue with `fifelse()` as reported in <https://github.com/ropensci/GSODR/issues/121>
 
-- Fix issue with working directory changing as reported in <https://github.com/ropensci/GSODR/issues/124#issuecomment-2342686025>
+- Fix issue with working directory changing as reported in <https://github.com/ropensci/GSODR/issues/124>
 
 # GSODR 4.1.1
 

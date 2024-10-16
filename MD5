@@ -1,7 +1,7 @@
-59b5e9b72e5f0cd14ec6f7819eeedc71 *DESCRIPTION
+7e1c58e6264ede8dbbe3a75f7510ee7d *DESCRIPTION
 dfc6d3c896f9d2764f5f2da5013d1b92 *LICENSE
 90c38c568f4dcc58090f1bf4f23f9572 *NAMESPACE
-74c0b6ca266ea16e575a3e832a866c76 *NEWS.md
+150487eabe4d9c7069181895e043bdd7 *NEWS.md
 3824d30e0b390d83010544862bc1a635 *R/GSODR-package.R
 a5146ebeea4d500ec8238454bc9a4eec *R/get_GSOD.R
 06220bf22aac232ef74b3dd0b9460585 *R/get_inventory.R
@@ -18,8 +18,8 @@ cb0e22645bbdff1d0bc60663e638392f *README.md
 b9b437061f6deb24f9d1ef06bca90c2e *build/vignette.rds
 fd4457bda1ecb89a40b208f81ffb9177 *inst/CITATION
 4ccefb00d9a3935adfa589767ab18a7c *inst/WORDLIST
-f5bedf2d379981c74e96521a549c7c77 *inst/doc/GSODR.Rmd
-a838773ea70b00c43a3207b4e562a791 *inst/doc/GSODR.html
+668e2bc60da93402985f08d5824329f2 *inst/doc/GSODR.Rmd
+3d88f1d75c5604cbcc783b6f25b733a6 *inst/doc/GSODR.html
 6c21c8f09c4f5824baee9764ff38ab49 *inst/extdata/isd_diff.rda
 d80610c1c8f0bbe3f6f0757c7251d099 *inst/extdata/isd_history.rda
 6e5e725b0b8886e644f215ecae6e71e3 *inst/paper/paper.bib
@@ -40,13 +40,13 @@ b714b8d1c1102fb1a26bbc0695f6ebb1 *man/get_updates.Rd
 87e26e0ecf52dd0154c8c7d4cb733126 *tests/testthat.R
 3b53460e1874deae402e4cf1d25acb73 *tests/testthat/test-get_GSOD.R
 e6b6cca6060b50c27a07a44d78c2fbcb *tests/testthat/test-get_inventory.R
+a9ea7e4decfb011adbb71d8d5b5d3ed9 *tests/testthat/test-get_updates.R
 a82d9de33e01ff1f77282c937b25a083 *tests/testthat/test-nearest_stations.R
 5e8beacf6557fdab73042a9097c4ce08 *tests/testthat/test-reformat_GSOD.R
-2454dd9eae3eb480d86f05d297c47461 *tests/testthat/test-test-get_updates.R
 0307260b3e5e2ccffe03783f74d5f4a3 *tests/testthat/test-update_station_list.R
 2f2869870f388c573d92328cb7b87864 *vignettes/Ex5-1.png
-f5bedf2d379981c74e96521a549c7c77 *vignettes/GSODR.Rmd
+668e2bc60da93402985f08d5824329f2 *vignettes/GSODR.Rmd
 369a9ea37e2d1b895dc9f677c3f0dff4 *vignettes/GSODR.Rmd.orig
-2b73e8ceb341d3bf130468bff41abad0 *vignettes/GSOD_Station_locations-1.png
+d13e297f3bf260d5cf00f80df14d3f14 *vignettes/GSOD_Station_locations-1.png
 7b494c0ca503a926833df52cfab8c9e3 *vignettes/precompile.R
 5770b4170ddc2eef9807a2b08bebb3e0 *vignettes/references.bib
