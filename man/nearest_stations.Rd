@@ -15,8 +15,8 @@ nearest_stations(LAT, LON, distance)
 be returned.}
 }
 \value{
-A \link[data.table:data.table]{data.table::data.table} with full station metadata including the
-distance from the user specified coordinates from nearest to farthest.
+A \code{\link[data.table:data.table]{data.table::data.table()}} with full station metadata including
+the distance from the user specified coordinates from nearest to farthest.
 }
 \description{
 Given latitude and longitude values entered as decimal degrees (DD), this
@@ -34,7 +34,7 @@ cannot be redistributed for commercial purposes.  Re-distribution of these
 data by others must provide this same notification.}
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Find stations within a 100km radius of Toowoomba, QLD, AUS
 
 n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)

@@ -1,4 +1,3 @@
-
 #' Find Nearest GSOD Stations to a Specified Latitude and Longitude
 #'
 #' Given latitude and longitude values entered as decimal degrees (DD), this
@@ -25,11 +24,11 @@
 #' n <- nearest_stations(LAT = -27.5598, LON = 151.9507, distance = 100)
 #' n
 #'
-#' @return A [data.table::data.table] with full station metadata including the
-#' distance from the user specified coordinates from nearest to farthest.
+#' @returns A [data.table::data.table()] with full station metadata including
+#' the distance from the user specified coordinates from nearest to farthest.
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @autoglobal
-#' @export nearest_stations
+#' @export
 
 nearest_stations <- function(LAT, LON, distance) {
   # load current local copy of isd_history
@@ -52,23 +51,31 @@ nearest_stations <- function(LAT, LON, distance) {
     delta_lon <- abs(lon1 - lon2)
 
     # radius of earth
-    6371 * 2 * asin(sqrt(`+`(
-      (sin(delta_lat / 2)) ^ 2,
-      cos(lat1) * cos(lat2) * (sin(delta_lon / 2)) ^ 2
-    )))
+    6371.0 *
+      2.0 *
+      asin(sqrt(`+`(
+        (sin(delta_lat / 2.0))^2.0,
+        cos(lat1) * cos(lat2) * (sin(delta_lon / 2.))^2.
+      )))
   }
 
-
-  isd_history[, distance_km := round(haversine_distance(
-    lat1 = LAT,
-    lon1 = LON,
-    lat2 = user_LAT,
-    lon2 = user_LON
-  ), 1)]
+  isd_history[,
+    distance_km := round(
+      haversine_distance(
+        lat1 = LAT,
+        lon1 = LON,
+        lat2 = user_LAT,
+        lon2 = user_LON
+      ),
+      1L
+    )
+  ]
 
   subset_stns <-
-    data.table(subset(isd_history[order(distance_km)],
-                      distance_km < distance)[[1]])
+    data.table(subset(
+      isd_history[order(distance_km)],
+      distance_km < distance
+    )[[1L]])
   setnames(subset_stns, "V1", "STNID")
 
   return(isd_history[subset_stns, on = "STNID"])

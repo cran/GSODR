@@ -1,8 +1,6 @@
-
-
 #' Get the Most Recent isd_history File
 #'
-#' @return A [data.table::data.table] object
+#' @returns A [data.table::data.table] object
 #' @export
 #' @family metadata
 #' @autoglobal
@@ -28,9 +26,23 @@ get_isd_history <- function() {
   # remove extra columns
   isd_history[, c("USAF", "WBAN", "ICAO") := NULL]
 
-  isd_history <-
-    isd_history[setDT(countrycode::codelist), on = c("CTRY" = "fips")]
+  cclist <- data.table::as.data.table(countrycode::codelist[, c(
+    "country.name.en",
+    "iso2c",
+    "fips"
+  )])
+  cclist <- data.table::melt(cclist, id.vars = "country.name.en")
+  cclist <- cclist[order(cclist$country.name.en)]
+  cclist <- unique(cclist, by = "value")
 
+  isd_history <-
+    isd_history[cclist, on = c("CTRY" = "value")]
+
+  isd_history <-
+    isd_history[
+      data.table::as.data.table(countrycode::codelist),
+      on = "country.name.en"
+    ]
   isd_history <- isd_history[, c(
     "STNID",
     "NAME",
@@ -47,20 +59,28 @@ get_isd_history <- function() {
   )]
 
   # clean data
-  isd_history[isd_history == -999] <- NA
+  isd_history[isd_history == -999L] <- NA
   isd_history[isd_history == -999.9] <- NA
   isd_history <-
-    isd_history[!is.na(isd_history$LAT) &
-                  !is.na(isd_history$LON), ]
+    isd_history[
+      !is.na(isd_history$LAT) &
+        !is.na(isd_history$LON),
+    ]
   isd_history <-
-    isd_history[isd_history$LAT != 0 &
-                  isd_history$LON != 0, ]
+    isd_history[
+      isd_history$LAT != 0.0 &
+        isd_history$LON != 0.0,
+    ]
   isd_history <-
-    isd_history[isd_history$LAT > -90 &
-                  isd_history$LAT < 90, ]
+    isd_history[
+      isd_history$LAT > -90.0 &
+        isd_history$LAT < 90.0,
+    ]
   isd_history <-
-    isd_history[isd_history$LON > -180 &
-                  isd_history$LON < 180, ]
+    isd_history[
+      isd_history$LON > -180.0 &
+        isd_history$LON < 180.0,
+    ]
 
   # set colnames to upper case
   names(isd_history) <- toupper(names(isd_history))

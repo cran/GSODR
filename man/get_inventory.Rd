@@ -7,7 +7,8 @@
 get_inventory()
 }
 \value{
-A \code{GSODR.info} object, which inherits from \link[data.table:data.table]{data.table::data.table}.
+A \code{GSODR.info} object, which inherits from
+\code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 \description{
 The \acronym{NCEI} maintains a document,
@@ -30,7 +31,7 @@ accessing these data and products will be maintained and may be made
 available to data providers.}
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 inventory <- get_inventory()
 inventory
 \dontshow{\}) # examplesIf}

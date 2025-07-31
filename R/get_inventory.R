@@ -22,11 +22,12 @@
 #' inventory <- get_inventory()
 #' inventory
 #'
-#' @return A `GSODR.info` object, which inherits from [data.table::data.table].
+#' @returns A `GSODR.info` object, which inherits from
+#' [data.table::data.table()].
 #' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #' @family metadata
 #' @autoglobal
-#' @export get_inventory
+#' @export
 
 get_inventory <- function() {
   load(system.file("extdata", "isd_history.rda", package = "GSODR")) # nocov
@@ -43,7 +44,7 @@ get_inventory <- function() {
       main_body <-
         fread(
           file.path(tempdir(), "inventory.txt"),
-          skip = 8,
+          skip = 8L,
           col.names = c(
             "USAF",
             "WBAN",
@@ -71,17 +72,18 @@ get_inventory <- function() {
       setcolorder(main_body, "STNID")
 
       header <-
-        readLines(file.path(tempdir(), "inventory.txt"), n = 6)
+        readLines(file.path(tempdir(), "inventory.txt"), n = 6L)
 
       # sift out the year and month
       year_month <- grep("[0-9]{4}", header)
 
       year_month <-
         tools::toTitleCase(tolower(gsub(
-          "^([^\\D]*\\d+).*", "\\1",
+          "^([^\\D]*\\d+).*",
+          "\\1",
           header[[year_month]]
         )))
-      year_month <- gsub("Through ", "", year_month)
+      year_month <- gsub("Through ", "", year_month, fixed = TRUE)
       year_month <- gsub("\\..*", "", year_month)
 
       main_body <- isd_history[main_body, on = "STNID"]
@@ -92,7 +94,9 @@ get_inventory <- function() {
       attr(main_body, "GSODR.Inventory") <- c(
         "  *** FEDERAL CLIMATE COMPLEX INTEGRATED SURFACE DATA INVENTORY ***  \n",
         "  This inventory provides the number of weather observations by  \n",
-        "  STATION-YEAR-MONTH for beginning of record through", year_month, " \n"
+        "  STATION-YEAR-MONTH for beginning of record through",
+        year_month,
+        " \n"
       )
     },
     error = function(cond) {

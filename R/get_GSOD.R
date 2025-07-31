@@ -3,12 +3,11 @@
 #' @description
 #' Automates downloading, cleaning, reformatting of data from the Global Surface
 #' Summary of the Day (\acronym{GSOD}) data provided by the
-#' [US National Centers for Environmental Information (NCEI)(https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516),
+#' [US National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516),
 #' Three additional useful elements: saturation vapour pressure (es), actual
 #' vapour pressure (ea) and relative humidity (RH) are calculated and returned
 #' in the final data frame using the improved August-Roche-Magnus approximation
 #' (Alduchov and Eskridge 1996).
-#'
 #'
 #' @details
 #' All units are converted to International System of Units (SI), *e.g*,
@@ -81,40 +80,37 @@
 #'
 #' Alduchov, O.A. and Eskridge, R.E., 1996. Improved Magnus form approximation
 #' of saturation vapor pressure. Journal of Applied Meteorology and Climatology,
-#' 35(4), pp.601-609. DOI:
-#' <10.1175%2F1520-0450%281996%29035%3C0601%3AIMFAOS%3E2.0.CO%3B2>.
+#' 35(4), pp.601-609.
+#' \doi{doi:10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2}.
 #'
-#' @return A [data.table::data.table()] object of \acronym{GSOD} weather data.
+#' @returns A [data.table::data.table()] object of \acronym{GSOD} weather data.
 #'
 #' @seealso [reformat_GSOD()]
 #' @autoglobal
 #' @export get_GSOD
 
-get_GSOD <- function(years,
-                     station = NULL,
-                     country = NULL,
-                     max_missing = NULL,
-                     agroclimatology = FALSE) {
+get_GSOD <- function(
+  years,
+  station = NULL,
+  country = NULL,
+  max_missing = NULL,
+  agroclimatology = FALSE
+) {
   # Validate user inputs -------------------------------------------------------
   .validate_years(years)
   # Validate stations for missing days -----------------------------------------
-  if (!is.null(max_missing)) {
-    if (is.na(max_missing) || max_missing < 1) {
-      stop(
-        call. = FALSE,
-        "The `max_missing` parameter must be a positive",
-        "value larger than 1."
-      )
-    }
+  if (!is.null(max_missing) && (is.na(max_missing) || max_missing < 1L)) {
+    stop(
+      call. = FALSE,
+      "The `max_missing` parameter must be a positive value larger than 1."
+    )
   }
 
-  if (!is.null(max_missing)) {
-    if (format(Sys.Date(), "%Y") %in% years) {
-      stop(
-        call. = FALSE,
-        "You cannot use `max_missing` with the current, incomplete year."
-      )
-    }
+  if (!is.null(max_missing) && (format(Sys.Date(), "%Y") %in% years)) {
+    stop(
+      call. = FALSE,
+      "You cannot use `max_missing` with the current, incomplete year."
+    )
   }
 
   if (isTRUE(agroclimatology) && !is.null(station)) {
@@ -176,10 +172,12 @@ get_GSOD <- function(years,
   if (!is.null(max_missing)) {
     file_list <-
       .validate_missing_days(max_missing, file_list)
-    if (length(file_list) == 0) {
+    if (length(file_list) == 0L) {
       stop(
         call. = FALSE,
-        "There were no stations that had a max of ", max_missing, " days."
+        "There were no stations that had a max of ",
+        max_missing,
+        " days."
       )
     }
   }

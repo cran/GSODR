@@ -1,7 +1,7 @@
 Type: Package
 Package: GSODR
 Title: Global Surface Summary of the Day ('GSOD') Weather Data Client
-Version: 4.1.3
+Version: 4.1.4
 Authors@R: c(
     person("Adam H.", "Sparks", , "adamhsparks@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0061-8359")),
@@ -21,8 +21,10 @@ Authors@R: c(
            comment = c("Reported bug in 'Windows OS' versions causing 'GSOD' data untarring to\n        fail", ORCID = "0000-0002-7973-6322")),
     person("Tyler", "Widdison", , "Tyler.Widdison@usav.org", role = "ctb",
            comment = "Reported bug where\n        `nearest_stations()` did not return stations in order of nearest to\n        farthest"),
-    person("Curtin University", role = "cph",
-           comment = "Supported the development of 'GSODR' through\n        Adam H. Sparks's time.")
+    person("Curtin University", role = c("fnd", "cph"),
+           comment = c(url = "http://www.curtin.edu.au/", ROR = "02n415q13")),
+    person("Grains Research and Development Corporation", role = c("fnd", "cph"),
+           comment = c(Project = "GRDC Project CUR2210-005OPX (AAGI-CU)", ROR = "02xwr1996"))
   )
 Description: Provides automated downloading, parsing, cleaning, unit
     conversion and formatting of Global Surface Summary of the Day
@@ -53,6 +55,7 @@ Suggests: bit64, dplyr, ggplot2, gridExtra, knitr, mapproj, maps,
         rmarkdown, roxyglobals, spelling, testthat, tidyr
 VignetteBuilder: knitr
 ByteCompile: TRUE
+Config/Needs/build: moodymudskipper/devtag
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
@@ -61,28 +64,32 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.2.9000
 X-schema.org-applicationCategory: Tools
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: US-NCEI, meteorological-data, global-weather,
         weather, weather-data, meteorology, station-data,
         surface-weather, data-access, US-NCDC
-Packaged: 2024-10-16 10:56:31 UTC; 283204f
-Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>),
-  Tomislav Hengl [aut] (<https://orcid.org/0000-0002-9921-5129>),
-  Andrew Nelson [aut] (<https://orcid.org/0000-0002-7249-3778>),
-  Hugh Parsonage [cph, ctb] (<https://orcid.org/0000-0003-4055-0835>),
+Packaged: 2025-07-31 01:26:36 UTC; 283204f
+Author: Adam H. Sparks [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-0061-8359>),
+  Tomislav Hengl [aut] (ORCID: <https://orcid.org/0000-0002-9921-5129>),
+  Andrew Nelson [aut] (ORCID: <https://orcid.org/0000-0002-7249-3778>),
+  Hugh Parsonage [cph, ctb] (ORCID:
+    <https://orcid.org/0000-0003-4055-0835>),
   Taras Kaduk [ctb] (Suggestion for handling bulk station downloads more
     efficiently),
   Gwenael Giboire [ctb] (Several bug reports in early versions and
     testing feedback),
   Łukasz Pawlik [ctb] (Reported bug in windspeed conversion calculation),
   Ross Darnell [ctb] (Reported bug in 'Windows OS' versions causing
-    'GSOD' data untarring to fail,
+    'GSOD' data untarring to fail, ORCID:
     <https://orcid.org/0000-0002-7973-6322>),
   Tyler Widdison [ctb] (Reported bug where `nearest_stations()` did not
     return stations in order of nearest to farthest),
-  Curtin University [cph] (Supported the development of 'GSODR' through
-    Adam H. Sparks's time.)
+  Curtin University [fnd, cph] (url: http://www.curtin.edu.au/, ROR:
+    <https://ror.org/02n415q13>),
+  Grains Research and Development Corporation [fnd, cph] (Project: GRDC
+    Project CUR2210-005OPX (AAGI-CU), ROR: <https://ror.org/02xwr1996>)
 Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
-Date/Publication: 2024-10-16 14:30:09 UTC
+Date/Publication: 2025-07-31 04:20:02 UTC

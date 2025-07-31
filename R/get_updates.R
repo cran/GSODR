@@ -1,4 +1,3 @@
-
 #' Get updates.txt With Information on Updates to the GSOD Data Set
 #'
 #' Gets and imports the 'updates.txt' file that has a change log of GSOD data.
@@ -6,7 +5,7 @@
 #'   field.  Column names follow \CRANpkg{GSODR} naming conventions.
 #'
 #'
-#' @return A [data.table::data.table()] object
+#' @returns A [data.table::data.table()] object
 #' @export
 #' @autoglobal
 #' @family metadata
@@ -19,26 +18,29 @@ get_updates <- function() {
 
   file_in <- file.path(tempdir(), "updates.txt")
   if (!file.exists(file_in)) {
-    tryCatch({
-      utils::download.file(
-        url =
-          "https://www1.ncdc.noaa.gov/pub/data/noaa/updates.txt",
-        destfile = file_in,
-        mode = "wb",
-        quiet = TRUE
-      )
-    }, error = function(x)
-      stop(
-        "The NCEI server with the update information is not responding. ",
-        "Please retry again later.\n",
-        call. = FALSE
-      ))
+    tryCatch(
+      {
+        utils::download.file(
+          url = "https://www1.ncdc.noaa.gov/pub/data/noaa/updates.txt",
+          destfile = file_in,
+          mode = "wb",
+          quiet = TRUE
+        )
+      },
+      error = function(x) {
+        stop(
+          "The NCEI server with the update information is not responding. ",
+          "Please retry again later.\n",
+          call. = FALSE
+        )
+      }
+    )
   }
 
   x <- data.table::setDT(
     utils::read.fwf(
       file = file_in,
-      widths = c(7, 5, 5, 11, 25),
+      widths = c(7L, 5L, 5L, 11L, 25L),
       header = FALSE,
       comment.char = "",
       allowEscapes = TRUE,
