@@ -19,9 +19,4 @@ field.  Column names follow \CRANpkg{GSODR} naming conventions.
 get_updates()
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other metadata: 
-\code{\link{get_inventory}()},
-\code{\link{get_isd_history}()}
-}
 \concept{metadata}
